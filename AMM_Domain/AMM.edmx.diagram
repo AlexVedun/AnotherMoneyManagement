@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="825956b82c1141c1ab846a5ce0e6a0ae" Name="Diagram1" >
+        <EntityTypeShape EntityType="AMM.Transaction" Width="2" PointX="6.125" PointY="0.875" />
+        <EntityTypeShape EntityType="AMM.User" Width="1.5" PointX="3.75" PointY="0.875" />
+        <EntityTypeShape EntityType="AMM.Family" Width="1.5" PointX="1.5" PointY="0.875" />
+        <EntityTypeShape EntityType="AMM.Source" Width="1.5" PointX="9.25" PointY="0.875" />
+        <EntityTypeShape EntityType="AMM.Cost" Width="1.5" PointX="9.25" PointY="3.5" />
+        <AssociationConnector Association="AMM.TransactionUser" />
+        <AssociationConnector Association="AMM.UserFamily" />
+        <EntityTypeShape EntityType="AMM.TypeOfSource" Width="1.5" PointX="11.5" PointY="0.875" />
+        <AssociationConnector Association="AMM.SourceTypeOfSource" />
+        <AssociationConnector Association="AMM.TransactionSource" />
+        <AssociationConnector Association="AMM.TransactionCost" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
