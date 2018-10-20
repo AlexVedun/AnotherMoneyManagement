@@ -65,7 +65,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AMM.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
+    <Compile Include="AMM_Interface.cs" />
     <Compile Include="Cost.cs">
       <DependentUpon>AMM.tt</DependentUpon>
     </Compile>
