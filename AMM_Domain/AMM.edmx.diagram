@@ -16,6 +16,7 @@
         <AssociationConnector Association="AMM.SourceTypeOfSource" />
         <AssociationConnector Association="AMM.TransactionSource" />
         <AssociationConnector Association="AMM.TransactionCost" />
+        <AssociationConnector Association="AMM.FamilyUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

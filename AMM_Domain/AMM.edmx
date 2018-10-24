@@ -179,6 +179,10 @@
             <End Role="Transaction" EntitySet="TransactionSet" />
             <End Role="Cost" EntitySet="CostSet" />
           </AssociationSet>
+          <AssociationSet Name="FamilyUser" Association="AMM.FamilyUser">
+            <End Role="Family" EntitySet="FamilySet" />
+            <End Role="User" EntitySet="UserSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Transaction">
           <Key>
@@ -212,6 +216,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="User" Relationship="AMM.UserFamily" FromRole="Family" ToRole="User" />
           <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="AMM.FamilyUser" FromRole="Family" ToRole="User" />
         </EntityType>
         <EntityType Name="Source">
           <Key>
@@ -256,6 +261,10 @@
         <Association Name="TransactionCost">
           <End Type="AMM.Transaction" Role="Transaction" Multiplicity="*" />
           <End Type="AMM.Cost" Role="Cost" Multiplicity="0..1" />
+        </Association>
+        <Association Name="FamilyUser">
+          <End Type="AMM.Family" Role="Family" Multiplicity="*" />
+          <End Type="AMM.User" Role="User" Multiplicity="1" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
