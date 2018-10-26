@@ -9,14 +9,15 @@
         <EntityTypeShape EntityType="AMM.User" Width="1.5" PointX="3.75" PointY="0.875" />
         <EntityTypeShape EntityType="AMM.Family" Width="1.5" PointX="1.5" PointY="0.875" />
         <EntityTypeShape EntityType="AMM.Source" Width="1.5" PointX="9.25" PointY="0.875" />
-        <EntityTypeShape EntityType="AMM.Cost" Width="1.5" PointX="9.25" PointY="3.5" />
         <AssociationConnector Association="AMM.TransactionUser" />
         <AssociationConnector Association="AMM.UserFamily" />
         <EntityTypeShape EntityType="AMM.TypeOfSource" Width="1.5" PointX="11.5" PointY="0.875" />
         <AssociationConnector Association="AMM.SourceTypeOfSource" />
-        <AssociationConnector Association="AMM.TransactionSource" />
-        <AssociationConnector Association="AMM.TransactionCost" />
         <AssociationConnector Association="AMM.FamilyUser" />
+        <EntityTypeShape EntityType="AMM.TransactionType" Width="1.5" PointX="6.625" PointY="3.875" />
+        <AssociationConnector Association="AMM.TransactionTransactionType" />
+        <AssociationConnector Association="AMM.TransactionSource" />
+        <AssociationConnector Association="AMM.TransactionSource1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

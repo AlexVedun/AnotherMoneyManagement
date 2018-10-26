@@ -20,7 +20,8 @@ namespace AMM_Domain
         public string Comment { get; set; }
     
         public virtual User User { get; set; }
-        public virtual Source Source { get; set; }
-        public virtual Cost Cost { get; set; }
+        public virtual TransactionType Type { get; set; }
+        public virtual Source From { get; set; }
+        public virtual Source To { get; set; }
     }
 }

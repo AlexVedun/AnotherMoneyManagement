@@ -66,9 +66,6 @@
       <DependentUpon>AMM.edmx</DependentUpon>
     </Compile>
     <Compile Include="AMM_Interface.cs" />
-    <Compile Include="Cost.cs">
-      <DependentUpon>AMM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Family.cs">
       <DependentUpon>AMM.tt</DependentUpon>
     </Compile>
@@ -77,6 +74,9 @@
       <DependentUpon>AMM.tt</DependentUpon>
     </Compile>
     <Compile Include="Transaction.cs">
+      <DependentUpon>AMM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionType.cs">
       <DependentUpon>AMM.tt</DependentUpon>
     </Compile>
     <Compile Include="TypeOfSource.cs">

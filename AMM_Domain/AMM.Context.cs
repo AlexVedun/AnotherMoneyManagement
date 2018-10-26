@@ -29,7 +29,7 @@ namespace AMM_Domain
         public virtual DbSet<User> UserSet { get; set; }
         public virtual DbSet<Family> FamilySet { get; set; }
         public virtual DbSet<Source> SourceSet { get; set; }
-        public virtual DbSet<Cost> CostSet { get; set; }
         public virtual DbSet<TypeOfSource> TypeOfSourceSet { get; set; }
+        public virtual DbSet<TransactionType> TransactionTypeSet { get; set; }
     }
 }
