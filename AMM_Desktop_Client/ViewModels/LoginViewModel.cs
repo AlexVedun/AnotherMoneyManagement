@@ -1,4 +1,6 @@
-﻿using Catel.MVVM;
+﻿using AMM_Domain;
+using Catel.Data;
+using Catel.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,44 @@ namespace AMM_Desktop_Client.ViewModels
 {
     class LoginViewModel: ViewModelBase
     {
+        private IRepository repository;
         public LoginViewModel()
         {
+            repository = new SqlServerRepository();
 
+            LoginCommand = new Command(OnLoginCommandExecute);
         }
-        
+
+        #region Properties
+
+        public string UserLogin
+        {
+            get { return GetValue<string>(UserLoginProperty); }
+            set { SetValue(UserLoginProperty, value); }
+        }
+
+        public static readonly PropertyData UserLoginProperty = RegisterProperty(nameof(UserLogin), typeof(string), null);
+        #endregion
+
+        #region Methods
+
+        public Command LoginCommand { get; private set; }
+
+        private void OnLoginCommandExecute()
+        {
+            User user = repository.UserAMM.GetUserByName(UserLogin);
+            if (user == null)
+            {
+                System.Windows.MessageBox.Show("Пользователь не найден");
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Пользователь найден");
+            }
+        }
+        #endregion
+
+        #region Other
         public override string Title { get { return "AMM_Desktop_Client"; } }
 
         // TODO: Register models with the vmpropmodel codesnippet
@@ -33,6 +68,8 @@ namespace AMM_Desktop_Client.ViewModels
 
             await base.CloseAsync();
         }
+        #endregion
+
     }
 
 

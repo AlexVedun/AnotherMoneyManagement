@@ -149,6 +149,12 @@
     <Folder Include="Models\" />
     <Folder Include="Services\Interfaces\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AMM_Domain\AMM_Domain.csproj">
+      <Project>{6a7652fc-c03c-4b8d-9b9e-1aa2094bf226}</Project>
+      <Name>AMM_Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

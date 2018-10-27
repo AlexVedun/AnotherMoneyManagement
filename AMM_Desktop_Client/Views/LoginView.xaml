@@ -23,7 +23,7 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Label Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Content="Логин" />
-        <TextBox Style="{DynamicResource MaterialDesignTextBox}" Grid.Row="1" Text="{Binding Login}" />
+        <TextBox Style="{DynamicResource MaterialDesignTextBox}" Grid.Row="1" Text="{Binding UserLogin}" />
         <Label Style="{DynamicResource MaterialDesignLabel}" Grid.Row="2" Content="Пароль" />
         <PasswordBox Style="{DynamicResource MaterialDesignPasswordBox}" Grid.Row="3" />
         <Label Grid.Row="4" Content="" />

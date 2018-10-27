@@ -64,7 +64,7 @@
     <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Patronymic" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Family_Id" Type="int" Nullable="false" />
+    <Property Name="Family_Id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="FamilySet">
     <Key>
@@ -112,7 +112,7 @@
   </Association>
   <Association Name="UserFamily">
     <End Role="User" Type="AMM.Store.UserSet" Multiplicity="*" />
-    <End Role="Family" Type="AMM.Store.FamilySet" Multiplicity="1" />
+    <End Role="Family" Type="AMM.Store.FamilySet" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="Family">
         <PropertyRef Name="Id" />
@@ -273,7 +273,7 @@
         </Association>
         <Association Name="UserFamily">
           <End Type="AMM.User" Role="User" Multiplicity="*" />
-          <End Type="AMM.Family" Role="Family" Multiplicity="1" />
+          <End Type="AMM.Family" Role="Family" Multiplicity="0..1" />
         </Association>
         <EntityType Name="TypeOfSource">
           <Key>
@@ -386,6 +386,7 @@
       <EndProperty Name="User">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
+      <Condition ColumnName="Family_Id" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="SourceTypeOfSource" TypeName="AMM.SourceTypeOfSource" StoreEntitySet="SourceSet">
       <EndProperty Name="TypeOfSource">

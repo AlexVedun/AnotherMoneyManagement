@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/26/2018 20:06:33
+-- Date Created: 10/27/2018 22:03:59
 -- Generated from EDMX file: C:\Users\Alex\Source\Repos\AnotherMoneyManagement\AMM_Domain\AMM.edmx
 -- --------------------------------------------------
 
@@ -26,8 +26,17 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_SourceTypeOfSource]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SourceSet] DROP CONSTRAINT [FK_SourceTypeOfSource];
 GO
+IF OBJECT_ID(N'[dbo].[FK_FamilyUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[FamilySet] DROP CONSTRAINT [FK_FamilyUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TransactionTransactionType]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TransactionSet] DROP CONSTRAINT [FK_TransactionTransactionType];
+GO
 IF OBJECT_ID(N'[dbo].[FK_TransactionSource]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TransactionSet] DROP CONSTRAINT [FK_TransactionSource];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TransactionSource1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TransactionSet] DROP CONSTRAINT [FK_TransactionSource1];
 GO
 
 -- --------------------------------------------------
@@ -48,6 +57,9 @@ IF OBJECT_ID(N'[dbo].[SourceSet]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[TypeOfSourceSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TypeOfSourceSet];
+GO
+IF OBJECT_ID(N'[dbo].[TransactionTypeSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TransactionTypeSet];
 GO
 
 -- --------------------------------------------------
@@ -75,7 +87,7 @@ CREATE TABLE [dbo].[UserSet] (
     [Surname] nvarchar(max)  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Patronymic] nvarchar(max)  NOT NULL,
-    [Family_Id] int  NOT NULL
+    [Family_Id] int  NULL
 );
 GO
 
