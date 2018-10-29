@@ -36,7 +36,7 @@ namespace AMM_Desktop_Client.ViewModels
 
         private void OnLoginCommandExecute()
         {
-            User user = repository.UserAMM.GetUserByName(UserLogin);
+            User user = repository.UserAMM.GetUserByLogin(UserLogin);
             if (user == null)
             {
                 System.Windows.MessageBox.Show("Пользователь не найден");

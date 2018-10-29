@@ -21,7 +21,7 @@ namespace AMM_Domain.Model
 
         public void SaveUser(User _user)
         {
-            User user = GetUserByName(_user.Name);
+            User user = GetUserByLogin(_user.Login);
             if (user == null)
             {
                 mdb.UserSet.Add(_user);
@@ -37,9 +37,9 @@ namespace AMM_Domain.Model
             mdb.SaveChanges();
         }
 
-        public User GetUserByName(string _name)
+        public User GetUserByLogin(string _login)
         {
-            return mdb.UserSet.Where(x => x.Name == _name).FirstOrDefault();
+            return mdb.UserSet.Where(x => x.Login == _login).FirstOrDefault();
         }
     }
 }
