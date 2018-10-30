@@ -221,6 +221,14 @@
             <End Role="Transaction" EntitySet="TransactionSet" />
             <End Role="Source" EntitySet="SourceSet" />
           </AssociationSet>
+          <AssociationSet Name="UserSource" Association="AMM.UserSource">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Source" EntitySet="SourceSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserSource1" Association="AMM.UserSource1">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Source" EntitySet="SourceSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Transaction">
           <Key>
@@ -247,6 +255,8 @@
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Patronymic" Type="String" Nullable="false" />
           <NavigationProperty Name="Family" Relationship="AMM.UserFamily" FromRole="User" ToRole="Family" />
+          <NavigationProperty Name="Wallets" Relationship="AMM.UserSource" FromRole="User" ToRole="Source" />
+          <NavigationProperty Name="Costs" Relationship="AMM.UserSource1" FromRole="User" ToRole="Source" />
         </EntityType>
         <EntityType Name="Family">
           <Key>
@@ -266,6 +276,8 @@
           <Property Name="Money" Type="Decimal" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" />
           <NavigationProperty Name="Type" Relationship="AMM.SourceTypeOfSource" FromRole="Source" ToRole="TypeOfSource" />
+          <Property Name="UserId" Type="Int32" Nullable="true" />
+          <Property Name="UserId1" Type="Int32" Nullable="true" />
         </EntityType>
         <Association Name="TransactionUser">
           <End Type="AMM.Transaction" Role="Transaction" Multiplicity="*" />
@@ -308,6 +320,30 @@
         <Association Name="TransactionSource1">
           <End Type="AMM.Transaction" Role="Transaction" Multiplicity="*" />
           <End Type="AMM.Source" Role="Source" Multiplicity="1" />
+        </Association>
+        <Association Name="UserSource">
+          <End Type="AMM.User" Role="User" Multiplicity="0..1" />
+          <End Type="AMM.Source" Role="Source" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Source">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserSource1">
+          <End Type="AMM.User" Role="User" Multiplicity="0..1" />
+          <End Type="AMM.Source" Role="Source" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Source">
+              <PropertyRef Name="UserId1" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>

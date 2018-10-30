@@ -18,6 +18,8 @@ namespace AMM_Domain
         public User()
         {
             this.Transactions = new HashSet<Transaction>();
+            this.Wallets = new HashSet<Source>();
+            this.Costs = new HashSet<Source>();
         }
     
         public int Id { get; set; }
@@ -30,5 +32,9 @@ namespace AMM_Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual Family Family { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Source> Wallets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Source> Costs { get; set; }
     }
 }

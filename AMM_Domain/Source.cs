@@ -18,6 +18,8 @@ namespace AMM_Domain
         public string Name { get; set; }
         public decimal Money { get; set; }
         public string Description { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> UserId1 { get; set; }
     
         public virtual TypeOfSource Type { get; set; }
     }

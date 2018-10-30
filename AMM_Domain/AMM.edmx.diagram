@@ -14,10 +14,12 @@
         <EntityTypeShape EntityType="AMM.TypeOfSource" Width="1.5" PointX="11.5" PointY="0.875" />
         <AssociationConnector Association="AMM.SourceTypeOfSource" />
         <AssociationConnector Association="AMM.FamilyUser" />
-        <EntityTypeShape EntityType="AMM.TransactionType" Width="1.5" PointX="6.625" PointY="3.875" />
+        <EntityTypeShape EntityType="AMM.TransactionType" Width="1.875" PointX="6.625" PointY="3.875" />
         <AssociationConnector Association="AMM.TransactionTransactionType" />
         <AssociationConnector Association="AMM.TransactionSource" />
         <AssociationConnector Association="AMM.TransactionSource1" />
+        <AssociationConnector Association="AMM.UserSource" />
+        <AssociationConnector Association="AMM.UserSource1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
