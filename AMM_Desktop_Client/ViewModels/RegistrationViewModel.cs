@@ -1,33 +1,27 @@
-﻿namespace AMM_Desktop_Client.ViewModels
-{
-    using Catel.Data;
-    using Catel.MVVM;
-    using System.Threading.Tasks;
+﻿using Catel.MVVM;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-    public class MainWindowViewModel : ViewModelBase
+namespace AMM_Desktop_Client.ViewModels
+{
+    class RegistrationViewModel: ViewModelBase
     {
-        private IViewModel loginView = new LoginViewModel();
-        private IViewModel registrationView = new RegistrationViewModel();
-        public MainWindowViewModel()
+        public RegistrationViewModel()
         {
-            CurrentView = loginView;
+
         }
 
         #region Properties
 
-        public IViewModel CurrentView
-        {
-            get { return GetValue<IViewModel>(CurrentViewProperty); }
-            set { SetValue(CurrentViewProperty, value); }
-        }
-
-        public static readonly PropertyData CurrentViewProperty = RegisterProperty(nameof(CurrentView), typeof(IViewModel), null);
         #endregion
-        
+
         #region Methods
 
         #endregion
-        
+
         #region Other
         public override string Title { get { return "AMM_Desktop_Client"; } }
 
@@ -49,5 +43,6 @@
             await base.CloseAsync();
         }
         #endregion
+
     }
 }
