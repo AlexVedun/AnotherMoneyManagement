@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace AMM_Desktop_Client.ViewModels
 {
@@ -16,7 +17,7 @@ namespace AMM_Desktop_Client.ViewModels
         {
             repository = new SqlServerRepository();
 
-            LoginCommand = new Command(OnLoginCommandExecute);
+            LoginCommand = new Command<object>(OnLoginCommandExecute);
         }
 
         #region Properties
@@ -32,19 +33,26 @@ namespace AMM_Desktop_Client.ViewModels
 
         #region Methods
 
-        public Command LoginCommand { get; private set; }
+        public Command<object> LoginCommand { get; private set; }
 
-        private void OnLoginCommandExecute()
+        private void OnLoginCommandExecute(object _param)
         {
+            var passwordBox = _param as PasswordBox;
+            string password = passwordBox.Password;
             User user = repository.UserAMM.GetUserByLogin(UserLogin);
             if (user == null)
             {
-                System.Windows.MessageBox.Show("Пользователь не найден");
+                System.Windows.MessageBox.Show("Неверный логин или пароль");
+            }
+            else if (user.Password != password)
+            {
+                System.Windows.MessageBox.Show("Неверный логин или пароль");
             }
             else
             {
-                System.Windows.MessageBox.Show("Пользователь найден");
+
             }
+
         }
         #endregion
 

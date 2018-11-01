@@ -1,4 +1,5 @@
-﻿using Catel.MVVM;
+﻿using AMM_Domain;
+using Catel.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,10 @@ namespace AMM_Desktop_Client.ViewModels
 {
     class RegistrationViewModel: ViewModelBase
     {
+        private IRepository repository;
         public RegistrationViewModel()
         {
-
+            repository = new SqlServerRepository();
         }
 
         #region Properties
