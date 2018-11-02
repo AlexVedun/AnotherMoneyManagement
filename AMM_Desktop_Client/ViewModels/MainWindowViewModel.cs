@@ -10,6 +10,10 @@
         private IViewModel registrationView = new RegistrationViewModel();
         public MainWindowViewModel()
         {
+            ShowRegistrationViewCommand = new Command(OnShowRegistrationViewCommandExecute);
+            ShowLoginViewCommand = new Command(OnShowLoginViewCommandExecute);
+            ((LoginViewModel)loginView).ShowRegistrationView = ShowRegistrationViewCommand;
+            ((RegistrationViewModel)registrationView).ShowLoginView = ShowLoginViewCommand;
             CurrentView = loginView;
         }
 
@@ -23,9 +27,22 @@
 
         public static readonly PropertyData CurrentViewProperty = RegisterProperty(nameof(CurrentView), typeof(IViewModel), null);
         #endregion
-        
+
         #region Methods
 
+        public Command ShowRegistrationViewCommand { get; private set; }
+
+        private void OnShowRegistrationViewCommandExecute()
+        {       
+            CurrentView = registrationView;
+        }
+
+        public Command ShowLoginViewCommand { get; private set; }
+
+        private void OnShowLoginViewCommandExecute()
+        {
+            CurrentView = loginView;
+        }
         #endregion
         
         #region Other

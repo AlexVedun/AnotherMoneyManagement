@@ -18,6 +18,7 @@ namespace AMM_Desktop_Client.ViewModels
             repository = new SqlServerRepository();
 
             LoginCommand = new Command<object>(OnLoginCommandExecute);
+            RegistrationCommand = new Command(OnRegistrationCommandExecute);
         }
 
         #region Properties
@@ -29,6 +30,14 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData UserLoginProperty = RegisterProperty(nameof(UserLogin), typeof(string), null);
+
+        public Command ShowRegistrationView
+        {
+            get { return GetValue<Command>(ShowRegistrationViewProperty); }
+            set { SetValue(ShowRegistrationViewProperty, value); }
+        }
+
+        public static readonly PropertyData ShowRegistrationViewProperty = RegisterProperty(nameof(ShowRegistrationView), typeof(Command), null);
         #endregion
 
         #region Methods
@@ -53,6 +62,14 @@ namespace AMM_Desktop_Client.ViewModels
 
             }
 
+        }
+
+        public Command RegistrationCommand { get; private set; }
+
+        private void OnRegistrationCommandExecute()
+        {
+            UserLogin = "";
+            ShowRegistrationView.Execute();
         }
         #endregion
 
