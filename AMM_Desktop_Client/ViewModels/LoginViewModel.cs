@@ -29,6 +29,14 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData UserLoginProperty = RegisterProperty(nameof(UserLogin), typeof(string), null);
+
+        public Command MainViewShow
+        {
+            get { return GetValue<Command>(MainViewShowProperty); }
+            set { SetValue(MainViewShowProperty, value); }
+        }
+
+        public static readonly PropertyData MainViewShowProperty = RegisterProperty(nameof(MainViewShow), typeof(Command), null);
         #endregion
 
         #region Methods
@@ -50,7 +58,7 @@ namespace AMM_Desktop_Client.ViewModels
             }
             else
             {
-
+                MainViewShow.Execute();
             }
 
         }

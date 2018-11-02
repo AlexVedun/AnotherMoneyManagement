@@ -8,9 +8,15 @@
     {
         private IViewModel loginView = new LoginViewModel();
         private IViewModel registrationView = new RegistrationViewModel();
+        private IViewModel mainView = new MainViewModel();
+
         public MainWindowViewModel()
         {
             CurrentView = loginView;
+            MainViewShowCommand = new Command(OnMainViewShowCommandExecute);
+            ((LoginViewModel)loginView).MainViewShow = MainViewShowCommand;
+
+            
         }
 
         #region Properties
@@ -23,11 +29,17 @@
 
         public static readonly PropertyData CurrentViewProperty = RegisterProperty(nameof(CurrentView), typeof(IViewModel), null);
         #endregion
-        
+
         #region Methods
 
+        public Command MainViewShowCommand { get; private set; }
+
+        private void OnMainViewShowCommandExecute()
+        {
+            CurrentView = mainView;
+        }
         #endregion
-        
+
         #region Other
         public override string Title { get { return "AMM_Desktop_Client"; } }
 
