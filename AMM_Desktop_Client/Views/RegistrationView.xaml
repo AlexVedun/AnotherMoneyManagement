@@ -29,6 +29,7 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
+        
         <Label 
             Style="{DynamicResource MaterialDesignLabel}" 
             Grid.Row="0" 
@@ -42,51 +43,55 @@
             Grid.Row="2" 
             Content="Пароль*" />
         <PasswordBox 
+            Name="passwdBox"
             Style="{DynamicResource MaterialDesignPasswordBox}" 
-            Grid.Row="3" />
+            Grid.Row="3" />        
         <Label 
             Style="{DynamicResource MaterialDesignLabel}" 
             Grid.Row="4" 
-            Content="Подтвердить пароль*" />
-        <PasswordBox 
-            Style="{DynamicResource MaterialDesignPasswordBox}" 
-            Grid.Row="5" />
-        <Label 
-            Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="6" 
             Content="Фамилия" />
         <TextBox 
             Style="{DynamicResource MaterialDesignTextBox}" 
-            Grid.Row="7" 
+            Grid.Row="5" 
             Text="{Binding UserSurname}" />
         <Label 
             Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="8" 
+            Grid.Row="6" 
             Content="Имя" />
         <TextBox 
             Style="{DynamicResource MaterialDesignTextBox}" 
-            Grid.Row="9" 
+            Grid.Row="7" 
             Text="{Binding UserName}" />
         <Label 
             Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="10" 
+            Grid.Row="8" 
             Content="Отчество" />
         <TextBox 
             Style="{DynamicResource MaterialDesignTextBox}" 
-            Grid.Row="11" 
+            Grid.Row="9" 
             Text="{Binding UserPatronymic}" />
         <Label
             Style="{DynamicResource MaterialDesignLabel}"
-            Grid.Row="12" 
+            Grid.Row="10" 
             Content="* - поля, обязательные для заполнения" />
+        <Label 
+            Grid.Row="11" 
+            Content="" />
+        <Button 
+            Style="{DynamicResource MaterialDesignRaisedButton}" 
+            Grid.Row="12" 
+            Content="Регистрация" 
+            IsDefault="True"
+            Command="{Binding RegistrationCommand}"
+            CommandParameter="{Binding ElementName=passwdBox}" />
         <Label 
             Grid.Row="13" 
             Content="" />
         <Button 
             Style="{DynamicResource MaterialDesignRaisedButton}" 
             Grid.Row="14" 
-            Content="Регистрация" 
-            Command="{Binding RegistrationCommand}" />
+            Content="Отмена"
+            Command="{Binding CancelCommand}" />
     </Grid>
     
 </catel:UserControl>

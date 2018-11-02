@@ -40,6 +40,14 @@
       <End Role="Transaction" EntitySet="TransactionSet" />
       <End Role="Source" EntitySet="SourceSet" />
     </AssociationSet>
+    <AssociationSet Name="UserSource" Association="AMM.Store.UserSource">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Source" EntitySet="SourceSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserSource1" Association="AMM.Store.UserSource1">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Source" EntitySet="SourceSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="TransactionSet">
     <Key>
@@ -61,9 +69,9 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Patronymic" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Patronymic" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Family_Id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="FamilySet">
@@ -82,6 +90,8 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Money" Type="decimal" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="true" />
+    <Property Name="UserId1" Type="int" Nullable="true" />
     <Property Name="Type_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="TypeOfSourceSet">
@@ -182,6 +192,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UserSource">
+    <End Role="User" Type="AMM.Store.UserSet" Multiplicity="0..1" />
+    <End Role="Source" Type="AMM.Store.SourceSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Source">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserSource1">
+    <End Role="User" Type="AMM.Store.UserSet" Multiplicity="0..1" />
+    <End Role="Source" Type="AMM.Store.SourceSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Source">
+        <PropertyRef Name="UserId1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -251,9 +285,9 @@
           <NavigationProperty Name="Transactions" Relationship="AMM.TransactionUser" FromRole="User" ToRole="Transaction" />
           <Property Name="Login" Type="String" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" />
-          <Property Name="Surname" Type="String" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="Patronymic" Type="String" Nullable="false" />
+          <Property Name="Surname" Type="String" Nullable="true" />
+          <Property Name="Name" Type="String" Nullable="true" />
+          <Property Name="Patronymic" Type="String" Nullable="true" />
           <NavigationProperty Name="Family" Relationship="AMM.UserFamily" FromRole="User" ToRole="Family" />
           <NavigationProperty Name="Wallets" Relationship="AMM.UserSource" FromRole="User" ToRole="Source" />
           <NavigationProperty Name="Costs" Relationship="AMM.UserSource1" FromRole="User" ToRole="Source" />
@@ -388,6 +422,8 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Money" ColumnName="Money" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserId1" ColumnName="UserId1" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
