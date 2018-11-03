@@ -16,6 +16,7 @@ namespace AMM_Desktop_Client.ViewModels
         public LoginViewModel()
         {
             repository = new SqlServerRepository();
+            PreloaderVisibility = false;
 
             LoginCommand = new Command<object>(OnLoginCommandExecute);
             RegistrationCommand = new Command(OnRegistrationCommandExecute);
@@ -38,6 +39,22 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData ShowRegistrationViewProperty = RegisterProperty(nameof(ShowRegistrationView), typeof(Command), null);
+
+        public Command ShowGeneralView
+        {
+            get { return GetValue<Command>(ShowGeneralViewProperty); }
+            set { SetValue(ShowGeneralViewProperty, value); }
+        }
+
+        public static readonly PropertyData ShowGeneralViewProperty = RegisterProperty(nameof(ShowGeneralView), typeof(Command), null);
+
+        public bool PreloaderVisibility
+        {
+            get { return GetValue<bool>(PreloaderVisibilityProperty); }
+            set { SetValue(PreloaderVisibilityProperty, value); }
+        }
+
+        public static readonly PropertyData PreloaderVisibilityProperty = RegisterProperty(nameof(PreloaderVisibility), typeof(bool), null);
         #endregion
 
         #region Methods
@@ -46,9 +63,11 @@ namespace AMM_Desktop_Client.ViewModels
 
         private void OnLoginCommandExecute(object _param)
         {
+            //PreloaderVisibility = true;
             var passwordBox = _param as PasswordBox;
             string password = passwordBox.Password;
             User user = repository.UserAMM.GetUserByLogin(UserLogin);
+            //PreloaderVisibility = false;
             if (user == null)
             {
                 System.Windows.MessageBox.Show("Неверный логин или пароль");
@@ -59,7 +78,8 @@ namespace AMM_Desktop_Client.ViewModels
             }
             else
             {
-
+                UserLogin = "";
+                ShowGeneralView.Execute();
             }
 
         }

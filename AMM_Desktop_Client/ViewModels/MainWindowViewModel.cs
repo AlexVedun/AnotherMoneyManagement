@@ -8,12 +8,18 @@
     {
         private IViewModel loginView = new LoginViewModel();
         private IViewModel registrationView = new RegistrationViewModel();
+        private IViewModel generalView = new GeneralViewModel();
+
         public MainWindowViewModel()
         {
             ShowRegistrationViewCommand = new Command(OnShowRegistrationViewCommandExecute);
             ShowLoginViewCommand = new Command(OnShowLoginViewCommandExecute);
+            ShowGeneralViewCommand = new Command(OnShowGeneralViewCommandExecute);
+
             ((LoginViewModel)loginView).ShowRegistrationView = ShowRegistrationViewCommand;
+            ((LoginViewModel)loginView).ShowGeneralView = ShowGeneralViewCommand;
             ((RegistrationViewModel)registrationView).ShowLoginView = ShowLoginViewCommand;
+
             CurrentView = loginView;
         }
 
@@ -42,6 +48,13 @@
         private void OnShowLoginViewCommandExecute()
         {
             CurrentView = loginView;
+        }
+
+        public Command ShowGeneralViewCommand { get; private set; }
+
+        private void OnShowGeneralViewCommandExecute()
+        {
+            CurrentView = generalView;
         }
         #endregion
         
