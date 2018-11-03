@@ -1,0 +1,473 @@
+﻿<div id="categories-edit">
+    <div class="row">
+        <div class="col s3">
+            <div class="card grey lighten-2">
+                <div class="card-content">
+                    <span class="card-title">Category</span>
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="name" name="name" type="text" class="validate">
+                                    <label for="name">category name</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn waves-effect waves-light" type="submit" name="action">
+                                    Submit
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m9 l9 xl9">
+            <h4>Categories</h4>
+            <!-- Сюда при помощи jquery помещается шаблон таблицы, заполненный данными о категориях -->
+            <div class="row">
+                <div class="col s12 m12 l12 xl12">
+                    <div id="categories-container"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12 l12 xl12">
+                    <div class="card horizontal">
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <form>
+                                    <button id="editCategory" class="waves-effect waves-light btn" type="button">Edit</button>
+                                    <button id="deleteCategory" class="waves-effect waves-light btn" type="button">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="articles-edit">
+    <div class="row">
+        <div class="col s12 m4 l4 xl4">
+            <div class="card grey lighten-2">
+                <div class="card-content">
+                    <span class="card-title">Article</span>
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="title" name="title" type="text" class="validate">
+                                    <label for="title">title</label>
+                                </div>
+                                <div id="category-select" class="input-field col s12">
+                                    <select id="categoryselector" name="categoryselector" required="required" class="validate">
+                                        <option disabled selected="selected" value="">Category</option>
+                                    </select>
+                                </div>
+                                <div class="input-field col s12">
+                                    <label for="description">description</label>
+                                    <textarea name="description" id="description" class="materialize-textarea"></textarea>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="price" name="price" type="text" class="validate">
+                                    <label for="price">price</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="quantity" name="quantity" type="text" class="validate">
+                                    <label for="quantity">quantity</label>
+                                </div>
+                                <div class="col s12">
+                                    <div class="file-field input-field">
+                                        <div class="btn">
+                                            <span>Image</span>
+                                            <input id="image-input" type="file">
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <img id="image" class="responsive-img" src="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn waves-effect waves-light" type="submit" name="action">
+                                    Submit
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m8 l8 xl8">
+            <h4>Articles</h4>
+            <!-- Сюда при помощи jquery помещается шаблон таблицы, заполненный данными о категориях -->
+            <div class="row">
+                <div class="col s12 m12 l12 xl12">
+                    <div id="articles-container"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12 l12 xl12">
+                    <div class="card horizontal">
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <form>
+                                    <button id="editArticle" class="waves-effect waves-light btn" type="button">Edit</button>
+                                    <button id="deleteArticle" class="waves-effect waves-light btn" type="button">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="container">
+    <div class="row">
+        <div class="col s12 m4 l4 xl4">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Categories</span>
+                    <p>Manage the categories</p>
+                </div>
+                <div class="card-action">
+                    <a href="#tests:testid={{id}}">Пройти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<script>
+    app.handler(function () {
+
+        //console.log(preloaderHide);
+        return function (param) {
+
+            console.log(param);
+            switch (param) {
+                case "categories": {
+                    $('#categories-edit').css('display', 'block');
+                    $('#articles-edit').css('display', 'none');
+
+                    var populateCategoriesTable = function () {
+
+                        $.ajax({
+                            url: "/api/categories/get-all"
+                            , type: 'GET'
+                        }).done(function (resp) {
+
+                            if (resp.error != "") {
+
+                                alert("error: " + resp.error);
+                            } else {
+
+                                //console.log(resp);
+                                var template = Hogan.compile(
+                                    '<table class="table">'
+                                    + '<thead>'
+                                    + '<tr>'
+                                    + '<th>ID</th>'
+                                    + '<th>name</th>'
+                                    + '</tr>'
+                                    + '</thead>'
+                                    + '<tbody>'
+                                    + '{{#data}}'
+                                    + '<tr>'
+                                    + '<th scope="row">{{id}}</th>'
+                                    + '<td>{{name}}</td>'
+                                    + '</tr>'
+                                    + '{{/data}}'
+                                    + '{{^data}}'
+                                    + '<span>Categories list is empty</span>'
+                                    + '{{/data}}'
+                                    + '</tbody>'
+                                    + '</table>'
+                                );
+                                //Заполняем шаблон данными и помещаем на веб-страницу
+                                $('#categories-container').html(template.render(resp));
+
+                                $("#editCategory, #deleteCategory").attr('disabled', '');
+                                //Устанавливаем обработчик кликов на все строки таблицы кроме заголовка
+                                $("#categories-container tr:not(:first)").unbind("click");
+                                $("#categories-container table tr:not(:first)").click(function () {
+
+                                    //Разблокируем кнопки, когда выбрана строка таблицы
+                                    $("#editCategory, #deleteCategory").removeAttr('disabled');
+                                    //Отмечаем текст выбранной строки зеленым цветом, с остальных строк выделение убираем
+                                    //(оно могло быть ранее установлено на одну из строк)
+                                    $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
+                                });
+                            }
+                        }).fail(function () {
+
+                            alert("error");
+                        });
+                    }
+
+                    populateCategoriesTable();
+
+                    $('#categories-edit button[type=submit]').unbind("click");
+                    $('#categories-edit button[type=submit]').click(
+
+                        function (ev) {
+
+                            ev.preventDefault();
+                            $.ajax({
+                                url: "api/categories/add"
+                                , data: { 'catname': $('#categories-edit input#name').val() }
+                                , type: 'GET'
+                            }).done(function (resp) {
+
+                                if (resp.error != "") {
+
+                                    alert("error: " + resp.error);
+                                } else {
+
+                                    populateCategoriesTable();
+                                }
+                            }).fail(function () {
+
+                                alert("error");
+                            });
+                        }
+                    );
+
+                    //
+                    $("#deleteCategory").unbind("click");
+                    $('#deleteCategory').click(function (ev) {
+
+                        ev.preventDefault();
+                        var catId = $('#categories-edit .selectedTableRow').find('th').text();
+                        console.log(catId);
+                        $.ajax({
+                            url: "api/categories/delete"
+                            , data: { 'catid': catId }
+                            , type: 'GET'
+                        }).done(function (resp) {
+
+                            if (resp.error != "") {
+
+                                alert("error: " + resp.error);
+                            } else {
+
+                                populateCategoriesTable();
+                            }
+                        }).fail(function () {
+
+                            alert("error");
+                        });
+                    });
+
+                    break;
+                }
+                case "articles": {
+                    $('#articles-edit').css('display', 'block');
+                    $('#categories-edit').css('display', 'none');
+
+                    //Get n render articles table
+                    var populateArticlesTable = function () {
+
+                        $.ajax({
+                            url: "/api/articles/get-all"
+                            , type: 'GET'
+                        }).done(function (resp) {
+
+                            if (resp.error != "") {
+
+                                alert("error: " + resp.error);
+                            } else {
+
+                                //console.log(resp);
+                                var template = Hogan.compile(
+                                    '<table class="table">'
+                                    + '<thead>'
+                                    + '<tr>'
+                                        + '<th>ID</th>'
+                                        + '<th>title</th>'
+                                        + '<th>category</th>'
+                                        + '<th>price</th>'
+                                        + '<th>quantity</th>'
+                                    + '</tr>'
+                                    + '</thead>'
+                                    + '<tbody>'
+                                        + '{{#data}}'
+                                        + '<tr>'
+                                        + '<th scope="row">{{id}}</th>'
+                                        + '<td>{{title}}</td>'
+                                        + '<td>{{Category.name}}</td>'
+                                        + '<td>{{price}}</td>'
+                                        + '<td>{{quantity}}</td>'
+                                        + '</tr>'
+                                        + '{{/data}}'
+                                        + '{{^data}}'
+                                        + '<span>Articles list is empty</span>'
+                                        + '{{/data}}'
+                                    + '</tbody>'
+                                    + '</table>'
+                                );
+                                //Заполняем шаблон данными и помещаем на веб-страницу
+                                $('#articles-container').html(template.render(resp));
+
+                                $("#editArticle, #deleteArticle").attr('disabled', '');
+                                //Устанавливаем обработчик кликов на все строки таблицы кроме заголовка
+                                $("#articles-container tr:not(:first)").unbind("click");
+                                $("#articles-container table tr:not(:first)").click(function () {
+
+                                    //Разблокируем кнопки, когда выбрана строка таблицы
+                                    $("#editArticle, #deleteArticle").removeAttr('disabled');
+                                    //Отмечаем текст выбранной строки зеленым цветом, с остальных строк выделение убираем
+                                    //(оно могло быть ранее установлено на одну из строк)
+                                    $(this).addClass("selectedTableRow").siblings().removeClass("selectedTableRow");
+                                });
+                            }
+                        }).fail(function () {
+
+                            alert("error");
+                        });
+                    }
+
+                    populateArticlesTable();
+
+                    //Get n render all the categories (into dropdown)
+                    var populateCategoriesSelect = function () {
+
+                        $.ajax({
+                            type: 'GET',
+                            url: '/api/categories/get-all',
+                            dataType: 'json',
+                            cache: false
+                        }).done(function (responseText, textStatus, jqXHR) {
+
+                            //Готовим шаблон списка при помощи библиотеки Hogan
+                            var template = Hogan.compile(
+                                '<select>'
+                                + '<option disabled="" selected="" value="">Category</option>'
+                                + '{{#data}}'
+                                + '<option value="{{id}}">'
+                                + '{{name}}'
+                                + '</option>'
+                                + '{{/data}}'
+                                + '</select>'
+                            );
+                            //Заполняем шаблон данными и помещаем на веб-страницу
+                            $('#category-select').html(template.render(responseText));
+                            $('#category-select select').formSelect();
+
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                            //console.log(textStatus);
+                            alert("Ошибка получения списка categories list: " + jqXHR);
+                        });
+                    }
+                    populateCategoriesSelect();
+
+                    //Prepare the image
+                    var imageBase64 = "";
+                    //console.log($('#articles-edit form input#image-input'));
+
+                    $('#articles-edit form input#image-input').unbind("change");
+                    $('#articles-edit form input#image-input').change(function (ev) {
+
+                        var file = ev.target.files[0];
+
+                        ImageTools.resize(file, {
+                            width: 300, // maximum width
+                            height: 300 // maximum height
+                        }, function (blob, didItResize) {
+                            var reader = new FileReader();
+                            reader.onloadend = function () {
+
+                                imageBase64 = reader.result;
+                                console.log(imageBase64);
+                                $('#articles-edit img#image').attr('src', imageBase64);
+                            }
+                            reader.readAsDataURL(blob);
+                        });
+                    });
+
+                    //New article form submit handler
+                    $('#articles-edit button[type=submit]').unbind("click");
+                    $('#articles-edit button[type=submit]').click(
+
+                        function (ev) {
+
+                            ev.preventDefault();
+
+                            var formData = $('#articles-edit form').serializeArray();
+                            //console.log(formData['title']);
+                            var selectedCategoryIndex =
+                                $('#articles-edit form #category-select li.selected').index();
+                            var selectedCategoryId =
+                                $('#articles-edit form #category-select select option')
+                                    .eq(selectedCategoryIndex)
+                                    .val();
+                            formData.push({ name: 'categoryid', value: selectedCategoryId });
+                            formData.push({ name: 'imageBase64', value: imageBase64 });
+                            //data.push({ name: 'action', value: 'create' });
+                            
+                            //console.log(formData[0].value);
+                            formData[0].value = encodeURIComponent(formData[0].value);
+                            formData[1].value = encodeURIComponent(formData[1].value);
+                            //console.log(formData[0].value);
+
+                            console.log(formData);
+                            $.ajax({
+                                url: "api/articles/add"
+                                , data: formData
+                                , type: 'POST'
+                            }).done(function (resp) {
+
+                                if (resp.error != "") {
+
+                                    alert("error: " + resp.error);
+                                } else {
+                                    //console.log(resp);
+                                    populateArticlesTable();
+                                }
+                            }).fail(function () {
+
+                                alert("error");
+                            });
+                        }
+                    );
+
+                    $("#deleteArticle").unbind("click");
+                    $('#deleteArticle').click(function (ev) {
+
+                        ev.preventDefault();
+                        var artId = $('#articles-edit .selectedTableRow').find('th').text();
+                        console.log(artId);
+                        $.ajax({
+                            url: "api/articles/delete"
+                            , data: { 'artid': artId }
+                            , type: 'GET'
+                        }).done(function (resp) {
+
+                            if (resp.error != "") {
+
+                                alert("error: " + resp.error);
+                            } else {
+
+                                populateArticlesTable();
+                            }
+                        }).fail(function () {
+
+                            alert("error");
+                        });
+                    });
+
+                    break;
+                }
+                default:
+            }
+            setTimeout(preloaderHide, 500);
+        };
+    });
+</script>
