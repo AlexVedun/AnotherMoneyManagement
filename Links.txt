@@ -1,0 +1,3 @@
+https://docs.microsoft.com/ru-ru/aspnet/web-api/overview/getting-started-with-aspnet-web-api/build-a-single-page-application-spa-with-aspnet-web-api-and-angularjs
+https://professorweb.ru/my/ASP_NET/mvc/level8/8_1.php
+https://habr.com/post/175999/

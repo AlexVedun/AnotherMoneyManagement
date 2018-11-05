@@ -116,6 +116,7 @@
     <Content Include="wwwroot\pages\about.htm" />
     <Content Include="wwwroot\pages\admin.htm" />
     <Content Include="wwwroot\pages\adminunit.htm" />
+    <Content Include="wwwroot\pages\login.htm" />
     <Content Include="wwwroot\pages\home.htm" />
     <Content Include="wwwroot\pages\signin.htm" />
     <Content Include="wwwroot\pages\signup.htm" />

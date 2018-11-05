@@ -58,7 +58,7 @@
     //
     function onhashchange() {
 
-        var hash = location.hash || "#!home";
+        var hash = location.hash || "#!login";
         //console.log(hash);
         var re = /#!([-0-9A-Za-z]+)(\:(.+))?/;
         var match = re.exec(hash);
