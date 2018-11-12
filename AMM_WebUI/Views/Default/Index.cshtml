@@ -57,6 +57,15 @@
         </div>
     </div>
 
+    @*<section id="home" class="active" data-src='@Url.Content("/api/auth/page?pagename=home&param=no")'></section>*@
+    <section id="login" class="active" data-src='@Url.Content("~/wwwroot/pages/login.htm")'></section>
+    <section id="signup" data-src='@Url.Content("/api/auth/page?pagename=signup&param=no")'></section>
+    @*<section id="signup" data-src='@Url.Content("~/wwwroot/pages/signup.htm")'></section>*@
+    <section id="signin" data-src='@Url.Content("/api/auth/page?pagename=signin&param=no")'></section>
+    @*<section id="signin" data-src='@Url.Content("~/wwwroot/pages/signin.htm")'></section>*@
+    <section id="admin" data-src='@Url.Content("/api/auth/page?pagename=admin&param=no")'></section>
+    <section id="adminunit" data-src='@Url.Content("/api/auth/page?pagename=adminunit&param=no")'></section>
+
     <script src="~/wwwroot/js/jquery-3.3.1.min.js"></script>
     <script src="~/wwwroot/js/jquery-hashchange.js"></script>
     <script src="~/wwwroot/js/hogan-3.0.2.min.js"></script>
