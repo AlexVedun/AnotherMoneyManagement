@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Links.txt = Links.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMM_WebUI_2", "AMM_WebUI_2\AMM_WebUI_2.csproj", "{5965F3B3-B617-47EB-BEFE-FC43157300AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{659176FD-1570-4FB0-AE7A-6A1C3F4C517F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{659176FD-1570-4FB0-AE7A-6A1C3F4C517F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{659176FD-1570-4FB0-AE7A-6A1C3F4C517F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5965F3B3-B617-47EB-BEFE-FC43157300AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5965F3B3-B617-47EB-BEFE-FC43157300AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5965F3B3-B617-47EB-BEFE-FC43157300AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5965F3B3-B617-47EB-BEFE-FC43157300AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
