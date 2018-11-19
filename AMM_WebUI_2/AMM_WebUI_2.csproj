@@ -104,6 +104,8 @@
     <Content Include="Content\materialize.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\materialize.min.js" />
+    <Content Include="Scripts\sammy-0.7.5.js" />
+    <Content Include="Scripts\sammy-0.7.5.min.js" />
     <Content Include="wwwroot\pages\login.htm" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

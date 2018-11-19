@@ -11,15 +11,62 @@
     <title>Index</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/materialize.min.css">
-    <script src="~/Scripts/jquery-3.3.1.min.js"</script>
-    <script src="~/Scripts/knockout-3.4.2.js"</script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
     <script src="~/Scripts/materialize.min.js"></script>
+    <script src="~/Scripts/sammy-0.7.5.min.js"></script>
 </head>
 <body>
-    
-    <section id="login" data-src='@Url.Content("~/wwwroot/pages/login.htm")'></section>
-   
 
-    
+    @*<section id="login" data-src='@Url.Content("~/wwwroot/pages/login.htm")'></section>*@
+    <section id="login">
+        <div id="login-grid">
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <input value="" id="UserLogin" type="text" class="validate">
+                    <label class="active" for="UserLogin">Login</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <input value="" id="UserPassword" type="password" class="validate">
+                    <label class="active" for="UserPassword">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <label class="active"></label>
+                </div>
+            </div>
+            <div class="row">
+                <a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Вход</a>                
+            </div>            
+            <div class="row">
+                <a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Регистрация</a>                
+            </div>            
+        </div>
+    </section>
+
+
+    <script>
+        function NewSection(name, data) {
+            self.sectionName = name;
+            self.sectionData = data;
+            return self;
+        }
+
+        function AAM_ViewModel() {
+            self.sections = [];
+            self.chosenSection = ko.observable();
+
+            self.changeSection = function (section) {
+                //let indx = sections.indexOf(section);
+                //if (indx !== -1) {
+                //    $("#" + selections[indx].name).html(selections[indx].)
+                //}
+            }
+        }
+        ko.applyBindings(new AAM_ViewModel());
+    </script>
 </body>
 </html>
