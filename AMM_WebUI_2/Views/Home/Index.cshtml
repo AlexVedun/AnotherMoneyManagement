@@ -9,8 +9,9 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="~/Content/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/materialize.min.css" />
+    <link rel="stylesheet" href="~/Content/custom.css" />
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/knockout-3.4.2.js"></script>
     <script src="~/Scripts/materialize.min.js"></script>
@@ -39,11 +40,70 @@
                 </div>
             </div>
             <div class="row">
-                <a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Вход</a>                
-            </div>            
+                <a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Вход</a>
+            </div>
             <div class="row">
-                <a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Регистрация</a>                
-            </div>            
+                @*<a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Регистрация</a>*@
+                <button 
+                        class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn"
+                        data-bind="click: ShowRegistrationClick">
+                    Регистрация
+                </button>
+            </div>
+        </div>
+    </section>
+    <section id="register">
+        <div id="register-grid">
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <input value="" id="RegUserLogin" type="text" class="validate">
+                    <label class="active" for="RegUserLogin">Логин*</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <input value="" id="RegUserPassword" type="password" class="validate">
+                    <label class="active" for="RegUserPassword">Пароль*</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <input value="" id="RegUserSurname" type="text" class="validate">
+                    <label class="active" for="RegUserSurname">Фамилия</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <input value="" id="RegUserName" type="text" class="validate">
+                    <label class="active" for="RegUserName">Имя</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <input value="" id="RegUserPatronymic" type="text" class="validate">
+                    <label class="active" for="RegUserPatronymic">Отчество</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <label class="active">* - поля, обязательные для заполнения</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                    <label class="active"></label>
+                </div>
+            </div>
+            <div class="row">
+                <a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Регистрация</a>
+            </div>
+            <div class="row">
+                @*<a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Отмена</a>*@
+                <button class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn"
+                        data-bind="click: CancelRegistrationClick">
+                    Отмена
+                </button>
+            </div>
         </div>
     </section>
 
@@ -65,8 +125,17 @@
                 //    $("#" + selections[indx].name).html(selections[indx].)
                 //}
             }
+            self.ShowRegistrationClick = function () {
+                $("#login").removeClass("active");
+                $("#register").addClass("active");
+            }
+            self.CancelRegistrationClick = function () {
+                $("#register").removeClass("active");
+                $("#login").addClass("active");
+            }
         }
         ko.applyBindings(new AAM_ViewModel());
+        $("#login").addClass("active");
     </script>
 </body>
 </html>
