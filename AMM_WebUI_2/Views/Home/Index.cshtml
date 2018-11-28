@@ -21,36 +21,44 @@
 
     @*<section id="login" data-src='@Url.Content("~/wwwroot/pages/login.htm")'></section>*@
     <section id="login">
-        <div id="login-grid">
-            <div class="row">
-                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
-                    <input value="" id="UserLogin" type="text" class="validate">
-                    <label class="active" for="UserLogin">Login</label>
+        <div class="card grey lighten-2 col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+            <div class="card-content">
+                <span class="card-title">Вход</span>
+                <div class="row">
+                    <form id="login-form" data-bind="submit: LoginClick">
+                        <div class="row">
+                            <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                                <input value="" id="UserLogin" name="login" type="text" class="validate">
+                                <label class="active" for="UserLogin">Login</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                                <input value="" id="UserPassword" name="password" type="password" class="validate">
+                                <label class="active" for="UserPassword">Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+                                <label class="active"></label>
+                            </div>
+                        </div>
+                        <div class="row">                            
+                            <button class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn"                                    
+                                    type="submit">
+                                Вход
+                            </button>
+                        </div>
+                        <div class="row">                            
+                            <button class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn"
+                                    data-bind="click: ShowRegistrationClick">
+                                Регистрация
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
-                    <input value="" id="UserPassword" type="password" class="validate">
-                    <label class="active" for="UserPassword">Password</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
-                    <label class="active"></label>
-                </div>
-            </div>
-            <div class="row">
-                <a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Вход</a>
-            </div>
-            <div class="row">
-                @*<a class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn">Регистрация</a>*@
-                <button 
-                        class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 waves-effect waves-light btn"
-                        data-bind="click: ShowRegistrationClick">
-                    Регистрация
-                </button>
-            </div>
-        </div>
+        </div>          
     </section>
     <section id="register">
         <div id="register-grid">
@@ -125,14 +133,20 @@
                 //    $("#" + selections[indx].name).html(selections[indx].)
                 //}
             }
+            // section login
+            self.LoginClick = function (formElement) {
+                console.log($(formElement).serialize());
+            }
             self.ShowRegistrationClick = function () {
                 $("#login").removeClass("active");
                 $("#register").addClass("active");
             }
+            // section register
             self.CancelRegistrationClick = function () {
                 $("#register").removeClass("active");
                 $("#login").addClass("active");
             }
+            
         }
         ko.applyBindings(new AAM_ViewModel());
         $("#login").addClass("active");
