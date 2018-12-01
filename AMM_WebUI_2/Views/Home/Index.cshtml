@@ -175,7 +175,7 @@
             return self;
         }
 
-        let AAM_ViewModel = {
+        let AMM_ViewModel = {
             sections: [],
             chosenSection: ko.observable(),
             showMain: ko.observable(false),
@@ -191,7 +191,7 @@
             },
             // section login
             LoginClick: function (formElement) {                
-                AAM_ViewModel.showPreloader(true);
+                AMM_ViewModel.showPreloader(true);
                 let formData = $(formElement).serialize();
                 $.ajax({
                     url: "api/login",
@@ -203,21 +203,21 @@
                         alert(resp.error);
                     }
                     else {
-                        AAM_ViewModel.showPreloader(false);
-                        AAM_ViewModel.showLogin(false);
-                        AAM_ViewModel.showMain(true);
+                        AMM_ViewModel.showPreloader(false);
+                        AMM_ViewModel.showLogin(false);
+                        AMM_ViewModel.showMain(true);
                     }
                 }).fail(function (xhr, status, text) {
                     alert("error: " + text);
                 });
             },
             ShowRegistrationClick: function () {                
-                AAM_ViewModel.showLogin(false);
-                AAM_ViewModel.showRegister(true);
+                AMM_ViewModel.showLogin(false);
+                AMM_ViewModel.showRegister(true);
             },
             // section register
             RegisterClick: function (formElement) {
-                AAM_ViewModel.showPreloader(true);
+                AMM_ViewModel.showPreloader(true);
                 let formData = $(formElement).serialize();
                 $.ajax({
                     url: "api/register",
@@ -228,22 +228,22 @@
                         alert(resp.error);
                     }
                     else {
-                        AAM_ViewModel.showPreloader(false);
-                        AAM_ViewModel.showRegister(false);
-                        AAM_ViewModel.showLogin(true);
+                        AMM_ViewModel.showPreloader(false);
+                        AMM_ViewModel.showRegister(false);
+                        AMM_ViewModel.showLogin(true);
                     }
                 }).fail(function (xhr, status, text) {
                     alert("error: " + text);
                 });
             },
             CancelRegistrationClick: function () {                
-                AAM_ViewModel.showRegister(false);
-                AAM_ViewModel.showLogin(true);
+                AMM_ViewModel.showRegister(false);
+                AMM_ViewModel.showLogin(true);
             }
         }
                 
-        ko.applyBindings(AAM_ViewModel);
-        AAM_ViewModel.showLogin(true);
+        ko.applyBindings(AMM_ViewModel);
+        AMM_ViewModel.showLogin(true);
     </script>
 </body>
 </html>
