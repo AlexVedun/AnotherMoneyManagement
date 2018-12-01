@@ -18,9 +18,50 @@
     <script src="~/Scripts/sammy-0.7.5.min.js"></script>
 </head>
 <body>
+    <div class="preloader-wrapper big active" data-bind="visible: showPreloader">
+        <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+
+        <div class="spinner-layer spinner-red">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+
+        <div class="spinner-layer spinner-yellow">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+
+        <div class="spinner-layer spinner-green">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
 
     @*<section id="login" data-src='@Url.Content("~/wwwroot/pages/login.htm")'></section>*@
-    <section id="login" class="row">
+    <section id="login" data-bind="visible: showLogin" class="row">
         <div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
             <div class="card grey lighten-2">
                 <div class="card-content">
@@ -29,13 +70,13 @@
                         <form id="login-form" data-bind="submit: LoginClick">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="UserLogin" name="login" type="text" class="validate">
+                                    <input value="" id="UserLogin" name="Login" type="text" class="validate">
                                     <label class="active" for="UserLogin">Логин</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="UserPassword" name="password" type="password" class="validate">
+                                    <input value="" id="UserPassword" name="Password" type="password" class="validate">
                                     <label class="active" for="UserPassword">Пароль</label>
                                 </div>
                             </div>
@@ -45,13 +86,13 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"                                        
+                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
                                         type="submit">
                                     Вход
                                 </button>
                             </div>
                             <div class="row">
-                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"                                        
+                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
                                         data-bind="click: ShowRegistrationClick">
                                     Регистрация
                                 </button>
@@ -60,9 +101,9 @@
                     </div>
                 </div>
             </div>
-        </div>                 
+        </div>
     </section>
-    <section id="register" class="row">
+    <section id="register" data-bind="visible: showRegister" class="row">
         <div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
             <div class="card grey lighten-2">
                 <div class="card-content">
@@ -71,31 +112,31 @@
                         <form id="register-form" data-bind="submit: RegisterClick">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserLogin" type="text" class="validate">
+                                    <input value="" id="RegUserLogin" name="Login" type="text" class="validate">
                                     <label class="active" for="RegUserLogin">Логин*</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserPassword" type="password" class="validate">
+                                    <input value="" id="RegUserPassword" name="Password" type="password" class="validate">
                                     <label class="active" for="RegUserPassword">Пароль*</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserSurname" type="text" class="validate">
+                                    <input value="" id="RegUserSurname" name="Surname" type="text" class="validate">
                                     <label class="active" for="RegUserSurname">Фамилия</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserName" type="text" class="validate">
+                                    <input value="" id="RegUserName" name="Name" type="text" class="validate">
                                     <label class="active" for="RegUserName">Имя</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserPatronymic" type="text" class="validate">
+                                    <input value="" id="RegUserPatronymic" name="Patronymic" type="text" class="validate">
                                     <label class="active" for="RegUserPatronymic">Отчество</label>
                                 </div>
                             </div>
@@ -103,13 +144,13 @@
                                 <div class="input-field col s12">
                                     <label class="active">* - поля, обязательные для заполнения</label>
                                 </div>
-                            </div>                            
-                            <div class="row">                                
+                            </div>
+                            <div class="row">
                                 <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
                                         type="submit">
                                     Регистрация
                                 </button>
-                            </div>                            
+                            </div>
                             <div class="row">
                                 <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
                                         data-bind="click: CancelRegistrationClick">
@@ -122,6 +163,9 @@
             </div>
         </div>
     </section>
+    <section id="main" data-bind="visible: showMain">
+        <label>Главный экран</label>
+    </section>
 
 
     <script>
@@ -131,36 +175,75 @@
             return self;
         }
 
-        function AAM_ViewModel() {
-            self.sections = [];
-            self.chosenSection = ko.observable();
+        let AAM_ViewModel = {
+            sections: [],
+            chosenSection: ko.observable(),
+            showMain: ko.observable(false),
+            showLogin: ko.observable(false),
+            showRegister: ko.observable(false),
+            showPreloader: ko.observable(false),
 
-            self.changeSection = function (section) {
+            changeSection: function (section) {
                 //let indx = sections.indexOf(section);
                 //if (indx !== -1) {
                 //    $("#" + selections[indx].name).html(selections[indx].)
                 //}
-            }
+            },
             // section login
-            self.LoginClick = function (formElement) {
-                console.log($(formElement).serialize());
-            }
-            self.ShowRegistrationClick = function () {
-                $("#login").removeClass("active");
-                $("#register").addClass("active");
-            }
+            LoginClick: function (formElement) {                
+                AAM_ViewModel.showPreloader(true);
+                let formData = $(formElement).serialize();
+                $.ajax({
+                    url: "api/login",
+                    data: formData,
+                    type: 'POST'
+                }).done(function (resp) {
+                    console.log(resp);
+                    if (resp.error !== null && resp.error !== "") {
+                        alert(resp.error);
+                    }
+                    else {
+                        AAM_ViewModel.showPreloader(false);
+                        AAM_ViewModel.showLogin(false);
+                        AAM_ViewModel.showMain(true);
+                    }
+                }).fail(function (xhr, status, text) {
+                    alert("error: " + text);
+                });
+            },
+            ShowRegistrationClick: function () {                
+                AAM_ViewModel.showLogin(false);
+                AAM_ViewModel.showRegister(true);
+            },
             // section register
-            self.RegisterClick = function () {
-
+            RegisterClick: function (formElement) {
+                AAM_ViewModel.showPreloader(true);
+                let formData = $(formElement).serialize();
+                $.ajax({
+                    url: "api/register",
+                    data: formData,
+                    type: 'POST'
+                }).done(function (resp) {
+                    if (resp.error !== null && resp.error !== "") {
+                        alert(resp.error);
+                    }
+                    else {
+                        AAM_ViewModel.showPreloader(false);
+                        AAM_ViewModel.showRegister(false);
+                        AAM_ViewModel.showLogin(true);
+                    }
+                }).fail(function (xhr, status, text) {
+                    alert("error: " + text);
+                });
+            },
+            CancelRegistrationClick: function () {                
+                AAM_ViewModel.showRegister(false);
+                AAM_ViewModel.showLogin(true);
             }
-            self.CancelRegistrationClick = function () {
-                $("#register").removeClass("active");
-                $("#login").addClass("active");
-            }
-            
         }
-        ko.applyBindings(new AAM_ViewModel());
-        $("#login").addClass("active");
+                
+        ko.applyBindings(AAM_ViewModel);
+        AAM_ViewModel.showLogin(true);
     </script>
 </body>
 </html>

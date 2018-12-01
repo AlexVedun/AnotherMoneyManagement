@@ -1,10 +1,18 @@
 ﻿body {
 }
 
-section {
+.preloader-wrapper {
+    position: absolute;
+    top: calc(25% - 32px);
+    left: calc(50% - 32px);
+    /*display: none;*/
+    z-index: 1000;
+}
+
+/*section {
     display: none;
 }
 
 section.active {
     display: block;
-}
+}*/
