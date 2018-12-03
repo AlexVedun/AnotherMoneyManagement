@@ -204,16 +204,18 @@
                     }
                     else {
                         AMM_ViewModel.showPreloader(false);
-                        AMM_ViewModel.showLogin(false);
-                        AMM_ViewModel.showMain(true);
+                        //AMM_ViewModel.showLogin(false);
+                        //AMM_ViewModel.showMain(true);
+                        location.hash = "#!main";
                     }
                 }).fail(function (xhr, status, text) {
                     alert("error: " + text);
                 });
             },
             ShowRegistrationClick: function () {                
-                AMM_ViewModel.showLogin(false);
-                AMM_ViewModel.showRegister(true);
+                //AMM_ViewModel.showLogin(false);
+                //AMM_ViewModel.showRegister(true);
+                location.hash = "#!register";
             },
             // section register
             RegisterClick: function (formElement) {
@@ -229,21 +231,48 @@
                     }
                     else {
                         AMM_ViewModel.showPreloader(false);
-                        AMM_ViewModel.showRegister(false);
-                        AMM_ViewModel.showLogin(true);
+                        //AMM_ViewModel.showRegister(false);
+                        //AMM_ViewModel.showLogin(true);
+                        location.hash = "#!login";
                     }
                 }).fail(function (xhr, status, text) {
                     alert("error: " + text);
                 });
             },
             CancelRegistrationClick: function () {                
-                AMM_ViewModel.showRegister(false);
-                AMM_ViewModel.showLogin(true);
+                //AMM_ViewModel.showRegister(false);
+                //AMM_ViewModel.showLogin(true);
+                location.hash = "#!login";
+            },
+            HideAll: function () {
+                this.showLogin(false);
+                this.showMain(false);
+                this.showRegister(false);
             }
         }
                 
         ko.applyBindings(AMM_ViewModel);
-        AMM_ViewModel.showLogin(true);
+        //AMM_ViewModel.showLogin(true);
+        location.hash = "#!login";
+
+        Sammy(function () {
+            //this.get('', function () {
+            //    console.log('first')
+            //    this.app.runRoute('get', '#!login')
+            //});
+            this.get('#!login', function () {
+                AMM_ViewModel.HideAll();
+                AMM_ViewModel.showLogin(true);
+            });
+            this.get('#!register', function () {
+                AMM_ViewModel.HideAll();
+                AMM_ViewModel.showRegister(true);
+            });
+            this.get('#!main', function () {
+                AMM_ViewModel.HideAll();
+                AMM_ViewModel.showMain(true);
+            });
+        }).run();
     </script>
 </body>
 </html>
