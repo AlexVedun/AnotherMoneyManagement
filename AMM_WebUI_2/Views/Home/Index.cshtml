@@ -67,16 +67,16 @@
                 <div class="card-content">
                     <span class="card-title">Вход</span>
                     <div class="row">
-                        <form id="login-form" data-bind="submit: LoginClick">
+                        <form id="login-form" @*data-bind="submit: LoginClick, submitBubble: false"*@>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="UserLogin" name="Login" type="text" class="validate">
+                                    <input value="" id="UserLogin" name="Login" type="text" class="validate" data-bind="value: loginForm.Login">
                                     <label class="active" for="UserLogin">Логин</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="UserPassword" name="Password" type="password" class="validate">
+                                    <input value="" id="UserPassword" name="Password" type="password" class="validate" data-bind="value: loginForm.Password">
                                     <label class="active" for="UserPassword">Пароль</label>
                                 </div>
                             </div>
@@ -87,7 +87,8 @@
                             </div>
                             <div class="row">
                                 <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                        type="submit">
+                                        @*type="submit"*@
+                                        data-bind="click: LoginClick">
                                     Вход
                                 </button>
                             </div>
@@ -109,7 +110,7 @@
                 <div class="card-content">
                     <span class="card-title">Регистрация</span>
                     <div class="row">
-                        <form id="register-form" data-bind="submit: RegisterClick">
+                        <form id="register-form" data-bind="submit: RegisterClick, submitBubble: false">
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input value="" id="RegUserLogin" name="Login" type="text" class="validate">
@@ -175,13 +176,22 @@
             return self;
         }
 
-        let AMM_ViewModel = {
+        //let AMM_LoginViewModel = {
+        //    Login: ko.observable(""),
+        //    Password: ko.observable("")
+        //}
+
+        let AMM_ViewModel = {            
             sections: [],
             chosenSection: ko.observable(),
             showMain: ko.observable(false),
             showLogin: ko.observable(false),
             showRegister: ko.observable(false),
             showPreloader: ko.observable(false),
+            loginForm: {
+                Login: ko.observable(""),
+                Password: ko.observable("")
+            },
 
             changeSection: function (section) {
                 //let indx = sections.indexOf(section);
@@ -190,16 +200,20 @@
                 //}
             },
             // section login
-            LoginClick: function (formElement) {                
+            LoginClick: function (formElement) {
                 AMM_ViewModel.showPreloader(true);
-                let formData = $(formElement).serialize();
+                //showPreloader(true);
+                //let formData = $(formElement).serialize();
+                let formData = ko.toJS(AMM_ViewModel.loginForm);
+                console.log(formData);
                 $.ajax({
                     url: "api/login",
                     data: formData,
                     type: 'POST'
                 }).done(function (resp) {
                     console.log(resp);
-                    if (resp.error !== null && resp.error !== "") {
+                    if (resp.error !== null && resp.error !== "") {                        
+                        AMM_ViewModel.showPreloader(false);
                         alert(resp.error);
                     }
                     else {
@@ -209,6 +223,7 @@
                         location.hash = "#!main";
                     }
                 }).fail(function (xhr, status, text) {
+                    AMM_ViewModel.showPreloader(false);
                     alert("error: " + text);
                 });
             },
@@ -251,7 +266,9 @@
             }
         }
                 
+        //ko.applyBindings(AMM_LoginViewModel);
         ko.applyBindings(AMM_ViewModel);
+        
         //AMM_ViewModel.showLogin(true);
         location.hash = "#!login";
 
