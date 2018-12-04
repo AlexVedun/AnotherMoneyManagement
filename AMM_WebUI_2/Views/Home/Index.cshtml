@@ -62,12 +62,12 @@
 
     @*<section id="login" data-src='@Url.Content("~/wwwroot/pages/login.htm")'></section>*@
     <section id="login" data-bind="visible: showLogin" class="row">
-        <div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+        @*<div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
             <div class="card grey lighten-2">
                 <div class="card-content">
                     <span class="card-title">Вход</span>
                     <div class="row">
-                        <form id="login-form" @*data-bind="submit: LoginClick, submitBubble: false"*@>
+                        <form id="login-form">
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input value="" id="UserLogin" name="Login" type="text" class="validate" data-bind="value: loginForm.Login">
@@ -86,8 +86,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                        @*type="submit"*@
+                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"                                        
                                         data-bind="click: LoginClick">
                                     Вход
                                 </button>
@@ -102,7 +101,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
     </section>
     <section id="register" data-bind="visible: showRegister" class="row">
         <div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
@@ -184,10 +183,10 @@
             showLogin: ko.observable(false),
             showRegister: ko.observable(false),
             showPreloader: ko.observable(false),
-            loginForm: {
-                Login: ko.observable(""),
-                Password: ko.observable("")
-            },
+            //loginForm: {
+            //    Login: ko.observable(""),
+            //    Password: ko.observable("")
+            //},
             registerForm: {
                 Login: ko.observable(""),
                 Password: ko.observable(""),
@@ -261,6 +260,23 @@
                 this.showLogin(false);
                 this.showMain(false);
                 this.showRegister(false);
+            },
+            ShowChunck: function (_chunck) {
+                let $page = $(document.body).find("section#" + _chunck);
+                if ($page.find(">:first-child").length == 0) {
+                    //$.get(src, "html") // it has src and is empty - load it
+                    $.get(src) // it has src and is empty - load it
+                        .done(function (html) {
+
+                            if (html) {
+                                currentPage = pageName;
+                                $page.html(html);
+                                show(pageName, param);
+                            }
+                        })
+                        .fail(function () { $page.html("failed to get:" + src); });
+                } else
+                    show(pageName, param);
             }
         }
                 
@@ -268,7 +284,21 @@
         
         location.hash = "#!login";
 
-        Sammy(function () {            
+        //Sammy(function () {            
+        //    this.get('#!login', function () {
+        //        AMM_ViewModel.HideAll();
+        //        AMM_ViewModel.showLogin(true);
+        //    });
+        //    this.get('#!register', function () {
+        //        AMM_ViewModel.HideAll();
+        //        AMM_ViewModel.showRegister(true);
+        //    });
+        //    this.get('#!main', function () {
+        //        AMM_ViewModel.HideAll();
+        //        AMM_ViewModel.showMain(true);
+        //    });
+        //}).run();
+        Sammy(function () {
             this.get('#!login', function () {
                 AMM_ViewModel.HideAll();
                 AMM_ViewModel.showLogin(true);
