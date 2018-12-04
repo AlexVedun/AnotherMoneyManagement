@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"                                
+                        <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
                                 data-bind="click: LoginClick">
                             Вход
                         </button>
@@ -38,9 +38,39 @@
         </div>
     </div>
 </div>
-<script>
-    //app.handler(function () {
-    //    preloaderHide();
-    //}
-    AMM_ViewModel.loginForm = 
+<script>    
+    let AMM_LoginViewModel = {
+        loginForm: {
+            Login: ko.observable(""),
+            Password: ko.observable("")
+        },
+
+        LoginClick: function () {
+            AMM_ViewModel.showPreloader(true);            
+            let formData = ko.toJS(AMM_LoginViewModel.loginForm);
+            console.log(formData);
+            $.ajax({
+                url: "api/login",
+                data: formData,
+                type: 'POST'
+            }).done(function (resp) {
+                console.log(resp);
+                if (resp.error !== null && resp.error !== "") {
+                    AMM_ViewModel.showPreloader(false);
+                    alert(resp.error);
+                }
+                else {
+                    AMM_ViewModel.showPreloader(false);
+                    location.hash = "#!main";
+                }
+            }).fail(function (xhr, status, text) {
+                AMM_ViewModel.showPreloader(false);
+                alert("error: " + text);
+            });
+        },
+        ShowRegistrationClick: function () {
+            location.hash = "#!register";
+        }
+    }    
+    ko.applyBindings(AMM_LoginViewModel, document.getElementById("login-form"));
 </script>

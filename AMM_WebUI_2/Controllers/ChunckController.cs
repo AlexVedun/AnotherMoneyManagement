@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AMM_WebUI_2.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace AMM_WebUI_2.Controllers
     public class ChunckController : ApiController
     {
         [Route("api/chunck")]
-        public Object Get([FromUri] string _chunck)
+        public Object Get([FromUri] ChunckRequestForm _chunckRequest)
         {
-            return GetHTMLPageText(AppDomain.CurrentDomain.BaseDirectory + "\\wwwroot\\pages\\" + _chunck + ".htm");
+            return GetHTMLPageText(AppDomain.CurrentDomain.BaseDirectory + "\\wwwroot\\pages\\" + _chunckRequest.Chunck + ".htm");
         }
 
         private Object GetHTMLPageText(string _pageUri/*, string _param*/)

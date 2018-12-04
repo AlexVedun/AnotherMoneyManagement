@@ -154,6 +154,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApiResponse.cs" />
+    <Compile Include="Models\ChunckRequestForm.cs" />
     <Compile Include="Models\LoginRequestForm.cs" />
     <Compile Include="Models\RegisterRequestForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

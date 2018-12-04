@@ -202,33 +202,33 @@
                 //}
             },
             // section login
-            LoginClick: function (formElement) {
-                AMM_ViewModel.showPreloader(true);                
-                //let formData = $(formElement).serialize();
-                let formData = ko.toJS(AMM_ViewModel.loginForm);
-                console.log(formData);
-                $.ajax({
-                    url: "api/login",
-                    data: formData,
-                    type: 'POST'
-                }).done(function (resp) {
-                    console.log(resp);
-                    if (resp.error !== null && resp.error !== "") {                        
-                        AMM_ViewModel.showPreloader(false);
-                        alert(resp.error);
-                    }
-                    else {
-                        AMM_ViewModel.showPreloader(false);                        
-                        location.hash = "#!main";
-                    }
-                }).fail(function (xhr, status, text) {
-                    AMM_ViewModel.showPreloader(false);
-                    alert("error: " + text);
-                });
-            },
-            ShowRegistrationClick: function () {             
-                location.hash = "#!register";
-            },
+            //LoginClick: function (formElement) {
+            //    AMM_ViewModel.showPreloader(true);                
+            //    //let formData = $(formElement).serialize();
+            //    let formData = ko.toJS(AMM_ViewModel.loginForm);
+            //    console.log(formData);
+            //    $.ajax({
+            //        url: "api/login",
+            //        data: formData,
+            //        type: 'POST'
+            //    }).done(function (resp) {
+            //        console.log(resp);
+            //        if (resp.error !== null && resp.error !== "") {                        
+            //            AMM_ViewModel.showPreloader(false);
+            //            alert(resp.error);
+            //        }
+            //        else {
+            //            AMM_ViewModel.showPreloader(false);                        
+            //            location.hash = "#!main";
+            //        }
+            //    }).fail(function (xhr, status, text) {
+            //        AMM_ViewModel.showPreloader(false);
+            //        alert("error: " + text);
+            //    });
+            //},
+            //ShowRegistrationClick: function () {             
+            //    location.hash = "#!register";
+            //},
             // section register
             RegisterClick: function (formElement) {
                 AMM_ViewModel.showPreloader(true);
@@ -262,21 +262,35 @@
                 this.showRegister(false);
             },
             ShowChunck: function (_chunck) {
+                AMM_ViewModel.HideAll();
+                AMM_ViewModel.showPreloader(true);
                 let $page = $(document.body).find("section#" + _chunck);
                 if ($page.find(">:first-child").length == 0) {
-                    //$.get(src, "html") // it has src and is empty - load it
-                    $.get(src) // it has src and is empty - load it
-                        .done(function (html) {
-
-                            if (html) {
-                                currentPage = pageName;
-                                $page.html(html);
-                                show(pageName, param);
-                            }
-                        })
-                        .fail(function () { $page.html("failed to get:" + src); });
-                } else
-                    show(pageName, param);
+                    $.ajax({
+                        url: "api/chunck",
+                        data: { Chunck: _chunck },
+                        type: 'GET'
+                    }).done(function (html) {
+                        if (html) {
+                            console.log(html);
+                            AMM_ViewModel.showPreloader(false);
+                            $page.html(html);
+                            AMM_ViewModel.showLogin(true);
+                            //ko.applyBindings(AMM_ViewModel);
+                        }                        
+                    }).fail(function (xhr, status, text) {
+                        AMM_ViewModel.showPreloader(false);
+                        alert("error: " + text);
+                    });
+                } else {
+                    switch (_chunck) {
+                        case 'login':
+                            AMM_ViewModel.showLogin(true);
+                            break;
+                        default:
+                    }
+                }
+                    
             }
         }
                 
@@ -284,24 +298,11 @@
         
         location.hash = "#!login";
 
-        //Sammy(function () {            
-        //    this.get('#!login', function () {
-        //        AMM_ViewModel.HideAll();
-        //        AMM_ViewModel.showLogin(true);
-        //    });
-        //    this.get('#!register', function () {
-        //        AMM_ViewModel.HideAll();
-        //        AMM_ViewModel.showRegister(true);
-        //    });
-        //    this.get('#!main', function () {
-        //        AMM_ViewModel.HideAll();
-        //        AMM_ViewModel.showMain(true);
-        //    });
-        //}).run();
-        Sammy(function () {
+        Sammy(function () {            
             this.get('#!login', function () {
                 AMM_ViewModel.HideAll();
-                AMM_ViewModel.showLogin(true);
+                AMM_ViewModel.ShowChunck('login');
+                //AMM_ViewModel.showLogin(true);
             });
             this.get('#!register', function () {
                 AMM_ViewModel.HideAll();
@@ -311,7 +312,7 @@
                 AMM_ViewModel.HideAll();
                 AMM_ViewModel.showMain(true);
             });
-        }).run();
+        }).run();        
     </script>
 </body>
 </html>
