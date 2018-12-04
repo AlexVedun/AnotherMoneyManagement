@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/02/2018 20:20:33
--- Generated from EDMX file: C:\Users\Alex\Source\Repos\AnotherMoneyManagement\AMM_Domain\AMM.edmx
+-- Date Created: 12/04/2018 13:28:22
+-- Generated from EDMX file: D:\Programming\AnotherMoneyManagement\AMM_Domain\AMM.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -37,6 +37,12 @@ IF OBJECT_ID(N'[dbo].[FK_TransactionSource]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_TransactionSource1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TransactionSet] DROP CONSTRAINT [FK_TransactionSource1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserSource]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SourceSet] DROP CONSTRAINT [FK_UserSource];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserSource1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SourceSet] DROP CONSTRAINT [FK_UserSource1];
 GO
 
 -- --------------------------------------------------
@@ -105,9 +111,8 @@ CREATE TABLE [dbo].[SourceSet] (
     [Name] nvarchar(max)  NOT NULL,
     [Money] decimal(18,0)  NOT NULL,
     [Description] nvarchar(max)  NOT NULL,
-    [UserId] int  NULL,
-    [UserId1] int  NULL,
-    [Type_Id] int  NOT NULL
+    [Type_Id] int  NOT NULL,
+    [UserSource_Source_Id] int  NOT NULL
 );
 GO
 
@@ -274,10 +279,10 @@ ON [dbo].[TransactionSet]
     ([To_Id]);
 GO
 
--- Creating foreign key on [UserId] in table 'SourceSet'
+-- Creating foreign key on [UserSource_Source_Id] in table 'SourceSet'
 ALTER TABLE [dbo].[SourceSet]
 ADD CONSTRAINT [FK_UserSource]
-    FOREIGN KEY ([UserId])
+    FOREIGN KEY ([UserSource_Source_Id])
     REFERENCES [dbo].[UserSet]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -286,22 +291,7 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserSource'
 CREATE INDEX [IX_FK_UserSource]
 ON [dbo].[SourceSet]
-    ([UserId]);
-GO
-
--- Creating foreign key on [UserId1] in table 'SourceSet'
-ALTER TABLE [dbo].[SourceSet]
-ADD CONSTRAINT [FK_UserSource1]
-    FOREIGN KEY ([UserId1])
-    REFERENCES [dbo].[UserSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UserSource1'
-CREATE INDEX [IX_FK_UserSource1]
-ON [dbo].[SourceSet]
-    ([UserId1]);
+    ([UserSource_Source_Id]);
 GO
 
 -- --------------------------------------------------

@@ -110,34 +110,34 @@
                 <div class="card-content">
                     <span class="card-title">Регистрация</span>
                     <div class="row">
-                        <form id="register-form" data-bind="submit: RegisterClick, submitBubble: false">
+                        <form id="register-form" @*data-bind="submit: RegisterClick, submitBubble: false"*@>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserLogin" name="Login" type="text" class="validate">
+                                    <input value="" id="RegUserLogin" name="Login" type="text" class="validate" data-bind="value: registerForm.Login">
                                     <label class="active" for="RegUserLogin">Логин*</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserPassword" name="Password" type="password" class="validate">
+                                    <input value="" id="RegUserPassword" name="Password" type="password" class="validate" data-bind="value: registerForm.Password">
                                     <label class="active" for="RegUserPassword">Пароль*</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserSurname" name="Surname" type="text" class="validate">
+                                    <input value="" id="RegUserSurname" name="Surname" type="text" class="validate" data-bind="value: registerForm.Surname">
                                     <label class="active" for="RegUserSurname">Фамилия</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserName" name="Name" type="text" class="validate">
+                                    <input value="" id="RegUserName" name="Name" type="text" class="validate" data-bind="value: registerForm.Name">
                                     <label class="active" for="RegUserName">Имя</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input value="" id="RegUserPatronymic" name="Patronymic" type="text" class="validate">
+                                    <input value="" id="RegUserPatronymic" name="Patronymic" type="text" class="validate" data-bind="value: registerForm.Patronymic">
                                     <label class="active" for="RegUserPatronymic">Отчество</label>
                                 </div>
                             </div>
@@ -148,7 +148,8 @@
                             </div>
                             <div class="row">
                                 <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                        type="submit">
+                                        @*type="submit"*@
+                                        data-bind="click: RegisterClick">
                                     Регистрация
                                 </button>
                             </div>
@@ -176,11 +177,6 @@
             return self;
         }
 
-        //let AMM_LoginViewModel = {
-        //    Login: ko.observable(""),
-        //    Password: ko.observable("")
-        //}
-
         let AMM_ViewModel = {            
             sections: [],
             chosenSection: ko.observable(),
@@ -192,6 +188,13 @@
                 Login: ko.observable(""),
                 Password: ko.observable("")
             },
+            registerForm: {
+                Login: ko.observable(""),
+                Password: ko.observable(""),
+                Surname: ko.observable(""),
+                Name: ko.observable(""),
+                Patronymic: ko.observable("")
+            },
 
             changeSection: function (section) {
                 //let indx = sections.indexOf(section);
@@ -201,8 +204,7 @@
             },
             // section login
             LoginClick: function (formElement) {
-                AMM_ViewModel.showPreloader(true);
-                //showPreloader(true);
+                AMM_ViewModel.showPreloader(true);                
                 //let formData = $(formElement).serialize();
                 let formData = ko.toJS(AMM_ViewModel.loginForm);
                 console.log(formData);
@@ -217,9 +219,7 @@
                         alert(resp.error);
                     }
                     else {
-                        AMM_ViewModel.showPreloader(false);
-                        //AMM_ViewModel.showLogin(false);
-                        //AMM_ViewModel.showMain(true);
+                        AMM_ViewModel.showPreloader(false);                        
                         location.hash = "#!main";
                     }
                 }).fail(function (xhr, status, text) {
@@ -227,36 +227,34 @@
                     alert("error: " + text);
                 });
             },
-            ShowRegistrationClick: function () {                
-                //AMM_ViewModel.showLogin(false);
-                //AMM_ViewModel.showRegister(true);
+            ShowRegistrationClick: function () {             
                 location.hash = "#!register";
             },
             // section register
             RegisterClick: function (formElement) {
                 AMM_ViewModel.showPreloader(true);
-                let formData = $(formElement).serialize();
+                //let formData = $(formElement).serialize();
+                let formData = ko.toJS(AMM_ViewModel.registerForm);
+                console.log(formData);
                 $.ajax({
                     url: "api/register",
                     data: formData,
                     type: 'POST'
                 }).done(function (resp) {
                     if (resp.error !== null && resp.error !== "") {
+                        AMM_ViewModel.showPreloader(false);
                         alert(resp.error);
                     }
                     else {
-                        AMM_ViewModel.showPreloader(false);
-                        //AMM_ViewModel.showRegister(false);
-                        //AMM_ViewModel.showLogin(true);
+                        AMM_ViewModel.showPreloader(false);                        
                         location.hash = "#!login";
                     }
                 }).fail(function (xhr, status, text) {
+                    AMM_ViewModel.showPreloader(false);
                     alert("error: " + text);
                 });
             },
-            CancelRegistrationClick: function () {                
-                //AMM_ViewModel.showRegister(false);
-                //AMM_ViewModel.showLogin(true);
+            CancelRegistrationClick: function () {               
                 location.hash = "#!login";
             },
             HideAll: function () {
@@ -266,17 +264,11 @@
             }
         }
                 
-        //ko.applyBindings(AMM_LoginViewModel);
         ko.applyBindings(AMM_ViewModel);
         
-        //AMM_ViewModel.showLogin(true);
         location.hash = "#!login";
 
-        Sammy(function () {
-            //this.get('', function () {
-            //    console.log('first')
-            //    this.app.runRoute('get', '#!login')
-            //});
+        Sammy(function () {            
             this.get('#!login', function () {
                 AMM_ViewModel.HideAll();
                 AMM_ViewModel.showLogin(true);

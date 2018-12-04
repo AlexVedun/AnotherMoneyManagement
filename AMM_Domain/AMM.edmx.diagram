@@ -19,7 +19,6 @@
         <AssociationConnector Association="AMM.TransactionSource" />
         <AssociationConnector Association="AMM.TransactionSource1" />
         <AssociationConnector Association="AMM.UserSource" />
-        <AssociationConnector Association="AMM.UserSource1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
