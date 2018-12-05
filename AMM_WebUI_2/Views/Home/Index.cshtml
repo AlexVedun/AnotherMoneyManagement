@@ -60,206 +60,27 @@
         </div>
     </div>
 
-    @*<section id="login" data-src='@Url.Content("~/wwwroot/pages/login.htm")'></section>*@
-    <section id="login" data-bind="visible: showLogin" class="row">
-        @*<div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
-            <div class="card grey lighten-2">
-                <div class="card-content">
-                    <span class="card-title">Вход</span>
-                    <div class="row">
-                        <form id="login-form">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input value="" id="UserLogin" name="Login" type="text" class="validate" data-bind="value: loginForm.Login">
-                                    <label class="active" for="UserLogin">Логин</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input value="" id="UserPassword" name="Password" type="password" class="validate" data-bind="value: loginForm.Password">
-                                    <label class="active" for="UserPassword">Пароль</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <label class="active"></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"                                        
-                                        data-bind="click: LoginClick">
-                                    Вход
-                                </button>
-                            </div>
-                            <div class="row">
-                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                        data-bind="click: ShowRegistrationClick">
-                                    Регистрация
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>*@
+    <section id="login" data-bind="visible: show['login']" class="row">    
     </section>
-    <section id="register" data-bind="visible: showRegister" class="row">
-        <div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
-            <div class="card grey lighten-2">
-                <div class="card-content">
-                    <span class="card-title">Регистрация</span>
-                    <div class="row">
-                        <form id="register-form" @*data-bind="submit: RegisterClick, submitBubble: false"*@>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input value="" id="RegUserLogin" name="Login" type="text" class="validate" data-bind="value: registerForm.Login">
-                                    <label class="active" for="RegUserLogin">Логин*</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input value="" id="RegUserPassword" name="Password" type="password" class="validate" data-bind="value: registerForm.Password">
-                                    <label class="active" for="RegUserPassword">Пароль*</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input value="" id="RegUserSurname" name="Surname" type="text" class="validate" data-bind="value: registerForm.Surname">
-                                    <label class="active" for="RegUserSurname">Фамилия</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input value="" id="RegUserName" name="Name" type="text" class="validate" data-bind="value: registerForm.Name">
-                                    <label class="active" for="RegUserName">Имя</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input value="" id="RegUserPatronymic" name="Patronymic" type="text" class="validate" data-bind="value: registerForm.Patronymic">
-                                    <label class="active" for="RegUserPatronymic">Отчество</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <label class="active">* - поля, обязательные для заполнения</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                        @*type="submit"*@
-                                        data-bind="click: RegisterClick">
-                                    Регистрация
-                                </button>
-                            </div>
-                            <div class="row">
-                                <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                        data-bind="click: CancelRegistrationClick">
-                                    Отмена
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section id="register" data-bind="visible: show['register']" class="row">    
     </section>
-    <section id="main" data-bind="visible: showMain">
-        <label>Главный экран</label>
+    <section id="main" data-bind="visible: show['main']">        
     </section>
 
 
     <script>
-        function NewSection(name, data) {
-            self.sectionName = name;
-            self.sectionData = data;
-            return self;
-        }
-
-        let AMM_ViewModel = {            
-            sections: [],
-            chosenSection: ko.observable(),
-            showMain: ko.observable(false),
-            showLogin: ko.observable(false),
-            showRegister: ko.observable(false),
+        let AMM_ViewModel = {
+            show: {
+                login: ko.observable(false),
+                register: ko.observable(false),
+                main: ko.observable(false)
+            },
             showPreloader: ko.observable(false),
-            //loginForm: {
-            //    Login: ko.observable(""),
-            //    Password: ko.observable("")
-            //},
-            registerForm: {
-                Login: ko.observable(""),
-                Password: ko.observable(""),
-                Surname: ko.observable(""),
-                Name: ko.observable(""),
-                Patronymic: ko.observable("")
-            },
-
-            changeSection: function (section) {
-                //let indx = sections.indexOf(section);
-                //if (indx !== -1) {
-                //    $("#" + selections[indx].name).html(selections[indx].)
-                //}
-            },
-            // section login
-            //LoginClick: function (formElement) {
-            //    AMM_ViewModel.showPreloader(true);                
-            //    //let formData = $(formElement).serialize();
-            //    let formData = ko.toJS(AMM_ViewModel.loginForm);
-            //    console.log(formData);
-            //    $.ajax({
-            //        url: "api/login",
-            //        data: formData,
-            //        type: 'POST'
-            //    }).done(function (resp) {
-            //        console.log(resp);
-            //        if (resp.error !== null && resp.error !== "") {                        
-            //            AMM_ViewModel.showPreloader(false);
-            //            alert(resp.error);
-            //        }
-            //        else {
-            //            AMM_ViewModel.showPreloader(false);                        
-            //            location.hash = "#!main";
-            //        }
-            //    }).fail(function (xhr, status, text) {
-            //        AMM_ViewModel.showPreloader(false);
-            //        alert("error: " + text);
-            //    });
-            //},
-            //ShowRegistrationClick: function () {             
-            //    location.hash = "#!register";
-            //},
-            // section register
-            RegisterClick: function (formElement) {
-                AMM_ViewModel.showPreloader(true);
-                //let formData = $(formElement).serialize();
-                let formData = ko.toJS(AMM_ViewModel.registerForm);
-                console.log(formData);
-                $.ajax({
-                    url: "api/register",
-                    data: formData,
-                    type: 'POST'
-                }).done(function (resp) {
-                    if (resp.error !== null && resp.error !== "") {
-                        AMM_ViewModel.showPreloader(false);
-                        alert(resp.error);
-                    }
-                    else {
-                        AMM_ViewModel.showPreloader(false);                        
-                        location.hash = "#!login";
-                    }
-                }).fail(function (xhr, status, text) {
-                    AMM_ViewModel.showPreloader(false);
-                    alert("error: " + text);
-                });
-            },
-            CancelRegistrationClick: function () {               
-                location.hash = "#!login";
-            },
-            HideAll: function () {
-                this.showLogin(false);
-                this.showMain(false);
-                this.showRegister(false);
+            
+            HideAll: function () {                
+                for (var i in this.show) {
+                    this.show[i](false);
+                }
             },
             ShowChunck: function (_chunck) {
                 AMM_ViewModel.HideAll();
@@ -271,24 +92,18 @@
                         data: { Chunck: _chunck },
                         type: 'GET'
                     }).done(function (html) {
-                        if (html) {
-                            console.log(html);
+                        if (html) {                            
                             AMM_ViewModel.showPreloader(false);
-                            $page.html(html);
-                            AMM_ViewModel.showLogin(true);
-                            //ko.applyBindings(AMM_ViewModel);
+                            $page.html(html);                            
+                            AMM_ViewModel.show[_chunck](true);
                         }                        
                     }).fail(function (xhr, status, text) {
                         AMM_ViewModel.showPreloader(false);
                         alert("error: " + text);
                     });
-                } else {
-                    switch (_chunck) {
-                        case 'login':
-                            AMM_ViewModel.showLogin(true);
-                            break;
-                        default:
-                    }
+                } else {                    
+                    AMM_ViewModel.showPreloader(false);
+                    AMM_ViewModel.show[_chunck](true);
                 }
                     
             }
@@ -299,19 +114,10 @@
         location.hash = "#!login";
 
         Sammy(function () {            
-            this.get('#!login', function () {
+            this.get('#!:chunck', function () {
                 AMM_ViewModel.HideAll();
-                AMM_ViewModel.ShowChunck('login');
-                //AMM_ViewModel.showLogin(true);
-            });
-            this.get('#!register', function () {
-                AMM_ViewModel.HideAll();
-                AMM_ViewModel.showRegister(true);
-            });
-            this.get('#!main', function () {
-                AMM_ViewModel.HideAll();
-                AMM_ViewModel.showMain(true);
-            });
+                AMM_ViewModel.ShowChunck(this.params['chunck']);                
+            });            
         }).run();        
     </script>
 </body>
