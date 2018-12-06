@@ -61,6 +61,10 @@
                 }
                 else {
                     AMM_ViewModel.showPreloader(false);
+                    AMM_ViewModel.navbar.login(false);
+                    AMM_ViewModel.navbar.register(false);
+                    AMM_ViewModel.navbar.logoutText("Выход (" + AMM_LoginViewModel.loginForm.Login() + ")");
+                    AMM_ViewModel.navbar.logout(true);
                     location.hash = "#!main";
                 }
             }).fail(function (xhr, status, text) {
