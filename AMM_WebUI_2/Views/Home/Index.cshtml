@@ -18,28 +18,37 @@
     <script src="~/Scripts/sammy-0.7.5.min.js"></script>
 </head>
 <body>
+    @*заголовок и главное меню*@
     <nav>
         <div class="nav-wrapper">
+            <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
             <a href="#" class="brand-logo">AMM</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="#!login" data-bind="visible: navbar.login">Вход</a></li>
                 <li><a href="#!register" data-bind="visible: navbar.register">Регистрация</a></li>
-                <li><a href="#!logout" data-bind="visible: navbar.logout, text: navbar.logoutText" id="logout"></a></li>
+                <li><a href="#!logout" data-bind="visible: navbar.logout, text: navbar.logoutText"></a></li>
             </ul>
         </div>
     </nav>
+    @*боковое меню*@
+    <ul id="slide-out" class="sidenav">
+        <li><a class="waves-effect sidenav-close" href="#!login" data-bind="visible: navbar.login">Вход</a></li>
+        <li><a class="waves-effect sidenav-close" href="#!register" data-bind="visible: navbar.register">Регистрация</a></li>
+        <li><a class="waves-effect sidenav-close" href="#!logout" data-bind="visible: navbar.logout, text: navbar.logoutText"></a></li>        
+    </ul>    
     @*индикатор выполнения длительного процесса*@
     <div class="progress" data-bind="visible: showPreloader">
         <div class="indeterminate"></div>
     </div>
-    
+    @*набор секций главного окна*@
     <section id="login" data-bind="visible: show['login']" class="row"></section>
     <section id="register" data-bind="visible: show['register']" class="row"></section>
     <section id="main" data-bind="visible: show['main']" class="row"></section>
-
-
+    @*основной скрипт*@
+    <script src="~/Scripts/global.js"></script>
     <script>
         let AMM_ViewModel = {
+            // свойства
             show: {
                 login: ko.observable(false),
                 register: ko.observable(false),
@@ -52,15 +61,15 @@
                 logoutText: ko.observable("")
             },
             showPreloader: ko.observable(false),
-
+            // методы
             HideAll: function () {
                 for (var i in this.show) {
                     this.show[i](false);
                 }
             },
             ShowChunck: function (_chunck) {
-                AMM_ViewModel.HideAll();
-                AMM_ViewModel.showPreloader(true);
+                this.HideAll();
+                this.showPreloader(true);
                 let $page = $(document.body).find("section#" + _chunck);
                 if ($page.find(">:first-child").length == 0) {
                     $.ajax({
@@ -78,23 +87,76 @@
                         alert("error: " + text);
                     });
                 } else {
-                    AMM_ViewModel.showPreloader(false);
-                    AMM_ViewModel.show[_chunck](true);
+                    this.showPreloader(false);
+                    this.show[_chunck](true);
                 }
-
+            },
+            SetLogin: function (_name) {
+                this.navbar.login(false);
+                this.navbar.register(false);
+                this.navbar.logoutText("Выход (" + _name + ")");
+                this.navbar.logout(true);
+            },
+            SetLogout: function () {
+                this.navbar.login(true);
+                this.navbar.register(true);
+                this.navbar.logoutText("");
+                this.navbar.logout(false);
             }
         }
 
         ko.applyBindings(AMM_ViewModel);
 
-        location.hash = "#!login";
-
         Sammy(function () {
+            this.get('#!logout', function () {
+                AMM_ViewModel.showPreloader(true);
+                $.ajax({
+                    url: "api/logout",
+                    type: 'POST'
+                }).done(function (resp) {
+                    if (resp.error !== null && resp.error !== "") {
+                        AMM_ViewModel.showPreloader(false);
+                        alert(resp.error);
+                    }
+                    else {
+                        AMM_ViewModel.showPreloader(false);
+                        isLogin = false;
+                        userLogin = "";
+                        AMM_ViewModel.SetLogout();
+                        location.hash = "#!login";
+                    }
+                }).fail(function (xhr, status, text) {
+                    AMM_ViewModel.showPreloader(false);
+                    alert("error: " + text);
+                });
+            });
             this.get('#!:chunck', function () {
                 AMM_ViewModel.HideAll();
                 AMM_ViewModel.ShowChunck(this.params['chunck']);
             });
         }).run();
+        // активация бокового меню
+        $(document).ready(function () {
+            $('.sidenav').sidenav();
+        });
+
+        AMM_ViewModel.showPreloader(true);
+        $.get("api/login/checkout")
+            .done(function (resp) {
+                console.log(resp);
+                AMM_ViewModel.showPreloader(false);
+                if (resp !== null) {
+                    AMM_ViewModel.SetLogin(resp);
+                    location.hash = "#!main";
+                }
+                else {
+                    location.hash = "#!login";
+                }
+            })
+            .fail(function (xhr, status, text) {
+                AMM_ViewModel.showPreloader(false);
+                alert("error: " + text);
+            });
     </script>
 </body>
 </html>

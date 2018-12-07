@@ -58,6 +58,7 @@
 </div>
 <script>    
     let AMM_RegisterViewModel = {
+        // свойства
         registerForm: {
             Login: ko.observable(""),
             Password: ko.observable(""),
@@ -65,11 +66,15 @@
             Name: ko.observable(""),
             Patronymic: ko.observable("")
         },
-
-        RegisterClick: function () {
+        // методы
+        ClearForm: function () {
+            for (var i in this.registerForm) {
+                this.registerForm[i]("");
+            }
+        },
+        RegisterClick: function () {            
             AMM_ViewModel.showPreloader(true);
-            let formData = ko.toJS(AMM_RegisterViewModel.registerForm);
-            console.log(formData);
+            let formData = ko.toJS(this.registerForm);            
             $.ajax({
                 url: "api/register",
                 data: formData,
@@ -81,6 +86,7 @@
                 }
                 else {
                     AMM_ViewModel.showPreloader(false);
+                    AMM_RegisterViewModel.ClearForm();
                     location.hash = "#!login";
                 }
             }).fail(function (xhr, status, text) {

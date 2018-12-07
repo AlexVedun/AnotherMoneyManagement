@@ -41,5 +41,11 @@ namespace AMM_WebUI_2.Controllers
                 return new ApiResponse<User>() { error = ex.Message };
             }
         }
+
+        [Route("api/login/checkout")]
+        public Object Get ()
+        {
+            return HttpContext.Current.Session["user_login"];
+        }
     }
 }

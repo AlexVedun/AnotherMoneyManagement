@@ -40,31 +40,36 @@
 </div>
 <script>    
     let AMM_LoginViewModel = {
+        // свойства
         loginForm: {
             Login: ko.observable(""),
             Password: ko.observable("")
         },
-
+        // методы
+        ClearForm: function () {
+            for (var i in this.loginForm) {
+                this.loginForm[i]("");
+            }
+        },
         LoginClick: function () {
             AMM_ViewModel.showPreloader(true);            
-            let formData = ko.toJS(AMM_LoginViewModel.loginForm);
+            let formData = ko.toJS(this.loginForm);
             console.log(formData);
             $.ajax({
                 url: "api/login",
                 data: formData,
                 type: 'POST'
-            }).done(function (resp) {
-                console.log(resp);
+            }).done(function (resp) {               
                 if (resp.error !== null && resp.error !== "") {
                     AMM_ViewModel.showPreloader(false);
                     alert(resp.error);
                 }
                 else {
                     AMM_ViewModel.showPreloader(false);
-                    AMM_ViewModel.navbar.login(false);
-                    AMM_ViewModel.navbar.register(false);
-                    AMM_ViewModel.navbar.logoutText("Выход (" + AMM_LoginViewModel.loginForm.Login() + ")");
-                    AMM_ViewModel.navbar.logout(true);
+                    isLogin = true;
+                    userLogin = AMM_LoginViewModel.loginForm.Login();
+                    AMM_ViewModel.SetLogin(userLogin);
+                    AMM_LoginViewModel.ClearForm();
                     location.hash = "#!main";
                 }
             }).fail(function (xhr, status, text) {
