@@ -132,7 +132,9 @@
     <Content Include="Scripts\materialize.min.js" />
     <Content Include="Scripts\sammy-0.7.5.js" />
     <Content Include="Scripts\sammy-0.7.5.min.js" />
+    <Content Include="wwwroot\pages\add_source.htm" />
     <Content Include="wwwroot\pages\main.htm" />
+    <Content Include="wwwroot\pages\add_trans.htm" />
     <Content Include="wwwroot\pages\register.htm" />
     <Content Include="wwwroot\pages\login.htm" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -154,9 +156,11 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LogoutController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddSourceForm.cs" />
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\ChunckRequestForm.cs" />
     <Compile Include="Models\LoginRequestForm.cs" />
@@ -179,9 +183,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AMM_Domain\AMM_Domain.csproj">
-      <Project>{6a7652fc-c03c-4b8d-9b9e-1aa2094bf226}</Project>
-      <Name>AMM_Domain</Name>
+    <ProjectReference Include="..\AMM_Domain_2\AMM_Domain_2.csproj">
+      <Project>{6e8d70c4-aeb6-4c49-90db-f58b12e68b4b}</Project>
+      <Name>AMM_Domain_2</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

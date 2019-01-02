@@ -5,7 +5,7 @@ namespace AMM_WebUI_2.App_Start
 {
     using System;
     using System.Web;
-    using AMM_Domain;
+    using AMM_Domain_2;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;

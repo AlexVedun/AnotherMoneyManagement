@@ -15,13 +15,10 @@ namespace AMM_Domain
     public partial class Transaction
     {
         public int Id { get; set; }
-        public System.DateTime Date { get; set; }
-        public decimal Sum { get; set; }
-        public string Comment { get; set; }
+        public decimal Debet { get; set; }
+        public decimal Credit { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual TransactionType Type { get; set; }
-        public virtual Source From { get; set; }
-        public virtual Source To { get; set; }
+        public virtual TransactionLog TransactionLog { get; set; }
+        public virtual Source Source { get; set; }
     }
 }

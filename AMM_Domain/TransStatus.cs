@@ -10,11 +10,10 @@
 namespace AMM_Domain
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TransactionType
+    public enum TransStatus : int
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        Success = 0,
+        Error = 1
     }
 }

@@ -34,8 +34,8 @@
     <ul id="slide-out" class="sidenav">
         <li><a class="waves-effect sidenav-close" href="#!login" data-bind="visible: navbar.login">Вход</a></li>
         <li><a class="waves-effect sidenav-close" href="#!register" data-bind="visible: navbar.register">Регистрация</a></li>
-        <li><a class="waves-effect sidenav-close" href="#!logout" data-bind="visible: navbar.logout, text: navbar.logoutText"></a></li>        
-    </ul>    
+        <li><a class="waves-effect sidenav-close" href="#!logout" data-bind="visible: navbar.logout, text: navbar.logoutText"></a></li>
+    </ul>
     @*индикатор выполнения длительного процесса*@
     <div class="progress" data-bind="visible: showPreloader">
         <div class="indeterminate"></div>
@@ -44,6 +44,8 @@
     <section id="login" data-bind="visible: show['login']" class="row"></section>
     <section id="register" data-bind="visible: show['register']" class="row"></section>
     <section id="main" data-bind="visible: show['main']" class="row"></section>
+    <section id="add_trans" data-bind="visible: show['add_trans']" class="row"></section>
+    <section id="add_source" data-bind="visible: show['add_source']" class="row"></section>
     @*основной скрипт*@
     <script src="~/Scripts/global.js"></script>
     <script>
@@ -52,7 +54,9 @@
             show: {
                 login: ko.observable(false),
                 register: ko.observable(false),
-                main: ko.observable(false)
+                main: ko.observable(false),
+                add_trans: ko.observable(false),
+                add_source: ko.observable(false)
             },
             navbar: {
                 login: ko.observable(true),

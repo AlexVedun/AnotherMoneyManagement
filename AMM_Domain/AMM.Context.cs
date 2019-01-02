@@ -30,6 +30,6 @@ namespace AMM_Domain
         public virtual DbSet<Family> FamilySet { get; set; }
         public virtual DbSet<Source> SourceSet { get; set; }
         public virtual DbSet<TypeOfSource> TypeOfSourceSet { get; set; }
-        public virtual DbSet<TransactionType> TransactionTypeSet { get; set; }
+        public virtual DbSet<TransactionLog> TransactionLogSet { get; set; }
     }
 }

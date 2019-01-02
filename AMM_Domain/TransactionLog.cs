@@ -12,26 +12,24 @@ namespace AMM_Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class TransactionLog
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public TransactionLog()
         {
-            this.Sources = new HashSet<Source>();
-            this.TransactionLogs = new HashSet<TransactionLog>();
+            this.Transactions = new HashSet<Transaction>();
         }
     
         public int Id { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Surname { get; set; }
-        public string Name { get; set; }
-        public string Patronymic { get; set; }
+        public System.DateTime Date { get; set; }
+        public TransStatus Status { get; set; }
+        public string ErrorDetail { get; set; }
+        public string Comment { get; set; }
     
-        public virtual Family Family { get; set; }
+        public virtual User User { get; set; }
+        public virtual Source From { get; set; }
+        public virtual Source To { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Source> Sources { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TransactionLog> TransactionLogs { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

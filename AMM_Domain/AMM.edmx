@@ -11,11 +11,7 @@
     <EntitySet Name="FamilySet" EntityType="AMM.Store.FamilySet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SourceSet" EntityType="AMM.Store.SourceSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TypeOfSourceSet" EntityType="AMM.Store.TypeOfSourceSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TransactionTypeSet" EntityType="AMM.Store.TransactionTypeSet" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="TransactionUser" Association="AMM.Store.TransactionUser">
-      <End Role="Transaction" EntitySet="TransactionSet" />
-      <End Role="User" EntitySet="UserSet" />
-    </AssociationSet>
+    <EntitySet Name="TransactionLogSet" EntityType="AMM.Store.TransactionLogSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserFamily" Association="AMM.Store.UserFamily">
       <End Role="User" EntitySet="UserSet" />
       <End Role="Family" EntitySet="FamilySet" />
@@ -28,20 +24,28 @@
       <End Role="Family" EntitySet="FamilySet" />
       <End Role="User" EntitySet="UserSet" />
     </AssociationSet>
-    <AssociationSet Name="TransactionTransactionType" Association="AMM.Store.TransactionTransactionType">
+    <AssociationSet Name="UserSource" Association="AMM.Store.UserSource">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Source" EntitySet="SourceSet" />
+    </AssociationSet>
+    <AssociationSet Name="TransactionLogUser" Association="AMM.Store.TransactionLogUser">
+      <End Role="TransactionLog" EntitySet="TransactionLogSet" />
+      <End Role="User" EntitySet="UserSet" />
+    </AssociationSet>
+    <AssociationSet Name="TransactionLogSource" Association="AMM.Store.TransactionLogSource">
+      <End Role="TransactionLog" EntitySet="TransactionLogSet" />
+      <End Role="Source" EntitySet="SourceSet" />
+    </AssociationSet>
+    <AssociationSet Name="TransactionLogSource1" Association="AMM.Store.TransactionLogSource1">
+      <End Role="TransactionLog" EntitySet="TransactionLogSet" />
+      <End Role="Source" EntitySet="SourceSet" />
+    </AssociationSet>
+    <AssociationSet Name="TransactionTransactionLog" Association="AMM.Store.TransactionTransactionLog">
       <End Role="Transaction" EntitySet="TransactionSet" />
-      <End Role="TransactionType" EntitySet="TransactionTypeSet" />
+      <End Role="TransactionLog" EntitySet="TransactionLogSet" />
     </AssociationSet>
     <AssociationSet Name="TransactionSource" Association="AMM.Store.TransactionSource">
       <End Role="Transaction" EntitySet="TransactionSet" />
-      <End Role="Source" EntitySet="SourceSet" />
-    </AssociationSet>
-    <AssociationSet Name="TransactionSource1" Association="AMM.Store.TransactionSource1">
-      <End Role="Transaction" EntitySet="TransactionSet" />
-      <End Role="Source" EntitySet="SourceSet" />
-    </AssociationSet>
-    <AssociationSet Name="UserSource" Association="AMM.Store.UserSource">
-      <End Role="User" EntitySet="UserSet" />
       <End Role="Source" EntitySet="SourceSet" />
     </AssociationSet>
   </EntityContainer>
@@ -50,13 +54,10 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Date" Type="datetime" Nullable="false" />
-    <Property Name="Sum" Type="decimal" Nullable="false" />
-    <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="User_Id" Type="int" Nullable="false" />
-    <Property Name="Type_Id" Type="int" Nullable="false" />
-    <Property Name="From_Id" Type="int" Nullable="false" />
-    <Property Name="To_Id" Type="int" Nullable="false" />
+    <Property Name="Debet" Type="decimal" Nullable="false" />
+    <Property Name="Credit" Type="decimal" Nullable="false" />
+    <Property Name="TransactionLog_Id" Type="int" Nullable="false" />
+    <Property Name="Source_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="UserSet">
     <Key>
@@ -96,25 +97,19 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <EntityType Name="TransactionTypeSet">
+  <EntityType Name="TransactionLogSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="ErrorDetail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="From_Id" Type="int" Nullable="false" />
+    <Property Name="To_Id" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="TransactionUser">
-    <End Role="Transaction" Type="AMM.Store.TransactionSet" Multiplicity="*" />
-    <End Role="User" Type="AMM.Store.UserSet" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Transaction">
-        <PropertyRef Name="User_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="UserFamily">
     <End Role="User" Type="AMM.Store.UserSet" Multiplicity="*" />
     <End Role="Family" Type="AMM.Store.FamilySet" Multiplicity="0..1" />
@@ -151,42 +146,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="TransactionTransactionType">
-    <End Role="Transaction" Type="AMM.Store.TransactionSet" Multiplicity="*" />
-    <End Role="TransactionType" Type="AMM.Store.TransactionTypeSet" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="TransactionType">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Transaction">
-        <PropertyRef Name="Type_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="TransactionSource">
-    <End Role="Transaction" Type="AMM.Store.TransactionSet" Multiplicity="*" />
-    <End Role="Source" Type="AMM.Store.SourceSet" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Source">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Transaction">
-        <PropertyRef Name="From_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="TransactionSource1">
-    <End Role="Transaction" Type="AMM.Store.TransactionSet" Multiplicity="*" />
-    <End Role="Source" Type="AMM.Store.SourceSet" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Source">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Transaction">
-        <PropertyRef Name="To_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="UserSource">
     <End Role="User" Type="AMM.Store.UserSet" Multiplicity="1" />
     <End Role="Source" Type="AMM.Store.SourceSet" Multiplicity="*" />
@@ -199,6 +158,66 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="TransactionLogUser">
+    <End Role="TransactionLog" Type="AMM.Store.TransactionLogSet" Multiplicity="*" />
+    <End Role="User" Type="AMM.Store.UserSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TransactionLog">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TransactionLogSource">
+    <End Role="TransactionLog" Type="AMM.Store.TransactionLogSet" Multiplicity="*" />
+    <End Role="Source" Type="AMM.Store.SourceSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Source">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TransactionLog">
+        <PropertyRef Name="From_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TransactionLogSource1">
+    <End Role="TransactionLog" Type="AMM.Store.TransactionLogSet" Multiplicity="*" />
+    <End Role="Source" Type="AMM.Store.SourceSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Source">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TransactionLog">
+        <PropertyRef Name="To_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TransactionTransactionLog">
+    <End Role="Transaction" Type="AMM.Store.TransactionSet" Multiplicity="*" />
+    <End Role="TransactionLog" Type="AMM.Store.TransactionLogSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="TransactionLog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="TransactionLog_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TransactionSource">
+    <End Role="Transaction" Type="AMM.Store.TransactionSet" Multiplicity="*" />
+    <End Role="Source" Type="AMM.Store.SourceSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Source">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="Source_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -208,10 +227,6 @@
           <EntitySet Name="UserSet" EntityType="AMM.User" />
           <EntitySet Name="FamilySet" EntityType="AMM.Family" />
           <EntitySet Name="SourceSet" EntityType="AMM.Source" />
-          <AssociationSet Name="TransactionUser" Association="AMM.TransactionUser">
-            <End Role="Transaction" EntitySet="TransactionSet" />
-            <End Role="User" EntitySet="UserSet" />
-          </AssociationSet>
           <AssociationSet Name="UserFamily" Association="AMM.UserFamily">
             <End Role="User" EntitySet="UserSet" />
             <End Role="Family" EntitySet="FamilySet" />
@@ -225,21 +240,29 @@
             <End Role="Family" EntitySet="FamilySet" />
             <End Role="User" EntitySet="UserSet" />
           </AssociationSet>
-          <EntitySet Name="TransactionTypeSet" EntityType="AMM.TransactionType" />
-          <AssociationSet Name="TransactionTransactionType" Association="AMM.TransactionTransactionType">
+          <AssociationSet Name="UserSource" Association="AMM.UserSource">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Source" EntitySet="SourceSet" />
+          </AssociationSet>
+          <EntitySet Name="TransactionLogSet" EntityType="AMM.TransactionLog" />
+          <AssociationSet Name="TransactionLogUser" Association="AMM.TransactionLogUser">
+            <End Role="TransactionLog" EntitySet="TransactionLogSet" />
+            <End Role="User" EntitySet="UserSet" />
+          </AssociationSet>
+          <AssociationSet Name="TransactionLogSource" Association="AMM.TransactionLogSource">
+            <End Role="TransactionLog" EntitySet="TransactionLogSet" />
+            <End Role="Source" EntitySet="SourceSet" />
+          </AssociationSet>
+          <AssociationSet Name="TransactionLogSource1" Association="AMM.TransactionLogSource1">
+            <End Role="TransactionLog" EntitySet="TransactionLogSet" />
+            <End Role="Source" EntitySet="SourceSet" />
+          </AssociationSet>
+          <AssociationSet Name="TransactionTransactionLog" Association="AMM.TransactionTransactionLog">
             <End Role="Transaction" EntitySet="TransactionSet" />
-            <End Role="TransactionType" EntitySet="TransactionTypeSet" />
+            <End Role="TransactionLog" EntitySet="TransactionLogSet" />
           </AssociationSet>
           <AssociationSet Name="TransactionSource" Association="AMM.TransactionSource">
             <End Role="Transaction" EntitySet="TransactionSet" />
-            <End Role="Source" EntitySet="SourceSet" />
-          </AssociationSet>
-          <AssociationSet Name="TransactionSource1" Association="AMM.TransactionSource1">
-            <End Role="Transaction" EntitySet="TransactionSet" />
-            <End Role="Source" EntitySet="SourceSet" />
-          </AssociationSet>
-          <AssociationSet Name="UserSource" Association="AMM.UserSource">
-            <End Role="User" EntitySet="UserSet" />
             <End Role="Source" EntitySet="SourceSet" />
           </AssociationSet>
         </EntityContainer>
@@ -248,20 +271,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Nullable="false" />
-          <Property Name="Sum" Type="Decimal" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="AMM.TransactionUser" FromRole="Transaction" ToRole="User" />
-          <Property Name="Comment" Type="String" Nullable="false" />
-          <NavigationProperty Name="Type" Relationship="AMM.TransactionTransactionType" FromRole="Transaction" ToRole="TransactionType" />
-          <NavigationProperty Name="From" Relationship="AMM.TransactionSource" FromRole="Transaction" ToRole="Source" />
-          <NavigationProperty Name="To" Relationship="AMM.TransactionSource1" FromRole="Transaction" ToRole="Source" />
+          <NavigationProperty Name="TransactionLog" Relationship="AMM.TransactionTransactionLog" FromRole="Transaction" ToRole="TransactionLog" />
+          <NavigationProperty Name="Source" Relationship="AMM.TransactionSource" FromRole="Transaction" ToRole="Source" />
+          <Property Name="Debet" Type="Decimal" Nullable="false" />
+          <Property Name="Credit" Type="Decimal" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Transactions" Relationship="AMM.TransactionUser" FromRole="User" ToRole="Transaction" />
           <Property Name="Login" Type="String" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" />
           <Property Name="Surname" Type="String" Nullable="true" />
@@ -269,6 +288,7 @@
           <Property Name="Patronymic" Type="String" Nullable="true" />
           <NavigationProperty Name="Family" Relationship="AMM.UserFamily" FromRole="User" ToRole="Family" />
           <NavigationProperty Name="Sources" Relationship="AMM.UserSource" FromRole="User" ToRole="Source" />
+          <NavigationProperty Name="TransactionLogs" Relationship="AMM.TransactionLogUser" FromRole="User" ToRole="TransactionLog" />
         </EntityType>
         <EntityType Name="Family">
           <Key>
@@ -289,10 +309,6 @@
           <Property Name="Description" Type="String" Nullable="false" />
           <NavigationProperty Name="Type" Relationship="AMM.SourceTypeOfSource" FromRole="Source" ToRole="TypeOfSource" />
         </EntityType>
-        <Association Name="TransactionUser">
-          <End Type="AMM.Transaction" Role="Transaction" Multiplicity="*" />
-          <End Type="AMM.User" Role="User" Multiplicity="1" />
-        </Association>
         <Association Name="UserFamily">
           <End Type="AMM.User" Role="User" Multiplicity="*" />
           <End Type="AMM.Family" Role="Family" Multiplicity="0..1" />
@@ -312,28 +328,47 @@
           <End Type="AMM.Family" Role="Family" Multiplicity="*" />
           <End Type="AMM.User" Role="User" Multiplicity="1" />
         </Association>
-        <EntityType Name="TransactionType">
+        <Association Name="UserSource">
+          <End Type="AMM.User" Role="User" Multiplicity="1" />
+          <End Type="AMM.Source" Role="Source" Multiplicity="*" />
+        </Association>
+        <EntityType Name="TransactionLog">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="AMM.TransactionLogUser" FromRole="TransactionLog" ToRole="User" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="From" Relationship="AMM.TransactionLogSource" FromRole="TransactionLog" ToRole="Source" />
+          <NavigationProperty Name="To" Relationship="AMM.TransactionLogSource1" FromRole="TransactionLog" ToRole="Source" />
+          <Property Name="Status" Type="AMM.TransStatus" Nullable="false" />
+          <Property Name="ErrorDetail" Type="String" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" />
+          <NavigationProperty Name="Transactions" Relationship="AMM.TransactionTransactionLog" FromRole="TransactionLog" ToRole="Transaction" />
         </EntityType>
-        <Association Name="TransactionTransactionType">
+        <Association Name="TransactionLogUser">
+          <End Type="AMM.TransactionLog" Role="TransactionLog" Multiplicity="*" />
+          <End Type="AMM.User" Role="User" Multiplicity="1" />
+        </Association>
+        <Association Name="TransactionLogSource">
+          <End Type="AMM.TransactionLog" Role="TransactionLog" Multiplicity="*" />
+          <End Type="AMM.Source" Role="Source" Multiplicity="1" />
+        </Association>
+        <Association Name="TransactionLogSource1">
+          <End Type="AMM.TransactionLog" Role="TransactionLog" Multiplicity="*" />
+          <End Type="AMM.Source" Role="Source" Multiplicity="1" />
+        </Association>
+        <EnumType Name="TransStatus">
+          <Member Name="Success" />
+          <Member Name="Error" />
+        </EnumType>
+        <Association Name="TransactionTransactionLog">
           <End Type="AMM.Transaction" Role="Transaction" Multiplicity="*" />
-          <End Type="AMM.TransactionType" Role="TransactionType" Multiplicity="1" />
+          <End Type="AMM.TransactionLog" Role="TransactionLog" Multiplicity="1" />
         </Association>
         <Association Name="TransactionSource">
           <End Type="AMM.Transaction" Role="Transaction" Multiplicity="*" />
           <End Type="AMM.Source" Role="Source" Multiplicity="1" />
-        </Association>
-        <Association Name="TransactionSource1">
-          <End Type="AMM.Transaction" Role="Transaction" Multiplicity="*" />
-          <End Type="AMM.Source" Role="Source" Multiplicity="1" />
-        </Association>
-        <Association Name="UserSource">
-          <End Type="AMM.User" Role="User" Multiplicity="1" />
-          <End Type="AMM.Source" Role="Source" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -345,9 +380,8 @@
       <EntityTypeMapping TypeName="IsTypeOf(AMM.Transaction)">
         <MappingFragment StoreEntitySet="TransactionSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Sum" ColumnName="Sum" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Debet" ColumnName="Debet" />
+          <ScalarProperty Name="Credit" ColumnName="Credit" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -389,22 +423,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TransactionTypeSet">
-      <EntityTypeMapping TypeName="IsTypeOf(AMM.TransactionType)">
-        <MappingFragment StoreEntitySet="TransactionTypeSet">
+    <EntitySetMapping Name="TransactionLogSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AMM.TransactionLog)">
+        <MappingFragment StoreEntitySet="TransactionLogSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ErrorDetail" ColumnName="ErrorDetail" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="TransactionUser" TypeName="AMM.TransactionUser" StoreEntitySet="TransactionSet">
-      <EndProperty Name="User">
-        <ScalarProperty Name="Id" ColumnName="User_Id" />
-      </EndProperty>
-      <EndProperty Name="Transaction">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="UserFamily" TypeName="AMM.UserFamily" StoreEntitySet="UserSet">
       <EndProperty Name="Family">
         <ScalarProperty Name="Id" ColumnName="Family_Id" />
@@ -430,9 +459,41 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="TransactionTransactionType" TypeName="AMM.TransactionTransactionType" StoreEntitySet="TransactionSet">
-      <EndProperty Name="TransactionType">
-        <ScalarProperty Name="Id" ColumnName="Type_Id" />
+    <AssociationSetMapping Name="UserSource" TypeName="AMM.UserSource" StoreEntitySet="SourceSet">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="UserSource_Source_Id" />
+      </EndProperty>
+      <EndProperty Name="Source">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TransactionLogUser" TypeName="AMM.TransactionLogUser" StoreEntitySet="TransactionLogSet">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="TransactionLog">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TransactionLogSource" TypeName="AMM.TransactionLogSource" StoreEntitySet="TransactionLogSet">
+      <EndProperty Name="Source">
+        <ScalarProperty Name="Id" ColumnName="From_Id" />
+      </EndProperty>
+      <EndProperty Name="TransactionLog">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TransactionLogSource1" TypeName="AMM.TransactionLogSource1" StoreEntitySet="TransactionLogSet">
+      <EndProperty Name="Source">
+        <ScalarProperty Name="Id" ColumnName="To_Id" />
+      </EndProperty>
+      <EndProperty Name="TransactionLog">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TransactionTransactionLog" TypeName="AMM.TransactionTransactionLog" StoreEntitySet="TransactionSet">
+      <EndProperty Name="TransactionLog">
+        <ScalarProperty Name="Id" ColumnName="TransactionLog_Id" />
       </EndProperty>
       <EndProperty Name="Transaction">
         <ScalarProperty Name="Id" ColumnName="Id" />
@@ -440,25 +501,9 @@
     </AssociationSetMapping>
     <AssociationSetMapping Name="TransactionSource" TypeName="AMM.TransactionSource" StoreEntitySet="TransactionSet">
       <EndProperty Name="Source">
-        <ScalarProperty Name="Id" ColumnName="From_Id" />
+        <ScalarProperty Name="Id" ColumnName="Source_Id" />
       </EndProperty>
       <EndProperty Name="Transaction">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="TransactionSource1" TypeName="AMM.TransactionSource1" StoreEntitySet="TransactionSet">
-      <EndProperty Name="Source">
-        <ScalarProperty Name="Id" ColumnName="To_Id" />
-      </EndProperty>
-      <EndProperty Name="Transaction">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="UserSource" TypeName="AMM.UserSource" StoreEntitySet="SourceSet">
-      <EndProperty Name="User">
-        <ScalarProperty Name="Id" ColumnName="UserSource_Source_Id" />
-      </EndProperty>
-      <EndProperty Name="Source">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
