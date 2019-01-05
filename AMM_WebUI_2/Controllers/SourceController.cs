@@ -25,6 +25,12 @@ namespace AMM_WebUI_2.Controllers
             return new ApiResponse<Object>() { data = mRepository.TypeOfSourceAMM.GetTypes(), error = "" };
         }
 
+        [Route("api/get-sources")]
+        public Object Get(bool _b1 = false)
+        {
+            return new ApiResponse<Object>() { data = mRepository.SourceAMM.GetSources(), error = "" };
+        }
+
         [Route("api/add-source")]
         public ApiResponse<Source> Post([FromBody]AddSourceForm _addSourceForm)
         {

@@ -1,7 +1,22 @@
-﻿<div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
+﻿<div id="main-div" class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
     <h4>Кошельки и карты</h4>
-    <div id="sources">
-
+    <div id="sources" data-bind="foreach: sourcesList">
+        <div class="col s12 m7">
+            <h2 class="header" data-bind="text: Name"></h2>
+            <div class="card horizontal">
+                <!--<div class="card-image">
+                    <img src="https://lorempixel.com/100/190/nature/6">
+                </div>-->
+                <div class="card-stacked">
+                    <div class="card-content" data-bind="text: 'Сумма: ' Money">
+                        
+                    </div>
+                    <!--<div class="card-action">
+                        <a href="#">This is a link</a>
+                    </div>-->
+                </div>
+            </div>
+        </div>
     </div>
     <a href="#!add_source" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Добавить</a>
     <div class="fixed-action-btn">
@@ -54,43 +69,74 @@
         </div>
     </div>-->
 </div>
-<script>
+<script>    
+    let AMM_MainViewModel = {
+        self: this,
+        sourcesList: ko.observableArray(),
+        //loginForm: {
+        //    Login: ko.observable(""),
+        //    Password: ko.observable("")
+        //},
+
+        UpdateSourcesList: function () {
+            AMM_ViewModel.showPreloader(true);
+            $.ajax({
+                url: "api/get-sources",                
+                type: 'GET'
+            }).done(function (resp) {
+                console.log(resp);
+                if (resp.error !== null && resp.error !== "") {
+                    AMM_ViewModel.showPreloader(false);
+                    alert(resp.error);
+                }
+                else {
+                    AMM_ViewModel.showPreloader(false);
+                    AMM_MainViewModel.sourcesList.length = 0;
+                    for (let item of resp.data) {
+                        if (item.Type.Name === "Кошелек" || item.Type.Name === "Карта") {
+                            AMM_MainViewModel.sourcesList.push(item);
+                        }                        
+                    }
+                    //location.hash = "#!main";
+                }
+            }).fail(function (xhr, status, text) {
+                AMM_ViewModel.showPreloader(false);
+                alert("error: " + text);
+            });
+        }
+        //LoginClick: function () {
+        //    AMM_ViewModel.showPreloader(true);            
+        //    let formData = ko.toJS(AMM_LoginViewModel.loginForm);
+        //    console.log(formData);
+        //    $.ajax({
+        //        url: "api/login",
+        //        data: formData,
+        //        type: 'POST'
+        //    }).done(function (resp) {
+        //        console.log(resp);
+        //        if (resp.error !== null && resp.error !== "") {
+        //            AMM_ViewModel.showPreloader(false);
+        //            alert(resp.error);
+        //        }
+        //        else {
+        //            AMM_ViewModel.showPreloader(false);
+        //            location.hash = "#!main";
+        //        }
+        //    }).fail(function (xhr, status, text) {
+        //        AMM_ViewModel.showPreloader(false);
+        //        alert("error: " + text);
+        //    });
+        //},
+
+        //ShowRegistrationClick: function () {
+        //    location.hash = "#!register";
+        //}
+    }    
+    ko.applyBindings(AMM_MainViewModel, document.getElementById("main-div"));
+
     $(document).ready(function () {
         $('.fixed-action-btn').floatingActionButton();
     });
-    //let AMM_LoginViewModel = {
-    //    loginForm: {
-    //        Login: ko.observable(""),
-    //        Password: ko.observable("")
-    //    },
 
-    //    LoginClick: function () {
-    //        AMM_ViewModel.showPreloader(true);            
-    //        let formData = ko.toJS(AMM_LoginViewModel.loginForm);
-    //        console.log(formData);
-    //        $.ajax({
-    //            url: "api/login",
-    //            data: formData,
-    //            type: 'POST'
-    //        }).done(function (resp) {
-    //            console.log(resp);
-    //            if (resp.error !== null && resp.error !== "") {
-    //                AMM_ViewModel.showPreloader(false);
-    //                alert(resp.error);
-    //            }
-    //            else {
-    //                AMM_ViewModel.showPreloader(false);
-    //                location.hash = "#!main";
-    //            }
-    //        }).fail(function (xhr, status, text) {
-    //            AMM_ViewModel.showPreloader(false);
-    //            alert("error: " + text);
-    //        });
-    //    },
-
-    //    ShowRegistrationClick: function () {
-    //        location.hash = "#!register";
-    //    }
-    //}    
-    //ko.applyBindings(AMM_LoginViewModel, document.getElementById("login-form"));
+    AMM_MainViewModel.UpdateSourcesList();
 </script>
