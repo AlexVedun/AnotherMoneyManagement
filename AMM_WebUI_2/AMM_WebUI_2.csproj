@@ -132,6 +132,10 @@
     <Content Include="Scripts\materialize.min.js" />
     <Content Include="Scripts\sammy-0.7.5.js" />
     <Content Include="Scripts\sammy-0.7.5.min.js" />
+    <Content Include="wwwroot\images\credit-card.png" />
+    <Content Include="wwwroot\images\credit-card-orig.png" />
+    <Content Include="wwwroot\images\wallet.png" />
+    <Content Include="wwwroot\images\wallet-orig.png" />
     <Content Include="wwwroot\pages\add_source.htm" />
     <Content Include="wwwroot\pages\main.htm" />
     <Content Include="wwwroot\pages\add_trans.htm" />

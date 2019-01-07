@@ -1,24 +1,27 @@
 ﻿<div id="main-div" class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
-    <h4>Кошельки и карты</h4>
-    <div id="sources" data-bind="foreach: sourcesList">
-        <div class="col s12 m7">
-            <h2 class="header" data-bind="text: Name"></h2>
-            <div class="card horizontal">
-                <!--<div class="card-image">
-                    <img src="https://lorempixel.com/100/190/nature/6">
-                </div>-->
-                <div class="card-stacked">
-                    <div class="card-content" data-bind="text: 'Сумма: ' Money">
-                        
-                    </div>
-                    <!--<div class="card-action">
-                        <a href="#">This is a link</a>
-                    </div>-->
+    <h4>Кошельки и карты<br /> (всего: <!--ko text: mainSum()--><!--/ko--> грн.)</h4>
+    <div class="row">
+        <ul class="collection" data-bind="foreach: sourcesList">
+            <li class="collection-item avatar">
+                <div class="card-image" data-bind="if: Type.Name == 'Кошелек'">
+                    <img class="circle" src="../../wwwroot/images/wallet.png" />
                 </div>
-            </div>
-        </div>
+                <div class="card-image" data-bind="if: Type.Name == 'Карта'">
+                    <img class="circle" src="../../wwwroot/images/credit-card.png" />
+                </div>
+                <span class="title" data-bind="text: Name"></span>
+                <p>Сумма: <!--ko text: Money--><!--/ko--> грн.</p>
+                <p><!--ko text: Description--><!--/ko--></p>
+                <!--<a href="#!" class="secondary-content"><i class="material-icons">edit</i></a>-->
+                <!--<a class="secondary-content waves-effect waves-light btn-small"><i class="material-icons left">edit</i>Изменить</a>-->
+                <button class="secondary-content waves-effect waves-light btn-small"
+                        data-bind="click: $parent.EditSource"><i class="material-icons">edit</i></button>
+            </li>            
+        </ul>        
     </div>
-    <a href="#!add_source" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Добавить</a>
+    <div class="row">
+        <a href="#!add_source" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Добавить</a>
+    </div>    
     <div class="fixed-action-btn">
         <a href="#!add_trans" class="btn-floating btn-large red waves-effect waves-light">
             <i class="large material-icons">add</i>
@@ -72,12 +75,21 @@
 <script>    
     let AMM_MainViewModel = {
         self: this,
-        sourcesList: ko.observableArray(),
+        sourcesList: ko.observableArray([]),
+        mainSum: function () {
+            let sum = 0;            
+            for (let i = 0; i < this.sourcesList().length; i++) {
+                sum += this.sourcesList()[i].Money;
+            }            
+            return sum;
+        },
         //loginForm: {
         //    Login: ko.observable(""),
         //    Password: ko.observable("")
         //},
+        EditSource: function () {
 
+        },
         UpdateSourcesList: function () {
             AMM_ViewModel.showPreloader(true);
             $.ajax({
@@ -91,7 +103,7 @@
                 }
                 else {
                     AMM_ViewModel.showPreloader(false);
-                    AMM_MainViewModel.sourcesList.length = 0;
+                    AMM_MainViewModel.sourcesList([]);
                     for (let item of resp.data) {
                         if (item.Type.Name === "Кошелек" || item.Type.Name === "Карта") {
                             AMM_MainViewModel.sourcesList.push(item);
