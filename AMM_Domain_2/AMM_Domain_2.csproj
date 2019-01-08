@@ -53,6 +53,14 @@
     <Compile Include="Migrations\201901011309242_InitialCreate.Designer.cs">
       <DependentUpon>201901011309242_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901080846273_Change1.cs" />
+    <Compile Include="Migrations\201901080846273_Change1.Designer.cs">
+      <DependentUpon>201901080846273_Change1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901080940253_Change2.cs" />
+    <Compile Include="Migrations\201901080940253_Change2.Designer.cs">
+      <DependentUpon>201901080940253_Change2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AMM.Context.cs" />
     <Compile Include="Model\Family.cs" />
@@ -76,6 +84,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901011309242_InitialCreate.resx">
       <DependentUpon>201901011309242_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901080846273_Change1.resx">
+      <DependentUpon>201901080846273_Change1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901080940253_Change2.resx">
+      <DependentUpon>201901080940253_Change2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

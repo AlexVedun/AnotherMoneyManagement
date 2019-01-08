@@ -18,5 +18,6 @@ namespace AMM_Domain_2.Model
                 
         public virtual ICollection<User> Users { get; set; }
         public virtual User Admin { get; set; }
+        public virtual ICollection<Source> Sources { get; set; }
     }
 }

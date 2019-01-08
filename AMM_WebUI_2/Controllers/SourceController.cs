@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace AMM_WebUI_2.Controllers
@@ -44,7 +45,9 @@ namespace AMM_WebUI_2.Controllers
                         Name = _addSourceForm.Name,
                         Money = _addSourceForm.Money,
                         Description = _addSourceForm.Description,
-                        Type = mRepository.TypeOfSourceAMM.GetTypeById(_addSourceForm.TypeOfSource)
+                        IsDeleted = false,
+                        Type = mRepository.TypeOfSourceAMM.GetTypeById(_addSourceForm.TypeOfSource),
+                        User = mRepository.UserAMM.GetUserByLogin(HttpContext.Current.Session["user_login"].ToString())
                     };
                     mRepository.SourceAMM.SaveSource(source);
                     return new ApiResponse<Source>() { data = source, error = "" };
