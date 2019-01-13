@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,8 @@ namespace AMM_Domain_2.Model
         public string Name { get; set; }
         public string Patronymic { get; set; }
 
-        public virtual Family Family { get; set; }        
+        public virtual Family Family { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Source> Sources { get; set; }
         public virtual ICollection<TransactionLog> TransactionLogs { get; set; }
     }
