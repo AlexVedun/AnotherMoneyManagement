@@ -25,11 +25,15 @@ namespace AMM_WebUI_2.Controllers
         {
             return new ApiResponse<Object>() { data = mRepository.TypeOfSourceAMM.GetTypes(), error = "" };
         }
-
+        // запрос источников для текущего пользователя
         [Route("api/get-sources")]
         public Object Get(bool _b1 = false)
         {
-            return new ApiResponse<Object>() { data = mRepository.SourceAMM.GetSources(), error = "" };
+            return new ApiResponse<Object>()
+                {
+                    data = mRepository.SourceAMM.GetSourcesForUser(HttpContext.Current.Session["user_login"].ToString()),
+                    error = ""
+                };
         }
 
         [Route("api/add-source")]

@@ -49,6 +49,7 @@
     @*основной скрипт*@
     <script src="~/Scripts/global.js"></script>
     <script>
+        let visibleEvent = new Event("MainVisible");
         let AMM_ViewModel = {
             // свойства
             show: {
@@ -108,6 +109,12 @@
                 this.navbar.logout(false);
             }
         }
+
+        AMM_ViewModel.show.main.subscribe(function (newValue) {
+            if (newValue) {
+                document.dispatchEvent(visibleEvent);                
+            }
+        });
 
         ko.applyBindings(AMM_ViewModel);
 

@@ -150,5 +150,9 @@
         $('.fixed-action-btn').floatingActionButton();
     });
 
-    AMM_MainViewModel.UpdateSourcesList();
+    $(document).on("MainVisible", function () {
+        AMM_MainViewModel.UpdateSourcesList();        
+    });
+
+    //AMM_MainViewModel.UpdateSourcesList();
 </script>

@@ -19,6 +19,11 @@ namespace AMM_Domain_2.Model
             return mdb.SourceSet.ToList();
         }
 
+        public IEnumerable<Source> GetSourcesForUser(string _login)
+        {
+            return mdb.SourceSet.Where(x => x.User.Login == _login).ToList();
+        }
+
         public Source GetSourceByName(string _name)
         {
             return mdb.SourceSet.Where(x => x.Name == _name).FirstOrDefault();
