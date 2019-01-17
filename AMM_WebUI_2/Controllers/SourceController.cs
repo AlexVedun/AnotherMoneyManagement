@@ -20,11 +20,11 @@ namespace AMM_WebUI_2.Controllers
             mRepository = _repository;
         }
 
-        [Route("api/get-source-types")]
-        public Object Get()
-        {
-            return new ApiResponse<Object>() { data = mRepository.TypeOfSourceAMM.GetTypes(), error = "" };
-        }
+        //[Route("api/get-source-types")]
+        //public Object Get()
+        //{
+        //    return new ApiResponse<Object>() { data = mRepository.TypeOfSourceAMM.GetTypes(), error = "" };
+        //}
         // запрос источников для текущего пользователя
         [Route("api/get-sources")]
         public Object Get(bool _b1 = false)
@@ -39,9 +39,10 @@ namespace AMM_WebUI_2.Controllers
         [Route("api/add-source")]
         public ApiResponse<Source> Post([FromBody]AddSourceForm _addSourceForm)
         {
+            string login = HttpContext.Current.Session["user_login"].ToString();
             try
             {
-                Source source = mRepository.SourceAMM.GetSourceByName(_addSourceForm.Name);
+                Source source = mRepository.SourceAMM.GetSourceByName(login, _addSourceForm.Name);
                 if (source == null)
                 {
                     source = new Source()
@@ -50,8 +51,9 @@ namespace AMM_WebUI_2.Controllers
                         Money = _addSourceForm.Money,
                         Description = _addSourceForm.Description,
                         IsDeleted = false,
-                        Type = mRepository.TypeOfSourceAMM.GetTypeById(_addSourceForm.TypeOfSource),
-                        User = mRepository.UserAMM.GetUserByLogin(HttpContext.Current.Session["user_login"].ToString())
+                        //Type = mRepository.TypeOfSourceAMM.GetTypeById(_addSourceForm.TypeOfSource),
+                        Type = (TypeOfSource)_addSourceForm.TypeOfSource,
+                        User = mRepository.UserAMM.GetUserByLogin(login)
                     };
                     mRepository.SourceAMM.SaveSource(source);
                     return new ApiResponse<Source>() { data = source, error = "" };

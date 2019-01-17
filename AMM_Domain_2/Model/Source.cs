@@ -16,9 +16,9 @@ namespace AMM_Domain_2.Model
         public string Description { get; set; }
         [Required]
         public bool IsDeleted { get; set; }
-
         [Required]
-        public virtual TypeOfSource Type { get; set; }
+        public TypeOfSource Type { get; set; }
+
         [Required]
         public virtual User User { get; set; }        
     }

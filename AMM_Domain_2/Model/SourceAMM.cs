@@ -24,19 +24,19 @@ namespace AMM_Domain_2.Model
             return mdb.SourceSet.Where(x => x.User.Login == _login).ToList();
         }
 
-        public Source GetSourceByName(string _name)
+        public Source GetSourceByName(string _login, string _name)
         {
-            return mdb.SourceSet.Where(x => x.Name == _name).FirstOrDefault();
+            return mdb.SourceSet.Where(x => x.User.Login == _login && x.Name == _name).FirstOrDefault();
         }
 
-        public Source GetSourceById(int _id)
+        public Source GetSourceById(string _login, int _id)
         {
-            return mdb.SourceSet.Where(x => x.Id == _id).FirstOrDefault();
+            return mdb.SourceSet.Where(x => x.User.Login == _login && x.Id == _id).FirstOrDefault();
         }
 
         public void SaveSource (Source _source)
         {
-            Source source = GetSourceById(_source.Id);
+            Source source = GetSourceById(_source.User.Login, _source.Id);
             if (source == null)
             {
                 mdb.SourceSet.Add(_source);

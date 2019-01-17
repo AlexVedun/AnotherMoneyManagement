@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace AMM_Domain_2.Model
 {
-    public partial class TypeOfSource
+    //public partial class TypeOfSource
+    //{
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //}
+    public enum TypeOfSource
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        Income  = 0,
+        Waste   = 1,
+        Wallet  = 2,
+        Card    = 3
     }
 }
