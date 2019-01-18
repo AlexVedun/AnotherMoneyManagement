@@ -1,7 +1,7 @@
 ﻿<div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
     <div class="card grey lighten-2">
         <div class="card-content">
-            <span class="card-title">Добавить кошелек / карту / категорию расходов</span>
+            <span class="card-title">Добавить кошелек / карту </span>
             <div class="row">
                 <form id="add-source-form">
                     <div class="row">
@@ -11,13 +11,25 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
-                            <select id="AddSourceType" data-bind="foreach: types">                                    
-                                <option data-bind="value: Id, text: Name"></option>                                    
-                            </select>
-                            <label>Тип</label>                           
-                        </div>
+                        <label>
+                            <input class="with-gap" name="AddSourceType" type="radio" value="2" data-bind="checked: addSourceForm.TypeOfSource" />
+                            <span>Кошелек</span>
+                        </label>
                     </div>
+                    <div class="row">
+                        <label>
+                            <input class="with-gap" name="AddSourceType" type="radio" value="3" data-bind="checked: addSourceForm.TypeOfSource" />
+                            <span>Карта</span>
+                        </label>
+                    </div>
+                    <!--<div class="row">
+                        <div class="input-field col s12">
+                            <select id="AddSourceType" data-bind="foreach: types">
+                                <option data-bind="value: Id, text: Name"></option>
+                            </select>
+                            <label>Тип</label>
+                        </div>
+                    </div>-->
                     <div class="row">
                         <div class="input-field col s12">
                             <input value="" id="AddSourceMoney" type="text" class="validate" data-bind="value: addSourceForm.Money">
@@ -42,7 +54,7 @@
                         </div>
                     </div>-->
                     <div class="row">
-                        <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"                                
+                        <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
                                 data-bind="click: AddSourceClick">
                             Добавить
                         </button>
@@ -58,26 +70,27 @@
         </div>
     </div>
 </div>
-<script>    
+<script>
     let AMM_AddSourceViewModel = {
         // свойства
         self: this,
-        selectedTypeIndex: function () {
-            return $('#AddSourceType').parent('li.selected').index();
-        },
+        //selectedTypeIndex: function () {
+        //    return $('#AddSourceType').parent('li.selected').index();
+        //},
         //selectedTypeText: function () {
         //    return $("#AddSourceType option:selected").eq(self.selectedTypeIndex()).text();
         //},
         addSourceForm: {
             Name: ko.observable(""),
             Money: ko.observable(0),
-            Description: ko.observable(""), 
-            TypeOfSource: 0
-            //TypeOfSource: ko.computed(function () {                
+            Description: ko.observable(""),
+            TypeOfSource: ko.observable("2")
+            //TypeOfSource: 0
+            //TypeOfSource: ko.computed(function () {
             //    return $("#AddSourceType option:selected").eq(self.selectedTypeIndex).val();
-            //})            
+            //})
         },
-        types: ko.observableArray(),
+        //types: ko.observableArray(),
         //isMoneyNeed: ko.computed(function () {
         //    console.log(self.selectedTypeText)
         //    return (self.selectedTypeText === "Кошелек" || self.selectedTypeText === "Карта");
@@ -86,13 +99,14 @@
         //SelectedType: ko.observable(""),
         // методы
         ClearForm: function () {
-            for (var i in this.registerForm) {
-                this.registerForm[i]("");
-            }
+            this.addSourceForm.Description("");
+            this.addSourceForm.Money(0);
+            this.addSourceForm.Name("");
+            //this.addSourceForm.TypeOfSource();
         },
-        AddSourceClick: function () {            
+        AddSourceClick: function () {
             AMM_ViewModel.showPreloader(true);
-            this.addSourceForm.TypeOfSource = $("#AddSourceType option:selected").eq(this.selectedTypeIndex()).val();
+            //this.addSourceForm.TypeOfSource = $("#AddSourceType option:selected").eq(this.selectedTypeIndex()).val();
             let formData = ko.toJS(this.addSourceForm);
             console.log(formData);
             $.ajax({
@@ -106,7 +120,7 @@
                 }
                 else {
                     AMM_ViewModel.showPreloader(false);
-                    //AMM_RegisterViewModel.ClearForm();
+                    AMM_AddSourceViewModel.ClearForm();
                     AMM_MainViewModel.UpdateSourcesList();
                     location.hash = "#!main";
                 }
@@ -122,30 +136,30 @@
     }
 
     ko.applyBindings(AMM_AddSourceViewModel, document.getElementById("add-source-form"));
-    
-    AMM_ViewModel.showPreloader(true);
-    $.ajax({
-        url: "api/get-source-types",        
-        type: 'GET'
-    }).done(function (resp) {
-        if (resp.error !== null && resp.error !== "") {
-            AMM_ViewModel.showPreloader(false);
-            alert(resp.error);
-        }
-        else {
-            AMM_ViewModel.showPreloader(false);
-            //AMM_RegisterViewModel.ClearForm();
-            for (const item of resp.data) {
-                AMM_AddSourceViewModel.types.push(item);
-                //AMM_AddSourceViewModel.TypeNames.push(item.Name);
-            }
-            //console.log(AMM_AddSourceViewModel.Types());
-            //console.log(AMM_AddSourceViewModel.TypeNames());
-            $('#AddSourceType').formSelect();
-            //location.hash = "#!login";
-        }
-    }).fail(function (xhr, status, text) {
-        AMM_ViewModel.showPreloader(false);
-        alert("error: " + text);
-    });        
+
+    //AMM_ViewModel.showPreloader(true);
+    //$.ajax({
+    //    url: "api/get-source-types",
+    //    type: 'GET'
+    //}).done(function (resp) {
+    //    if (resp.error !== null && resp.error !== "") {
+    //        AMM_ViewModel.showPreloader(false);
+    //        alert(resp.error);
+    //    }
+    //    else {
+    //        AMM_ViewModel.showPreloader(false);
+    //        //AMM_RegisterViewModel.ClearForm();
+    //        for (const item of resp.data) {
+    //            AMM_AddSourceViewModel.types.push(item);
+    //            //AMM_AddSourceViewModel.TypeNames.push(item.Name);
+    //        }
+    //        //console.log(AMM_AddSourceViewModel.Types());
+    //        //console.log(AMM_AddSourceViewModel.TypeNames());
+    //        $('#AddSourceType').formSelect();
+    //        //location.hash = "#!login";
+    //    }
+    //}).fail(function (xhr, status, text) {
+    //    AMM_ViewModel.showPreloader(false);
+    //    alert("error: " + text);
+    //});
 </script>
