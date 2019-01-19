@@ -136,6 +136,7 @@
     <Content Include="wwwroot\images\credit-card-orig.png" />
     <Content Include="wwwroot\images\wallet.png" />
     <Content Include="wwwroot\images\wallet-orig.png" />
+    <Content Include="wwwroot\pages\manage_income_waste.htm" />
     <Content Include="wwwroot\pages\add_source.htm" />
     <Content Include="wwwroot\pages\main.htm" />
     <Content Include="wwwroot\pages\add_trans.htm" />

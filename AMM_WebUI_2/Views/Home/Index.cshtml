@@ -26,6 +26,7 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="#!login" data-bind="visible: navbar.login">Вход</a></li>
                 <li><a href="#!register" data-bind="visible: navbar.register">Регистрация</a></li>
+                <li><a href="#!manage_income_waste" data-bind="visible: navbar.incomeWaste">Категории</a></li>
                 <li><a href="#!logout" data-bind="visible: navbar.logout, text: navbar.logoutText"></a></li>
             </ul>
         </div>
@@ -34,6 +35,7 @@
     <ul id="slide-out" class="sidenav">
         <li><a class="waves-effect sidenav-close" href="#!login" data-bind="visible: navbar.login">Вход</a></li>
         <li><a class="waves-effect sidenav-close" href="#!register" data-bind="visible: navbar.register">Регистрация</a></li>
+        <li><a class="waves-effect sidenav-close" href="#!manage_income_waste" data-bind="visible: navbar.incomeWaste">Категории</a></li>
         <li><a class="waves-effect sidenav-close" href="#!logout" data-bind="visible: navbar.logout, text: navbar.logoutText"></a></li>
     </ul>
     @*индикатор выполнения длительного процесса*@
@@ -46,6 +48,7 @@
     <section id="main" data-bind="visible: show['main']" class="row"></section>
     <section id="add_trans" data-bind="visible: show['add_trans']" class="row"></section>
     <section id="add_source" data-bind="visible: show['add_source']" class="row"></section>
+    <section id="manage_income_waste" data-bind="visible: show['manage_income_waste']" class="row"></section>
     @*основной скрипт*@
     <script src="~/Scripts/global.js"></script>
     <script>
@@ -57,12 +60,14 @@
                 register: ko.observable(false),
                 main: ko.observable(false),
                 add_trans: ko.observable(false),
-                add_source: ko.observable(false)
+                add_source: ko.observable(false),
+                manage_income_waste: ko.observable(false)
             },
             navbar: {
                 login: ko.observable(true),
                 register: ko.observable(true),
                 logout: ko.observable(false),
+                incomeWaste: ko.observable(false),
                 logoutText: ko.observable("")
             },
             showPreloader: ko.observable(false),
@@ -101,18 +106,20 @@
                 this.navbar.register(false);
                 this.navbar.logoutText("Выход (" + _name + ")");
                 this.navbar.logout(true);
+                this.navbar.incomeWaste(true);
             },
             SetLogout: function () {
                 this.navbar.login(true);
                 this.navbar.register(true);
                 this.navbar.logoutText("");
                 this.navbar.logout(false);
+                this.navbar.incomeWaste(false);
             }
         }
 
         AMM_ViewModel.show.main.subscribe(function (newValue) {
             if (newValue) {
-                document.dispatchEvent(visibleEvent);                
+                document.dispatchEvent(visibleEvent);
             }
         });
 
@@ -150,7 +157,7 @@
         $(document).ready(function () {
             $('.sidenav').sidenav();
         });
-
+        // проверка, есть ли на сервере активная пользовательская сессия
         AMM_ViewModel.showPreloader(true);
         $.get("api/login/checkout")
             .done(function (resp) {
