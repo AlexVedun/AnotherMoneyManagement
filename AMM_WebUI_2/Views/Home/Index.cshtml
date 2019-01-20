@@ -52,7 +52,7 @@
     @*основной скрипт*@
     <script src="~/Scripts/global.js"></script>
     <script>
-        let visibleEvent = new Event("MainVisible");
+        let mainVisibleEvent = new Event("MainVisible");
         let AMM_ViewModel = {
             // свойства
             show: {
@@ -116,10 +116,10 @@
                 this.navbar.incomeWaste(false);
             }
         }
-
+        // генерируется событие того, что раздел main изменил свою видимость
         AMM_ViewModel.show.main.subscribe(function (newValue) {
             if (newValue) {
-                document.dispatchEvent(visibleEvent);
+                document.dispatchEvent(mainVisibleEvent);
             }
         });
 

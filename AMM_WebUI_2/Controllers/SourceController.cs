@@ -27,7 +27,7 @@ namespace AMM_WebUI_2.Controllers
         //}
         // запрос источников для текущего пользователя
         [Route("api/get-sources")]
-        public Object Get(bool _b1 = false)
+        public Object Get(/*bool _b1 = false*/)
         {
             return new ApiResponse<Object>()
                 {

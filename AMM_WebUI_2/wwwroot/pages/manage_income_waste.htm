@@ -3,7 +3,7 @@
         <div class="card-content">
             <span class="card-title">Управление категориями доходов/расходов</span>
             <div class="row">
-                <form id="manage-income-waste-form" class="col s12 m6 l6 xl6">
+                <form id="manage-income-waste-form" class="col s12 m8 l8 xl8">
                     <div class="col s12 m6 l6 xl6">
                         <div class="row">
                             <div class="input-field col s12">
@@ -13,13 +13,13 @@
                         </div>
                         <div class="row">
                             <label>
-                                <input class="with-gap" name="IncomeWasteType" type="radio" value="0" data-bind="checked: manageIncomeWasteForm.Type" />
+                                <input class="with-gap" name="IncomeWasteType" type="radio" value="0" data-bind="checked: manageIncomeWasteForm.TypeOfSource" />
                                 <span>Доход</span>
                             </label>
                         </div>
                         <div class="row">
                             <label>
-                                <input class="with-gap" name="IncomeWasteType" type="radio" value="1" data-bind="checked: manageIncomeWasteForm.Type" />
+                                <input class="with-gap" name="IncomeWasteType" type="radio" value="1" data-bind="checked: manageIncomeWasteForm.TypeOfSource" />
                                 <span>Расход</span>
                             </label>
                         </div>
@@ -33,7 +33,7 @@
                     <div class="col s12 m6 l6 xl6">
                         <div class="row">
                             <div class="input-field col s12">
-                                <select id="AddSourceType" data-bind="foreach: types">
+                                <select id="DeleteSourceList" data-bind="foreach: sources">
                                     <option data-bind="value: Id, text: Name"></option>
                                 </select>
                                 <label>Категория</label>
@@ -109,11 +109,8 @@
                         </button>
                     </div>-->
                 </form>
-                <ul class="collection col s12 m6 l6 xl6">
-                    <li class="collection-item">Alvin</li>
-                    <li class="collection-item">Alvin</li>
-                    <li class="collection-item">Alvin</li>
-                    <li class="collection-item">Alvin</li>
+                <ul class="collection col s12 m4 l4 xl4" data-bind="foreach: sources">
+                    <li class="collection-item" data-bind="text: Name"><i class="material-icons" data-bind="text: Icon"></i></li>
                 </ul>
             </div>
         </div>
@@ -131,15 +128,16 @@
         //},
         manageIncomeWasteForm: {
             Name: ko.observable(""),
-            Type: ko.observable("0")
-            //Money: ko.observable(0),
-            //Description: ko.observable(""),
+            TypeOfSource: ko.observable("0"),
+            Money: ko.observable(0),
+            Description: ko.observable("")
             //TypeOfSource: ko.observable("2")
             //TypeOfSource: 0
             //TypeOfSource: ko.computed(function () {
             //    return $("#AddSourceType option:selected").eq(self.selectedTypeIndex).val();
             //})
         },
+        sources: ko.observableArray(),
         //types: ko.observableArray(),
         //isMoneyNeed: ko.computed(function () {
         //    console.log(self.selectedTypeText)
@@ -155,10 +153,69 @@
             //this.addSourceForm.TypeOfSource();
         },
         AddIncomeWasteClick: function () {
-
+            AMM_ViewModel.showPreloader(true);
+            //this.addSourceForm.TypeOfSource = $("#AddSourceType option:selected").eq(this.selectedTypeIndex()).val();
+            let formData = ko.toJS(this.manageIncomeWasteForm);
+            console.log(formData);
+            $.ajax({
+                url: "api/add-source",
+                data: formData,
+                type: 'POST'
+            }).done(function (resp) {
+                if (resp.error !== null && resp.error !== "") {
+                    AMM_ViewModel.showPreloader(false);
+                    alert(resp.error);
+                }
+                else {
+                    AMM_ViewModel.showPreloader(false);
+                    AMM_ManageIncomeWasteViewModel.GetIncomeWaste();
+                    //AMM_AddSourceViewModel.ClearForm();
+                    //AMM_MainViewModel.UpdateSourcesList();
+                    //location.hash = "#!main";
+                }
+            }).fail(function (xhr, status, text) {
+                AMM_ViewModel.showPreloader(false);
+                alert("error: " + text);
+            });
+            //this.GetIncomeWaste();
         },
         DeleteIncomeWasteClick: function () {
 
+        },
+        GetIncomeWaste: function () {
+            AMM_ViewModel.showPreloader(true);
+            $.ajax({
+                url: "api/get-sources",
+                type: 'GET'
+            }).done(function (resp) {
+                console.log(resp);
+                if (resp.error !== null && resp.error !== "") {
+                    AMM_ViewModel.showPreloader(false);
+                    alert(resp.error);
+                }
+                else {
+                    AMM_ViewModel.showPreloader(false);
+                    AMM_ManageIncomeWasteViewModel.sources([]);
+                    for (let item of resp.data) {
+                        if (item.Type === INCOME || item.Type === WASTE) {
+                            switch (item.Type) {
+                                case INCOME:
+                                    item.Icon = "attach_money";
+                                    break;
+                                case WASTE:
+                                    item.Icon = "shopping_cart";
+                                    break;
+                                default:
+                            }
+                            AMM_ManageIncomeWasteViewModel.sources.push(item);
+                        }
+                    }
+                    //location.hash = "#!main";
+                }
+            }).fail(function (xhr, status, text) {
+                AMM_ViewModel.showPreloader(false);
+                alert("error: " + text);
+            });
         },
         //AddSourceClick: function () {
         //    AMM_ViewModel.showPreloader(true);
@@ -191,31 +248,11 @@
         }
     }
 
+    $(document).ready(function () {
+        $('select').formSelect();
+    });
+
     ko.applyBindings(AMM_ManageIncomeWasteViewModel, document.getElementById("manage-income-waste-form"));
 
-    //AMM_ViewModel.showPreloader(true);
-    //$.ajax({
-    //    url: "api/get-source-types",
-    //    type: 'GET'
-    //}).done(function (resp) {
-    //    if (resp.error !== null && resp.error !== "") {
-    //        AMM_ViewModel.showPreloader(false);
-    //        alert(resp.error);
-    //    }
-    //    else {
-    //        AMM_ViewModel.showPreloader(false);
-    //        //AMM_RegisterViewModel.ClearForm();
-    //        for (const item of resp.data) {
-    //            AMM_AddSourceViewModel.types.push(item);
-    //            //AMM_AddSourceViewModel.TypeNames.push(item.Name);
-    //        }
-    //        //console.log(AMM_AddSourceViewModel.Types());
-    //        //console.log(AMM_AddSourceViewModel.TypeNames());
-    //        $('#AddSourceType').formSelect();
-    //        //location.hash = "#!login";
-    //    }
-    //}).fail(function (xhr, status, text) {
-    //    AMM_ViewModel.showPreloader(false);
-    //    alert("error: " + text);
-    //});
+    AMM_ManageIncomeWasteViewModel.GetIncomeWaste();
 </script>
