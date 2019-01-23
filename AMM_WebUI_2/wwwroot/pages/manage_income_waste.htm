@@ -1,9 +1,9 @@
 ﻿<div class="col s12 m12 l12 xl10 offset-xl1">
-    <div class="card grey lighten-2">
+    <div class="card grey lighten-2" id="manage-income-waste-form">
         <div class="card-content">
             <span class="card-title">Управление категориями доходов/расходов</span>
             <div class="row">
-                <form id="manage-income-waste-form" class="col s12 m8 l8 xl8">
+                <form class="col s12 m8 l8 xl8">
                     <div class="col s12 m6 l6 xl6">
                         <div class="row">
                             <div class="input-field col s12">
@@ -110,7 +110,10 @@
                     </div>-->
                 </form>
                 <ul class="collection col s12 m4 l4 xl4" data-bind="foreach: sources">
-                    <li class="collection-item" data-bind="text: Name"><i class="material-icons" data-bind="text: Icon"></i></li>
+                    <li class="collection-item">
+                        <i class="material-icons" data-bind="text: Icon"></i>
+                        <!--ko text: Name--><!--/ko-->                        
+                    </li>
                 </ul>
             </div>
         </div>
@@ -156,7 +159,7 @@
             AMM_ViewModel.showPreloader(true);
             //this.addSourceForm.TypeOfSource = $("#AddSourceType option:selected").eq(this.selectedTypeIndex()).val();
             let formData = ko.toJS(this.manageIncomeWasteForm);
-            console.log(formData);
+            //console.log(formData);
             $.ajax({
                 url: "api/add-source",
                 data: formData,
@@ -180,7 +183,28 @@
             //this.GetIncomeWaste();
         },
         DeleteIncomeWasteClick: function () {
-
+            let deleteId = $("#DeleteSourceList option:selected").eq($('#DeleteSourceList').parent('li.selected').index()).val();
+            //let deleteId = GetSelectedItemId("DeleteSourceList");
+            $.ajax({
+                url: "api/add-source",
+                data: { '_Id': deleteId },
+                type: 'DELETE'
+            }).done(function (resp) {
+                if (resp.error !== null && resp.error !== "") {
+                    AMM_ViewModel.showPreloader(false);
+                    alert(resp.error);
+                }
+                else {
+                    AMM_ViewModel.showPreloader(false);
+                    AMM_ManageIncomeWasteViewModel.GetIncomeWaste();
+                    //AMM_AddSourceViewModel.ClearForm();
+                    //AMM_MainViewModel.UpdateSourcesList();
+                    //location.hash = "#!main";
+                }
+            }).fail(function (xhr, status, text) {
+                AMM_ViewModel.showPreloader(false);
+                alert("error: " + text);
+            });
         },
         GetIncomeWaste: function () {
             AMM_ViewModel.showPreloader(true);
@@ -210,6 +234,8 @@
                             AMM_ManageIncomeWasteViewModel.sources.push(item);
                         }
                     }
+                    $('#DeleteSourceList').formSelect();
+                    console.log(AMM_ManageIncomeWasteViewModel.sources);
                     //location.hash = "#!main";
                 }
             }).fail(function (xhr, status, text) {
@@ -248,11 +274,15 @@
         }
     }
 
-    $(document).ready(function () {
-        $('select').formSelect();
-    });
-
     ko.applyBindings(AMM_ManageIncomeWasteViewModel, document.getElementById("manage-income-waste-form"));
 
-    AMM_ManageIncomeWasteViewModel.GetIncomeWaste();
+    //$(document).ready(function () {
+    //    $('select').formSelect();
+    //});
+    
+    $(document).on("IncomeWasteVisible", function () {        
+        AMM_ManageIncomeWasteViewModel.GetIncomeWaste();
+    });
+
+    
 </script>

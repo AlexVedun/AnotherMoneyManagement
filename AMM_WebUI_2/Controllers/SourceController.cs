@@ -69,5 +69,30 @@ namespace AMM_WebUI_2.Controllers
                 return new ApiResponse<Source>() { error = ex.Message };
             }
         }
+
+        [Route("api/delete-source")]
+        public ApiResponse<Source> Delete(int _Id)
+        {
+            string login = HttpContext.Current.Session["user_login"].ToString();
+            try
+            {
+                Source source = mRepository.SourceAMM.GetSourceById(login, _Id);                
+                if (source != null)
+                {
+                    source.IsDeleted = true;
+                    mRepository.SourceAMM.SaveSource(source);
+                    return new ApiResponse<Source>() { data = source, error = "" };
+                }
+                else
+                {
+                    return new ApiResponse<Source>() { error = "Критическая ошибка! Не могу найти выбранный для удуления источник." };
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return new ApiResponse<Source>() { error = ex.Message };
+            }
+        }
     }
 }

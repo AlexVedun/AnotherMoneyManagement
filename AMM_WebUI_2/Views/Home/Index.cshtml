@@ -53,6 +53,7 @@
     <script src="~/Scripts/global.js"></script>
     <script>
         let mainVisibleEvent = new Event("MainVisible");
+        let manageIncomeWasteEvent = new Event("IncomeWasteVisible");
         let AMM_ViewModel = {
             // свойства
             show: {
@@ -120,6 +121,12 @@
         AMM_ViewModel.show.main.subscribe(function (newValue) {
             if (newValue) {
                 document.dispatchEvent(mainVisibleEvent);
+            }
+        });
+
+        AMM_ViewModel.show.manage_income_waste.subscribe(function (newValue) {
+            if (newValue) {
+                document.dispatchEvent(manageIncomeWasteEvent);
             }
         });
 

@@ -21,7 +21,7 @@ namespace AMM_Domain_2.Model
 
         public IEnumerable<Source> GetSourcesForUser(string _login)
         {
-            return mdb.SourceSet.Where(x => x.User.Login == _login).ToList();
+            return mdb.SourceSet.Where(x => x.User.Login == _login && x.IsDeleted == false).ToList();
         }
 
         public Source GetSourceByName(string _login, string _name)
