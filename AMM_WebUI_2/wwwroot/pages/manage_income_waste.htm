@@ -116,6 +116,12 @@
                     </li>
                 </ul>
             </div>
+            <div class="row">
+                <button class="col s12 m4 offset-m8 l4 offset-l8 xl4 offset-xl8 waves-effect waves-light btn"
+                        data-bind="click: ReadyClick">
+                    Готово
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -183,11 +189,10 @@
             //this.GetIncomeWaste();
         },
         DeleteIncomeWasteClick: function () {
-            let deleteId = $("#DeleteSourceList option:selected").eq($('#DeleteSourceList').parent('li.selected').index()).val();
-            //let deleteId = GetSelectedItemId("DeleteSourceList");
+            //let deleteId = $("#DeleteSourceList option:selected").eq($('#DeleteSourceList').parent('li.selected').index()).val();
+            let deleteId = GetSelectedItemId("DeleteSourceList");
             $.ajax({
-                url: "api/add-source",
-                data: { '_Id': deleteId },
+                url: "api/delete-source/" + deleteId,
                 type: 'DELETE'
             }).done(function (resp) {
                 if (resp.error !== null && resp.error !== "") {
@@ -269,7 +274,7 @@
         //    });
         //},
 
-        CancelAddSourceClick: function () {
+        ReadyClick: function () {
             location.hash = "#!main";
         }
     }

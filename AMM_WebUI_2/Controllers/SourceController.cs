@@ -58,6 +58,14 @@ namespace AMM_WebUI_2.Controllers
                     mRepository.SourceAMM.SaveSource(source);
                     return new ApiResponse<Source>() { data = source, error = "" };
                 }                
+                else if (source.IsDeleted == true)
+                {
+                    source.Money = _addSourceForm.Money;
+                    source.Description = _addSourceForm.Description;
+                    source.IsDeleted = false;
+                    mRepository.SourceAMM.SaveSource(source);
+                    return new ApiResponse<Source>() { data = source, error = "" };
+                }
                 else
                 {
                     return new ApiResponse<Source>() { error = "Кошелек/карта/категория расходов с таким именем уже существуют!" };
@@ -70,8 +78,8 @@ namespace AMM_WebUI_2.Controllers
             }
         }
 
-        [Route("api/delete-source")]
-        public ApiResponse<Source> Delete(int _Id)
+        [Route("api/delete-source/{_Id}")]
+        public ApiResponse<Source> Delete([FromUri] int _Id)
         {
             string login = HttpContext.Current.Session["user_login"].ToString();
             try
