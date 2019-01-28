@@ -24,6 +24,12 @@
                             </label>
                         </div>
                         <div class="row">
+                            <div class="input-field col s12">
+                                <input value="" id="IncomeWasteDescription" type="text" class="validate" data-bind="value: manageIncomeWasteForm.Description">
+                                <label class="active" for="IncomeWasteDescription">Описание</label>
+                            </div>
+                        </div>
+                        <div class="row">
                             <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
                                     data-bind="click: AddIncomeWasteClick">
                                 Добавить
@@ -109,12 +115,19 @@
                         </button>
                     </div>-->
                 </form>
-                <ul class="collection col s12 m4 l4 xl4" data-bind="foreach: sources">
-                    <li class="collection-item">
-                        <i class="material-icons" data-bind="text: Icon"></i>
-                        <!--ko text: Name--><!--/ko-->                        
+                <ul id="IncomeWasteList" class="collapsible col s12 m4 l4 xl4" data-bind="foreach: sources">
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons" data-bind="text: Icon"></i><!--ko text: Name--><!--/ko--></div>
+                        <div class="collapsible-body"><span><!--ko text: Description--><!--/ko--></span></div>
                     </li>
                 </ul>
+                <!--<ul class="collection col s12 m4 l4 xl4" data-bind="foreach: sources">
+                <li class="collection-item">
+                    <i class="material-icons" data-bind="text: Icon"></i>
+                    <!--ko text: Name-->
+                <!--/ko-->
+                <!--</li>
+                </ul>-->
             </div>
             <div class="row">
                 <button class="col s12 m4 offset-m8 l4 offset-l8 xl4 offset-xl8 waves-effect waves-light btn"
@@ -284,10 +297,14 @@
     //$(document).ready(function () {
     //    $('select').formSelect();
     //});
-    
-    $(document).on("IncomeWasteVisible", function () {        
+
+    $(document).on("IncomeWasteVisible", function () {
         AMM_ManageIncomeWasteViewModel.GetIncomeWaste();
     });
 
-    
+    $(document).ready(function () {
+        $('#IncomeWasteList').collapsible();
+    });
+
+
 </script>
