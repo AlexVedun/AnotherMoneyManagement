@@ -12,6 +12,7 @@ namespace AMM_Domain_2
         FamilyAMM FamilyAMM { get; }
         UserAMM UserAMM { get; }
         SourceAMM SourceAMM { get; }
+        TransactionAMM TransactionAMM { get; }
         //TypeOfSourceAMM TypeOfSourceAMM { get; }
     }
 }

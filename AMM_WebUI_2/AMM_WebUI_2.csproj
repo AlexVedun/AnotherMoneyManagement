@@ -162,6 +162,7 @@
     <Compile Include="Controllers\LogoutController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -170,6 +171,7 @@
     <Compile Include="Models\ChunckRequestForm.cs" />
     <Compile Include="Models\LoginRequestForm.cs" />
     <Compile Include="Models\RegisterRequestForm.cs" />
+    <Compile Include="Models\TransactionForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

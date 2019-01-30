@@ -76,6 +76,7 @@
     <Compile Include="Model\Source.cs" />
     <Compile Include="Model\SourceAMM.cs" />
     <Compile Include="Model\Transaction.cs" />
+    <Compile Include="Model\TransactionAMM.cs" />
     <Compile Include="Model\TransactionLog.cs" />
     <Compile Include="Model\TransStatus.cs" />
     <Compile Include="Model\TypeOfSource.cs" />
