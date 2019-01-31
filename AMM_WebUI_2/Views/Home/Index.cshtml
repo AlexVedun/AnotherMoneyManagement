@@ -58,6 +58,7 @@
         let mainVisibleEvent = new Event("MainVisible");
         let manageIncomeWasteEvent = new Event("IncomeWasteVisible");
         let addSourceEvent = new Event("AddSourceVisible");
+        let addTransactionEvent = new Event("AddTransactionVisible");
         let AMM_ViewModel = {
             // свойства
             show: {
@@ -142,6 +143,12 @@
                 document.dispatchEvent(addSourceEvent);
             }
         });
+
+        AMM_ViewModel.show.add_trans.subscribe(function (newValue) {
+            if (newValue) {
+                document.dispatchEvent(addTransactionEvent);
+            }
+        })
 
         ko.applyBindings(AMM_ViewModel);
 

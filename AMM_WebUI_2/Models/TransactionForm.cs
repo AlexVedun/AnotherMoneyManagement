@@ -9,8 +9,8 @@ namespace AMM_WebUI_2.Models
     {
         public System.DateTime Date { get; set; }
         public string Comment { get; set; }
-        public string From { get; set; }
-        public string To { get; set; }
+        public int From { get; set; }
+        public int To { get; set; }
         public decimal Summ { get; set; }
     }
 }

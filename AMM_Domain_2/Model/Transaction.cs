@@ -14,7 +14,7 @@ namespace AMM_Domain_2.Model
         public decimal Credit { get; set; }
 
         [JsonIgnore]
-        public virtual TransactionLog TransactionLog { get; set; }
+        //public virtual TransactionLog TransactionLog { get; set; }
         public virtual Source Source { get; set; }
     }
 }

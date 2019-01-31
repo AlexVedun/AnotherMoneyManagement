@@ -69,6 +69,10 @@
     <Compile Include="Migrations\201901171827434_Change_TypeOfSourses.Designer.cs">
       <DependentUpon>201901171827434_Change_TypeOfSourses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901312020324_31_01_2019-1.cs" />
+    <Compile Include="Migrations\201901312020324_31_01_2019-1.Designer.cs">
+      <DependentUpon>201901312020324_31_01_2019-1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AMM.Context.cs" />
     <Compile Include="Model\Family.cs" />
@@ -102,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901171827434_Change_TypeOfSourses.resx">
       <DependentUpon>201901171827434_Change_TypeOfSourses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901312020324_31_01_2019-1.resx">
+      <DependentUpon>201901312020324_31_01_2019-1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
