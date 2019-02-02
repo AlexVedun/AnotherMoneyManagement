@@ -73,20 +73,37 @@
     <Compile Include="Migrations\201901312020324_31_01_2019-1.Designer.cs">
       <DependentUpon>201901312020324_31_01_2019-1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902011827566_01_02_2019-1.cs" />
+    <Compile Include="Migrations\201902011827566_01_02_2019-1.Designer.cs">
+      <DependentUpon>201902011827566_01_02_2019-1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902011903105_01_02_2019-2.cs" />
+    <Compile Include="Migrations\201902011903105_01_02_2019-2.Designer.cs">
+      <DependentUpon>201902011903105_01_02_2019-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902020933123_02_02_2019-1.cs" />
+    <Compile Include="Migrations\201902020933123_02_02_2019-1.Designer.cs">
+      <DependentUpon>201902020933123_02_02_2019-1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902021545302_Delete_TransactionLog.cs" />
+    <Compile Include="Migrations\201902021545302_Delete_TransactionLog.Designer.cs">
+      <DependentUpon>201902021545302_Delete_TransactionLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AMM.Context.cs" />
     <Compile Include="Model\Family.cs" />
-    <Compile Include="Model\FamilyAMM.cs" />
+    <Compile Include="ModelAMM\FamilyAMM.cs" />
     <Compile Include="Model\Source.cs" />
-    <Compile Include="Model\SourceAMM.cs" />
+    <Compile Include="ModelAMM\SourceAMM.cs" />
     <Compile Include="Model\Transaction.cs" />
-    <Compile Include="Model\TransactionAMM.cs" />
+    <Compile Include="ModelAMM\TransactionAMM.cs" />
     <Compile Include="Model\TransactionLog.cs" />
+    <Compile Include="ModelAMM\TransactionLogAMM.cs" />
     <Compile Include="Model\TransStatus.cs" />
     <Compile Include="Model\TypeOfSource.cs" />
-    <Compile Include="Model\TypeOfSourceAMM.cs" />
+    <Compile Include="ModelAMM\TypeOfSourceAMM.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="Model\UserAMM.cs" />
+    <Compile Include="ModelAMM\UserAMM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerRepository.cs" />
   </ItemGroup>
@@ -109,6 +126,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901312020324_31_01_2019-1.resx">
       <DependentUpon>201901312020324_31_01_2019-1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902011827566_01_02_2019-1.resx">
+      <DependentUpon>201902011827566_01_02_2019-1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902011903105_01_02_2019-2.resx">
+      <DependentUpon>201902011903105_01_02_2019-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902020933123_02_02_2019-1.resx">
+      <DependentUpon>201902020933123_02_02_2019-1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902021545302_Delete_TransactionLog.resx">
+      <DependentUpon>201902021545302_Delete_TransactionLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

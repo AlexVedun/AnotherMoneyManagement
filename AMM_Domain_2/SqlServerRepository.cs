@@ -20,6 +20,7 @@ namespace AMM_Domain_2
         public UserAMM UserAMM => new UserAMM(mdb);
         public SourceAMM SourceAMM => new SourceAMM(mdb);
         public TransactionAMM TransactionAMM => new TransactionAMM(mdb);
+        //public TransactionLogAMM TransactionLogAMM => new TransactionLogAMM(mdb);
         //public TypeOfSourceAMM TypeOfSourceAMM => new TypeOfSourceAMM(mdb);
     }
 }

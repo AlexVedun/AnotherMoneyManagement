@@ -17,6 +17,7 @@ namespace AMM_Domain
         public int Id { get; set; }
         public decimal Debet { get; set; }
         public decimal Credit { get; set; }
+        public int TransactionLogId { get; set; }
     
         public virtual TransactionLog TransactionLog { get; set; }
         public virtual Source Source { get; set; }

@@ -265,6 +265,10 @@
             <End Role="Transaction" EntitySet="TransactionSet" />
             <End Role="Source" EntitySet="SourceSet" />
           </AssociationSet>
+          <AssociationSet Name="TransactionLogTransaction" Association="AMM.TransactionLogTransaction">
+            <End Role="TransactionLog" EntitySet="TransactionLogSet" />
+            <End Role="Transaction" EntitySet="TransactionSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Transaction">
           <Key>
@@ -275,6 +279,7 @@
           <NavigationProperty Name="Source" Relationship="AMM.TransactionSource" FromRole="Transaction" ToRole="Source" />
           <Property Name="Debet" Type="Decimal" Nullable="false" />
           <Property Name="Credit" Type="Decimal" Nullable="false" />
+          <Property Name="TransactionLogId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -344,7 +349,7 @@
           <Property Name="Status" Type="AMM.TransStatus" Nullable="false" />
           <Property Name="ErrorDetail" Type="String" Nullable="false" />
           <Property Name="Comment" Type="String" Nullable="false" />
-          <NavigationProperty Name="Transactions" Relationship="AMM.TransactionTransactionLog" FromRole="TransactionLog" ToRole="Transaction" />
+          <NavigationProperty Name="Transactions" Relationship="AMM.TransactionLogTransaction" FromRole="TransactionLog" ToRole="Transaction" />
         </EntityType>
         <Association Name="TransactionLogUser">
           <End Type="AMM.TransactionLog" Role="TransactionLog" Multiplicity="*" />
@@ -369,6 +374,18 @@
         <Association Name="TransactionSource">
           <End Type="AMM.Transaction" Role="Transaction" Multiplicity="*" />
           <End Type="AMM.Source" Role="Source" Multiplicity="1" />
+        </Association>
+        <Association Name="TransactionLogTransaction">
+          <End Type="AMM.TransactionLog" Role="TransactionLog" Multiplicity="1" />
+          <End Type="AMM.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionLog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="TransactionLogId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>

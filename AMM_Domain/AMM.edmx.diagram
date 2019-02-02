@@ -18,7 +18,6 @@
         <AssociationConnector Association="AMM.TransactionLogUser" />
         <AssociationConnector Association="AMM.TransactionLogSource" />
         <AssociationConnector Association="AMM.TransactionLogSource1" />
-        <AssociationConnector Association="AMM.TransactionTransactionLog" />
         <AssociationConnector Association="AMM.TransactionSource" />
       </Diagram>
     </edmx:Diagrams>

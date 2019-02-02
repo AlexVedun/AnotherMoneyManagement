@@ -14,12 +14,12 @@ namespace AMM_Domain_2.Model
             mdb = _db;
         }
 
-        public void SaveTransaction(TransactionLog _transactionLog)
+        public void SaveTransaction(Transaction _transaction)
         {
-            if (_transactionLog != null)
+            if (_transaction != null)
             {
-                mdb.TransactionLogSet.Add(_transactionLog);
-            }            
+                mdb.TransactionSet.Add(_transaction);
+            }
             mdb.SaveChanges();
         }
     }

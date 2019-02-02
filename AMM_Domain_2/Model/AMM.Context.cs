@@ -24,7 +24,7 @@ namespace AMM_Domain_2.Model
         public virtual DbSet<Family> FamilySet { get; set; }
         public virtual DbSet<Source> SourceSet { get; set; }
         //public virtual DbSet<TypeOfSource> TypeOfSourceSet { get; set; }
-        public virtual DbSet<TransactionLog> TransactionLogSet { get; set; }       
+        //public virtual DbSet<TransactionLog> TransactionLogSet { get; set; }       
     }
 
     public class FirstInitializer : DropCreateDatabaseIfModelChanges<AMMContainer>

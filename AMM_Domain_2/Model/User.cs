@@ -12,7 +12,8 @@ namespace AMM_Domain_2.Model
         public User()
         {
             this.Sources = new HashSet<Source>();
-            this.TransactionLogs = new HashSet<TransactionLog>();
+            this.Transactions = new HashSet<Transaction>();
+            //this.TransactionLogs = new HashSet<TransactionLog>();
         }
 
         public int Id { get; set; }
@@ -25,6 +26,7 @@ namespace AMM_Domain_2.Model
         public virtual Family Family { get; set; }
         [JsonIgnore]
         public virtual ICollection<Source> Sources { get; set; }
-        public virtual ICollection<TransactionLog> TransactionLogs { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
+        //public virtual ICollection<TransactionLog> TransactionLogs { get; set; }
     }
 }
