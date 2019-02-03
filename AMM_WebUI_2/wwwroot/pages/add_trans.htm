@@ -118,7 +118,9 @@
         },
         AddTransactionClick: function () {
             AMM_ViewModel.showPreloader(true);
-            this.addTransactionForm.Date(new Date());
+            let currentDate = new Date();
+            console.log(currentDate.toJSON());
+            this.addTransactionForm.Date(currentDate.toJSON());
             this.addTransactionForm.From(GetSelectedItemId("FromSourceList"));
             this.addTransactionForm.To(GetSelectedItemId("ToSourceList"));
             let formData = ko.toJS(this.addTransactionForm);

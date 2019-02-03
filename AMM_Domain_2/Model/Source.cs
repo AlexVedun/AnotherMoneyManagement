@@ -19,7 +19,7 @@ namespace AMM_Domain_2.Model
         [Required]
         public TypeOfSource Type { get; set; }
 
-        [Required]
+        //[Required]
         public virtual User User { get; set; }        
     }
 }

@@ -89,6 +89,10 @@
     <Compile Include="Migrations\201902021545302_Delete_TransactionLog.Designer.cs">
       <DependentUpon>201902021545302_Delete_TransactionLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902031305514_Add_Id_Properties.cs" />
+    <Compile Include="Migrations\201902031305514_Add_Id_Properties.Designer.cs">
+      <DependentUpon>201902031305514_Add_Id_Properties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AMM.Context.cs" />
     <Compile Include="Model\Family.cs" />
@@ -138,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902021545302_Delete_TransactionLog.resx">
       <DependentUpon>201902021545302_Delete_TransactionLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902031305514_Add_Id_Properties.resx">
+      <DependentUpon>201902031305514_Add_Id_Properties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
