@@ -13,14 +13,23 @@
                                 </li>
                             </ul>
                         </div>                        
-                        <div class="row">
+                        <!--<div class="row">
                             <a href="#!add_source" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Добавить</a>
-                        </div>
+                        </div>-->
                     </div>                    
                 </li>
                 <li>
                     <div class="collapsible-header"><i class="material-icons">swap_horiz</i>Транзакции</div>
-                    <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <ul class="collapsible" data-bind="foreach: transactionList">
+                                <li>
+                                    <div class="collapsible-header"><i class="material-icons" data-bind="text: Icon"></i><!--ko text: Name--><!--/ko--> (<!--ko text: Money--><!--/ko--> грн.)</div>
+                                    <div class="collapsible-body"><span><!--ko text: Description--><!--/ko--></span></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -35,50 +44,13 @@
             <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
             <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
         </ul>-->
-    </div>
-    <!--<div class="card grey lighten-2">
-        <div class="card-content">
-            <span class="card-title">Вход</span>
-            <div class="row">
-                <form id="login-form">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input value="" id="UserLogin" name="Login" type="text" class="validate" data-bind="value: loginForm.Login">
-                            <label class="active" for="UserLogin">Логин</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input value="" id="UserPassword" name="Password" type="password" class="validate" data-bind="value: loginForm.Password">
-                            <label class="active" for="UserPassword">Пароль</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <label class="active"></label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                data-bind="click: LoginClick">
-                            Вход
-                        </button>
-                    </div>
-                    <div class="row">
-                        <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                data-bind="click: ShowRegistrationClick">
-                            Регистрация
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>-->
+    </div>    
 </div>
 <script>
     let AMM_MainViewModel = {
         self: this,
         sourcesList: ko.observableArray([]),
+        transactionList: ko.observableArray([]),
         mainSum: function () {
             let sum = 0;
             for (let i = 0; i < this.sourcesList().length; i++) {
@@ -90,9 +62,9 @@
         //    Login: ko.observable(""),
         //    Password: ko.observable("")
         //},
-        EditSource: function () {
+        //EditSource: function () {
 
-        },
+        //},
         UpdateSourcesList: function () {
             AMM_ViewModel.showPreloader(true);
             $.ajax({
@@ -122,6 +94,43 @@
                             AMM_MainViewModel.sourcesList.push(item);
                         }
                     }
+                    //location.hash = "#!main";
+                }
+            }).fail(function (xhr, status, text) {
+                AMM_ViewModel.showPreloader(false);
+                alert("error: " + text);
+            });
+        },
+        UpdateTransactionList: function () {
+            AMM_ViewModel.showPreloader(true);
+            $.ajax({
+                url: "api/transactions/get-today",
+                type: 'GET'
+            }).done(function (resp) {
+                console.log(resp);
+                if (resp.error !== null && resp.error !== "") {
+                    AMM_ViewModel.showPreloader(false);
+                    alert(resp.error);
+                }
+                else {
+                    AMM_ViewModel.showPreloader(false);
+                    console.log(resp.data);
+                    //AMM_MainViewModel.transactionList([]);
+                    //for (let item of resp.data) {
+                    //    //if (item.Type.Name === "Кошелек" || item.Type.Name === "Карта") {
+                    //    if (item.Type === WALLET || item.Type === CARD) {
+                    //        switch (item.Type) {
+                    //            case WALLET:
+                    //                item.Icon = "account_balance_wallet";
+                    //                break;
+                    //            case CARD:
+                    //                item.Icon = "credit_card";
+                    //                break;
+                    //            default:
+                    //        }
+                    //        AMM_MainViewModel.transactionList.push(item);
+                    //    }
+                    //}
                     //location.hash = "#!main";
                 }
             }).fail(function (xhr, status, text) {
@@ -169,6 +178,7 @@
 
     $(document).on("MainVisible", function () {
         AMM_MainViewModel.UpdateSourcesList();
+        AMM_MainViewModel.UpdateTransactionList();
     });
 
         //AMM_MainViewModel.UpdateSourcesList();

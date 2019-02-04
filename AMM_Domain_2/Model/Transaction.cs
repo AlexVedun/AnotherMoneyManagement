@@ -14,8 +14,7 @@ namespace AMM_Domain_2.Model
         public string Comment { get; set; }
         public decimal Debet { get; set; }
         public decimal Credit { get; set; }
-        public int UserId { get; set; }
-        
+        public int UserId { get; set; }        
         public int FromId { get; set; }
         public int ToId { get; set; }
 

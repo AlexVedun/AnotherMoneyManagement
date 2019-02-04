@@ -125,7 +125,7 @@
             this.addTransactionForm.To(GetSelectedItemId("ToSourceList"));
             let formData = ko.toJS(this.addTransactionForm);
             $.ajax({
-                url: "api/add-transaction",
+                url: "api/transactions/add",
                 data: formData,
                 type: 'POST'
             }).done(function (resp) {

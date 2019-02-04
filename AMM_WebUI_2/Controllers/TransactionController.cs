@@ -20,7 +20,18 @@ namespace AMM_WebUI_2.Controllers
             mRepository = _repository;
         }
 
-        [Route("api/add-transaction")]
+        [Route("api/transactions/get-today")]
+        public Object Get()
+        {
+            string login = HttpContext.Current.Session["user_login"].ToString();
+            return new ApiResponse<Object>()
+            {
+                data = mRepository.TransactionAMM.GetTransactionsForToday(login),
+                error = ""
+            };
+        }
+
+        [Route("api/transactions/add")]
         public ApiResponse<Transaction> Post([FromBody]TransactionForm _transactionForm)
         {
             string login = HttpContext.Current.Session["user_login"].ToString();

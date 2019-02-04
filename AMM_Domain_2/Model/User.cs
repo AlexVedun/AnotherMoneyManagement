@@ -26,6 +26,7 @@ namespace AMM_Domain_2.Model
         public virtual Family Family { get; set; }
         [JsonIgnore]
         public virtual ICollection<Source> Sources { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Transaction> Transactions { get; set; }
         //public virtual ICollection<TransactionLog> TransactionLogs { get; set; }
     }
