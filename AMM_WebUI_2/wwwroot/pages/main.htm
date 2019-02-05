@@ -114,23 +114,38 @@
                 }
                 else {
                     AMM_ViewModel.showPreloader(false);
-                    console.log(resp.data);
-                    //AMM_MainViewModel.transactionList([]);
-                    //for (let item of resp.data) {
-                    //    //if (item.Type.Name === "Кошелек" || item.Type.Name === "Карта") {
-                    //    if (item.Type === WALLET || item.Type === CARD) {
-                    //        switch (item.Type) {
-                    //            case WALLET:
-                    //                item.Icon = "account_balance_wallet";
-                    //                break;
-                    //            case CARD:
-                    //                item.Icon = "credit_card";
-                    //                break;
-                    //            default:
-                    //        }
-                    //        AMM_MainViewModel.transactionList.push(item);
-                    //    }
-                    //}
+                    //console.log(resp.data);
+                    AMM_MainViewModel.transactionList([]);
+                    for (let item of resp.data) {
+                        //if (item.Type.Name === "Кошелек" || item.Type.Name === "Карта") {
+                        if (item.From.Type === INCOME) {
+                            item.Icon = "add";
+                        }
+                        else if (item.To.Type === WASTE) {
+                            item.Icon = "remove";
+                        }
+                        else {
+                            item.Icon = "import_export";
+                        }
+                        //moment.locale();
+                        item.Time = moment(item.Date).format('LT');
+                        //item.Time = new Date(item.Date).toTimeString();
+                        //item.Time = item.Date.toTimeString();
+                        console.log(item.Time);
+                        AMM_MainViewModel.transactionList.push(item);
+                        //if (item.Type === WALLET || item.Type === CARD) {
+                        //    switch (item.Type) {
+                        //        case WALLET:
+                        //            item.Icon = "account_balance_wallet";
+                        //            break;
+                        //        case CARD:
+                        //            item.Icon = "credit_card";
+                        //            break;
+                        //        default:
+                        //    }
+                        //    AMM_MainViewModel.transactionList.push(item);
+                        //}
+                    }
                     //location.hash = "#!main";
                 }
             }).fail(function (xhr, status, text) {

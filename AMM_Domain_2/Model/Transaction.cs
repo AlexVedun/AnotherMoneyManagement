@@ -14,10 +14,13 @@ namespace AMM_Domain_2.Model
         public string Comment { get; set; }
         public decimal Debet { get; set; }
         public decimal Credit { get; set; }
+        [JsonIgnore]
         public int UserId { get; set; }        
+        [JsonIgnore]
         public int FromId { get; set; }
+        [JsonIgnore]
         public int ToId { get; set; }
-
+        [JsonIgnore]
         public virtual User User { get; set; }
         public virtual Source From { get; set; }
         public virtual Source To { get; set; }        

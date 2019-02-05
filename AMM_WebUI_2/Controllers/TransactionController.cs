@@ -24,11 +24,22 @@ namespace AMM_WebUI_2.Controllers
         public Object Get()
         {
             string login = HttpContext.Current.Session["user_login"].ToString();
-            return new ApiResponse<Object>()
+            try
             {
-                data = mRepository.TransactionAMM.GetTransactionsForToday(login),
-                error = ""
-            };
+                return new ApiResponse<Object>()
+                {
+                    data = mRepository.TransactionAMM.GetTransactionsForToday(login),
+                    error = ""
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<Object>()
+                {
+                    error = ex.Message
+                };
+            }
+            
         }
 
         [Route("api/transactions/add")]
