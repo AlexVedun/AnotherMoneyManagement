@@ -24,8 +24,21 @@
                         <div class="row">
                             <ul class="collapsible" data-bind="foreach: transactionList">
                                 <li>
-                                    <div class="collapsible-header"><i class="material-icons" data-bind="text: Icon"></i><!--ko text: Name--><!--/ko--> (<!--ko text: Money--><!--/ko--> грн.)</div>
-                                    <div class="collapsible-body"><span><!--ko text: Description--><!--/ko--></span></div>
+                                    <div class="collapsible-header">
+                                        <i class="material-icons" data-bind="text: Icon"></i>
+                                        <!--ko text: Time--><!--/ko--> - <!--ko text: Summ--><!--/ko--> грн.
+                                    </div>
+                                    <div class="collapsible-body">
+                                        <div>
+                                            <span>Из <!--ko text: From.Name--><!--/ko-->, расход <!--ko text: Credit--><!--/ko--> грн.</span>
+                                        </div>
+                                        <div>
+                                            <span>В <!--ko text: To.Name--><!--/ko-->, приход <!--ko text: Debet--><!--/ko--> грн.</span>
+                                        </div>
+                                        <div>
+                                            <!--ko text: Comment--><!--/ko-->
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -126,11 +139,14 @@
                         }
                         else {
                             item.Icon = "import_export";
+                        }                        
+                        item.Time = moment(item.Date).format('kk:mm');
+                        if (item.Debet !== 0) {
+                            item.Summ = item.Debet;
                         }
-                        //moment.locale();
-                        item.Time = moment(item.Date).format('LT');
-                        //item.Time = new Date(item.Date).toTimeString();
-                        //item.Time = item.Date.toTimeString();
+                        else {
+                            item.Summ = item.Credit;
+                        }
                         console.log(item.Time);
                         AMM_MainViewModel.transactionList.push(item);
                         //if (item.Type === WALLET || item.Type === CARD) {

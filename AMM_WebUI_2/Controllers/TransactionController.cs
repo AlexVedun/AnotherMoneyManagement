@@ -78,6 +78,8 @@ namespace AMM_WebUI_2.Controllers
 
             try
             {
+                mRepository.SourceAMM.SaveSource(transaction.From);
+                mRepository.SourceAMM.SaveSource(transaction.To);
                 mRepository.TransactionAMM.SaveTransaction(transaction);
                 return new ApiResponse<Transaction>() { data = transaction, error = "" };
             }
