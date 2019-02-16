@@ -42,6 +42,28 @@ namespace AMM_WebUI_2.Controllers
             
         }
 
+        [Route("api/transactions/get-from-to")]        
+        public Object Get (DateTime _from, DateTime _to)
+        {
+            string login = HttpContext.Current.Session["user_login"].ToString();
+            try
+            {
+                return new ApiResponse<Object>()
+                {
+                    data = mRepository.TransactionAMM.GetTransactionsFromTo(login, _from, _to),
+                    error = ""
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<Object>()
+                {
+                    error = ex.Message
+                };
+            }
+
+        }
+
         [Route("api/transactions/add")]
         public ApiResponse<Transaction> Post([FromBody]TransactionForm _transactionForm)
         {

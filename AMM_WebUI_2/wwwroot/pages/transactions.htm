@@ -1,0 +1,275 @@
+﻿<div class="col s12 m12 l12 xl10 offset-xl1">
+    <div class="card grey lighten-2" id="transactions-form">
+        <div class="card-content">
+            <span class="card-title">Транзакции</span>
+            <div class="row">
+                <form class="col s12 m12 l12 xl12">
+                    <div class="row">
+                        <h6>Поступление: <!--ko text: income--><!--/ko--> грн.</h6>
+                    </div>
+                    <div class="row">
+                        <h6>Расходы: <!--ko text: waste--><!--/ko--> грн.</h6>
+                    </div>
+                    <div class="row">
+                        <h6>Выберите промежуток времени</h6>
+                    </div>
+                    <div class="row">
+                        <h6 class="active col s1 m1 l1 xl1">c</h6><input id="FromDate" type="date" class="datepicker col s11 m4 l4 xl4" data-bind="value: transactionsDateForm.From" />
+                        <h6 class="active col s1 m1 l1 xl1">по</h6><input id="ToDate" type="date" class="datepicker col s11 m4 l4 xl4" data-bind="value: transactionsDateForm.To" />
+                        <button class="col s12 m2 l2 xl2 waves-effect waves-light btn"
+                                data-bind="click: FindClick">
+                            Найти
+                        </button>
+                    </div>
+                    <div class="row">
+                        <ul class="collapsible" data-bind="foreach: transactionList">
+                            <li>
+                                <div class="collapsible-header">
+                                    <i class="material-icons" data-bind="text: Icon"></i>
+                                    <!--ko text: Date_--><!--/ko--> - <!--ko text: Time--><!--/ko--> - <!--ko text: Summ--><!--/ko--> грн.
+                                </div>
+                                <div class="collapsible-body">
+                                    <div>
+                                        <span>Из <!--ko text: From.Name--><!--/ko-->, расход <!--ko text: Credit--><!--/ko--> грн.</span>
+                                    </div>
+                                    <div>
+                                        <span>В <!--ko text: To.Name--><!--/ko-->, приход <!--ko text: Debet--><!--/ko--> грн.</span>
+                                    </div>
+                                    <div>
+                                        <!--ko text: Comment--><!--/ko-->
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--<div class="col s12 m6 l6 xl6">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input value="" id="AddSourceName" type="text" class="validate" data-bind="value: addSourceForm.Name">
+                                <label class="active" for="AddSourceName">Наименование</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input class="with-gap" name="AddSourceType" type="radio" value="2" data-bind="checked: addSourceForm.TypeOfSource" />
+                                <span>Кошелек</span>
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label>
+                                <input class="with-gap" name="AddSourceType" type="radio" value="3" data-bind="checked: addSourceForm.TypeOfSource" />
+                                <span>Карта</span>
+                            </label>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input value="" id="AddSourceMoney" type="text" class="validate" data-bind="value: addSourceForm.Money">
+                                <label class="active" for="AddSourceMoney">Сумма</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input value="" id="AddSourceDescription" type="text" class="validate" data-bind="value: addSourceForm.Description">
+                                <label class="active" for="AddSourceDescription">Описание</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
+                                    data-bind="click: AddSourceClick">
+                                Добавить
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l6 xl6">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="DeleteWalletCardList" data-bind="foreach: sources">
+                                    <option data-bind="value: Id, text: Name"></option>
+                                </select>
+                                <label>Категория</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
+                                    data-bind="click: DeleteSourceClick">
+                                Удалить
+                            </button>
+                        </div>
+                    </div>-->
+                </form>
+            </div>
+            <!--<div class="row">
+                <button class="col s12 m4 offset-m8 l4 offset-l8 xl4 offset-xl8 waves-effect waves-light btn"
+                        data-bind="click: ReadyClick">
+                    Готово
+                </button>
+            </div>-->
+        </div>
+    </div>
+    <div class="fixed-action-btn">
+        <a href="#!main" class="btn-floating btn-large red waves-effect waves-light">
+            <i class="large material-icons">check</i>
+        </a>
+        <!--<ul>
+            <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+            <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+            <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+            <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+        </ul>-->
+    </div>
+</div>
+<script>
+    let AMM_TransactionsViewModel = {
+        // свойства
+        self: this,
+        //selectedTypeIndex: function () {
+        //    return $('#AddSourceType').parent('li.selected').index();
+        //},
+        //selectedTypeText: function () {
+        //    return $("#AddSourceType option:selected").eq(self.selectedTypeIndex()).text();
+        //},
+        transactionList: ko.observableArray(),
+        transactionsDateForm: {
+            From: ko.observable(""),
+            To: ko.observable("")
+        },
+        income: ko.observable(0),
+        waste: ko.observable(0),
+        //types: ko.observableArray(),
+        //isMoneyNeed: ko.computed(function () {
+        //    console.log(self.selectedTypeText)
+        //    return (self.selectedTypeText === "Кошелек" || self.selectedTypeText === "Карта");
+        //}),
+        //TypeNames: ko.observableArray(),
+        //SelectedType: ko.observable(""),
+        // методы
+        ClearForm: function () {
+            this.transactionsDateForm.From("");            
+            this.transactionsDateForm.To("");            
+        },
+        FindClick: function () {
+            AMM_ViewModel.showPreloader(true);            
+            $.ajax({
+                url: "api/transactions/get-from-to",
+                data: { '_from': this.transactionsDateForm.From, '_to': this.transactionsDateForm.To },
+                type: 'GET'
+            }).done(function (resp) {
+                console.log(resp);
+                if (resp.error !== null && resp.error !== "") {
+                    AMM_ViewModel.showPreloader(false);
+                    alert(resp.error);
+                }
+                else {
+                    AMM_ViewModel.showPreloader(false);
+                    //console.log(resp.data);
+                    AMM_TransactionsViewModel.transactionList([]);
+                    AMM_TransactionsViewModel.income(0);
+                    AMM_TransactionsViewModel.waste(0);
+                    for (let item of resp.data) {                        
+                        if (item.From.Type === INCOME) {
+                            item.Icon = "add";
+                            AMM_TransactionsViewModel.income(AMM_TransactionsViewModel.income() + item.Debet);
+                        }
+                        else if (item.To.Type === WASTE) {
+                            item.Icon = "remove";
+                            AMM_TransactionsViewModel.waste(AMM_TransactionsViewModel.waste() + item.Credit);
+                        }
+                        else {
+                            item.Icon = "import_export";
+                        }
+                        item.Time = moment(item.Date).format('kk:mm');
+                        item.Date_ = moment(item.Date).format('DD.MM.YYYY');
+                        if (item.Debet !== 0) {
+                            item.Summ = item.Debet;
+                        }
+                        else {
+                            item.Summ = item.Credit;
+                        }                        
+                        AMM_TransactionsViewModel.transactionList.push(item);                        
+                    }
+                    AMM_TransactionsViewModel.ClearForm();
+                }
+            }).fail(function (xhr, status, text) {
+                AMM_ViewModel.showPreloader(false);
+                alert("error: " + text);
+            });
+        },
+        //DeleteSourceClick: function () {
+        //    let deleteId = GetSelectedItemId("DeleteWalletCardList");
+        //    $.ajax({
+        //        url: "api/delete-source/" + deleteId,
+        //        type: 'DELETE'
+        //    }).done(function (resp) {
+        //        if (resp.error !== null && resp.error !== "") {
+        //            AMM_ViewModel.showPreloader(false);
+        //            alert(resp.error);
+        //        }
+        //        else {
+        //            AMM_ViewModel.showPreloader(false);
+        //            AMM_AddSourceViewModel.GetWalletsCards();
+        //            //AMM_AddSourceViewModel.ClearForm();
+        //            //AMM_MainViewModel.UpdateSourcesList();
+        //            //location.hash = "#!main";
+        //        }
+        //    }).fail(function (xhr, status, text) {
+        //        AMM_ViewModel.showPreloader(false);
+        //        alert("error: " + text);
+        //    });
+        //},
+        //GetWalletsCards: function () {
+        //    AMM_ViewModel.showPreloader(true);
+        //    $.ajax({
+        //        url: "api/get-sources",
+        //        type: 'GET'
+        //    }).done(function (resp) {
+        //        console.log(resp);
+        //        if (resp.error !== null && resp.error !== "") {
+        //            AMM_ViewModel.showPreloader(false);
+        //            alert(resp.error);
+        //        }
+        //        else {
+        //            AMM_ViewModel.showPreloader(false);
+        //            AMM_AddSourceViewModel.sources([]);
+        //            for (let item of resp.data) {
+        //                if (item.Type === WALLET || item.Type === CARD) {
+        //                    switch (item.Type) {
+        //                        case WALLET:
+        //                            item.Icon = "account_balance_wallet";
+        //                            break;
+        //                        case CARD:
+        //                            item.Icon = "credit_card";
+        //                            break;
+        //                        default:
+        //                    }
+        //                    AMM_AddSourceViewModel.sources.push(item);
+        //                }
+        //            }
+        //            $('#DeleteWalletCardList').formSelect();
+        //            console.log(AMM_AddSourceViewModel.sources);
+        //            //location.hash = "#!main";
+        //        }
+        //    }).fail(function (xhr, status, text) {
+        //        AMM_ViewModel.showPreloader(false);
+        //        alert("error: " + text);
+        //    });
+        //},
+        ReadyClick: function () {
+            location.hash = "#!main";
+        }
+    }
+
+    ko.applyBindings(AMM_TransactionsViewModel, document.getElementById("transactions-form"));
+
+    //$(document).ready(function () {
+    //    $('.datepicker').datepicker();
+    //});
+
+    $(document).ready(function () {
+        $('.collapsible').collapsible();
+    });
+
+    $(document).ready(function () {
+        $('.fixed-action-btn').floatingActionButton();
+    });
+
+</script>

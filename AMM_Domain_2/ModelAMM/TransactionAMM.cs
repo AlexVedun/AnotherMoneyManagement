@@ -17,15 +17,16 @@ namespace AMM_Domain_2.Model
 
         public IEnumerable<Transaction> GetTransactionsForToday(string _login)
         {
-            //DateTime t1 = DateTime.Today;
-            //List<DateTime> tt = new List<DateTime>();
-            //tt = mdb.TransactionSet.Select(x => x.Date.Date).ToList();
-            //var result = from x in mdb.TransactionSet
-            //             where x.User.Login == _login && DbFunctions.TruncateTime(x.Date) == DateTime.Today
-            //             select x;
+            return mdb.TransactionSet.Where(x => x.User.Login == _login && DbFunctions.TruncateTime(x.Date) == DateTime.Today).ToList();            
+        }
 
-            return mdb.TransactionSet.Where(x => x.User.Login == _login && DbFunctions.TruncateTime(x.Date) == DateTime.Today).ToList();
-            //return result;
+        public IEnumerable<Transaction> GetTransactionsFromTo(string _login, DateTime _from, DateTime _to)
+        {
+            return mdb.TransactionSet.Where(
+                x => x.User.Login == _login && 
+                DbFunctions.TruncateTime(x.Date) >= _from &&
+                DbFunctions.TruncateTime(x.Date) <= _to
+            ).ToList();
         }
 
         public void SaveTransaction(Transaction _transaction)
