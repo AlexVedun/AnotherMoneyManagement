@@ -14,8 +14,8 @@
                         <h6>Выберите промежуток времени</h6>
                     </div>
                     <div class="row">
-                        <h6 class="active col s1 m1 l1 xl1">c</h6><input id="FromDate" type="date" class="datepicker col s11 m4 l4 xl4" data-bind="value: transactionsDateForm.From" />
-                        <h6 class="active col s1 m1 l1 xl1">по</h6><input id="ToDate" type="date" class="datepicker col s11 m4 l4 xl4" data-bind="value: transactionsDateForm.To" />
+                        <h6 class="active col s1 m1 l1 xl1">c</h6><input id="FromDate" type="text" class="datepicker col s11 m4 l4 xl4" data-bind="value: from" />
+                        <h6 class="active col s1 m1 l1 xl1">по</h6><input id="ToDate" type="text" class="datepicker col s11 m4 l4 xl4" data-bind="value: to" />
                         <button class="col s12 m2 l2 xl2 waves-effect waves-light btn"
                                 data-bind="click: FindClick">
                             Найти
@@ -135,6 +135,8 @@
         },
         income: ko.observable(0),
         waste: ko.observable(0),
+        from: ko.observable(""),
+        to: ko.observable(""),
         //types: ko.observableArray(),
         //isMoneyNeed: ko.computed(function () {
         //    console.log(self.selectedTypeText)
@@ -148,10 +150,18 @@
             this.transactionsDateForm.To("");            
         },
         FindClick: function () {
-            AMM_ViewModel.showPreloader(true);            
+            AMM_ViewModel.showPreloader(true);
+            let fromPicker = M.Datepicker.getInstance(document.getElementById('FromDate'));
+            let toPicker = M.Datepicker.getInstance(document.getElementById('ToDate'));
+            let fromDate = moment(fromPicker.date).format('YYYY-MM-DD');
+            let toDate = moment(toPicker.date).format('YYYY-MM-DD');
+            //console.log(moment(fromPicker.date).format('YYYY-MM-DD'));
+            //console.log(moment(toPicker.date).format('YYYY-MM-DD'));
+
             $.ajax({
                 url: "api/transactions/get-from-to",
-                data: { '_from': this.transactionsDateForm.From, '_to': this.transactionsDateForm.To },
+                //data: { '_from': this.from(), '_to': this.to() },
+                data: { '_from': fromDate, '_to': toDate },
                 type: 'GET'
             }).done(function (resp) {
                 console.log(resp);
@@ -260,8 +270,15 @@
 
     ko.applyBindings(AMM_TransactionsViewModel, document.getElementById("transactions-form"));
 
-    //$(document).ready(function () {
-    //    $('.datepicker').datepicker();
+    $(document).ready(function () {
+        var elems = document.querySelectorAll('.datepicker');
+        var instances = M.Datepicker.init(elems, { format: 'dd.mm.yyyy' });
+    });
+
+    
+
+    //document.addEventListener('DOMContentLoaded', function () {
+        
     //});
 
     $(document).ready(function () {
