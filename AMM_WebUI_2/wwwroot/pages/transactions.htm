@@ -22,6 +22,22 @@
                         </button>
                     </div>
                     <div class="row">
+                        <ul class="collapsible">
+                            <li>
+                                <div class="collapsible-header">
+                                    <span>По категориям</span>
+                                </div>
+                                <div class="collapsible-body">
+                                    <ul class="collection" data-bind="foreach: categoryList">
+                                        <li class="collection-item">
+                                            <!--ko text: Name--><!--/ko-->: <!--ko text: Summ--><!--/ko--> грн.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
                         <ul class="collapsible" data-bind="foreach: transactionList">
                             <li>
                                 <div class="collapsible-header">
@@ -41,113 +57,31 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
-                    <!--<div class="col s12 m6 l6 xl6">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input value="" id="AddSourceName" type="text" class="validate" data-bind="value: addSourceForm.Name">
-                                <label class="active" for="AddSourceName">Наименование</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label>
-                                <input class="with-gap" name="AddSourceType" type="radio" value="2" data-bind="checked: addSourceForm.TypeOfSource" />
-                                <span>Кошелек</span>
-                            </label>
-                        </div>
-                        <div class="row">
-                            <label>
-                                <input class="with-gap" name="AddSourceType" type="radio" value="3" data-bind="checked: addSourceForm.TypeOfSource" />
-                                <span>Карта</span>
-                            </label>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input value="" id="AddSourceMoney" type="text" class="validate" data-bind="value: addSourceForm.Money">
-                                <label class="active" for="AddSourceMoney">Сумма</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input value="" id="AddSourceDescription" type="text" class="validate" data-bind="value: addSourceForm.Description">
-                                <label class="active" for="AddSourceDescription">Описание</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                    data-bind="click: AddSourceClick">
-                                Добавить
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col s12 m6 l6 xl6">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <select id="DeleteWalletCardList" data-bind="foreach: sources">
-                                    <option data-bind="value: Id, text: Name"></option>
-                                </select>
-                                <label>Категория</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                    data-bind="click: DeleteSourceClick">
-                                Удалить
-                            </button>
-                        </div>
-                    </div>-->
+                    </div>                    
                 </form>
-            </div>
-            <!--<div class="row">
-                <button class="col s12 m4 offset-m8 l4 offset-l8 xl4 offset-xl8 waves-effect waves-light btn"
-                        data-bind="click: ReadyClick">
-                    Готово
-                </button>
-            </div>-->
+            </div>            
         </div>
     </div>
     <div class="fixed-action-btn">
         <a href="#!main" class="btn-floating btn-large red waves-effect waves-light">
             <i class="large material-icons">check</i>
-        </a>
-        <!--<ul>
-            <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-            <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-            <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-            <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-        </ul>-->
+        </a>        
     </div>
 </div>
 <script>
     let AMM_TransactionsViewModel = {
         // свойства
-        self: this,
-        //selectedTypeIndex: function () {
-        //    return $('#AddSourceType').parent('li.selected').index();
-        //},
-        //selectedTypeText: function () {
-        //    return $("#AddSourceType option:selected").eq(self.selectedTypeIndex()).text();
-        //},
-        transactionList: ko.observableArray(),
-        transactionsDateForm: {
-            From: ko.observable(""),
-            To: ko.observable("")
-        },
+        self: this,        
+        transactionList: ko.observableArray(),        
         income: ko.observable(0),
         waste: ko.observable(0),
         from: ko.observable(""),
         to: ko.observable(""),
-        //types: ko.observableArray(),
-        //isMoneyNeed: ko.computed(function () {
-        //    console.log(self.selectedTypeText)
-        //    return (self.selectedTypeText === "Кошелек" || self.selectedTypeText === "Карта");
-        //}),
-        //TypeNames: ko.observableArray(),
-        //SelectedType: ko.observable(""),
+        categoryList: ko.observableArray(),        
         // методы
         ClearForm: function () {
-            this.transactionsDateForm.From("");            
-            this.transactionsDateForm.To("");            
+            this.from("");            
+            this.to("");            
         },
         FindClick: function () {
             AMM_ViewModel.showPreloader(true);
@@ -155,12 +89,8 @@
             let toPicker = M.Datepicker.getInstance(document.getElementById('ToDate'));
             let fromDate = moment(fromPicker.date).format('YYYY-MM-DD');
             let toDate = moment(toPicker.date).format('YYYY-MM-DD');
-            //console.log(moment(fromPicker.date).format('YYYY-MM-DD'));
-            //console.log(moment(toPicker.date).format('YYYY-MM-DD'));
-
             $.ajax({
-                url: "api/transactions/get-from-to",
-                //data: { '_from': this.from(), '_to': this.to() },
+                url: "api/transactions/get-from-to",                
                 data: { '_from': fromDate, '_to': toDate },
                 type: 'GET'
             }).done(function (resp) {
@@ -171,10 +101,11 @@
                 }
                 else {
                     AMM_ViewModel.showPreloader(false);
-                    //console.log(resp.data);
                     AMM_TransactionsViewModel.transactionList([]);
+                    AMM_TransactionsViewModel.categoryList([]);
                     AMM_TransactionsViewModel.income(0);
                     AMM_TransactionsViewModel.waste(0);
+                    let categories = {};
                     for (let item of resp.data) {                        
                         if (item.From.Type === INCOME) {
                             item.Icon = "add";
@@ -183,6 +114,10 @@
                         else if (item.To.Type === WASTE) {
                             item.Icon = "remove";
                             AMM_TransactionsViewModel.waste(AMM_TransactionsViewModel.waste() + item.Credit);
+                            if (isNaN(categories[item.To.Name])) {
+                                categories[item.To.Name] = 0;
+                            }
+                            categories[item.To.Name] += item.Credit;
                         }
                         else {
                             item.Icon = "import_export";
@@ -197,72 +132,20 @@
                         }                        
                         AMM_TransactionsViewModel.transactionList.push(item);                        
                     }
+                    let categoryItem;
+                    for (var cat in categories) {
+                        categoryItem = {};
+                        categoryItem.Name = cat;
+                        categoryItem.Summ = categories[cat];
+                        AMM_TransactionsViewModel.categoryList.push(categoryItem);
+                    }                    
                     AMM_TransactionsViewModel.ClearForm();
                 }
             }).fail(function (xhr, status, text) {
                 AMM_ViewModel.showPreloader(false);
                 alert("error: " + text);
             });
-        },
-        //DeleteSourceClick: function () {
-        //    let deleteId = GetSelectedItemId("DeleteWalletCardList");
-        //    $.ajax({
-        //        url: "api/delete-source/" + deleteId,
-        //        type: 'DELETE'
-        //    }).done(function (resp) {
-        //        if (resp.error !== null && resp.error !== "") {
-        //            AMM_ViewModel.showPreloader(false);
-        //            alert(resp.error);
-        //        }
-        //        else {
-        //            AMM_ViewModel.showPreloader(false);
-        //            AMM_AddSourceViewModel.GetWalletsCards();
-        //            //AMM_AddSourceViewModel.ClearForm();
-        //            //AMM_MainViewModel.UpdateSourcesList();
-        //            //location.hash = "#!main";
-        //        }
-        //    }).fail(function (xhr, status, text) {
-        //        AMM_ViewModel.showPreloader(false);
-        //        alert("error: " + text);
-        //    });
-        //},
-        //GetWalletsCards: function () {
-        //    AMM_ViewModel.showPreloader(true);
-        //    $.ajax({
-        //        url: "api/get-sources",
-        //        type: 'GET'
-        //    }).done(function (resp) {
-        //        console.log(resp);
-        //        if (resp.error !== null && resp.error !== "") {
-        //            AMM_ViewModel.showPreloader(false);
-        //            alert(resp.error);
-        //        }
-        //        else {
-        //            AMM_ViewModel.showPreloader(false);
-        //            AMM_AddSourceViewModel.sources([]);
-        //            for (let item of resp.data) {
-        //                if (item.Type === WALLET || item.Type === CARD) {
-        //                    switch (item.Type) {
-        //                        case WALLET:
-        //                            item.Icon = "account_balance_wallet";
-        //                            break;
-        //                        case CARD:
-        //                            item.Icon = "credit_card";
-        //                            break;
-        //                        default:
-        //                    }
-        //                    AMM_AddSourceViewModel.sources.push(item);
-        //                }
-        //            }
-        //            $('#DeleteWalletCardList').formSelect();
-        //            console.log(AMM_AddSourceViewModel.sources);
-        //            //location.hash = "#!main";
-        //        }
-        //    }).fail(function (xhr, status, text) {
-        //        AMM_ViewModel.showPreloader(false);
-        //        alert("error: " + text);
-        //    });
-        //},
+        },        
         ReadyClick: function () {
             location.hash = "#!main";
         }
@@ -274,13 +157,7 @@
         var elems = document.querySelectorAll('.datepicker');
         var instances = M.Datepicker.init(elems, { format: 'dd.mm.yyyy' });
     });
-
-    
-
-    //document.addEventListener('DOMContentLoaded', function () {
         
-    //});
-
     $(document).ready(function () {
         $('.collapsible').collapsible();
     });
