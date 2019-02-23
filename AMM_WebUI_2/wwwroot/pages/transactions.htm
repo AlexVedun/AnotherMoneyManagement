@@ -1,5 +1,5 @@
-﻿<div class="col s12 m12 l12 xl10 offset-xl1">
-    <div class="card grey lighten-2" id="transactions-form">
+﻿<div class="col s12 m12 l12 xl10 offset-xl1" id="transactions-form">
+    <div class="card grey lighten-2">
         <div class="card-content">
             <span class="card-title">Транзакции</span>
             <div class="row">
@@ -57,15 +57,16 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>                    
+                    </div>
                 </form>
-            </div>            
+            </div>
         </div>
     </div>
-    <div class="fixed-action-btn">
-        <a href="#!main" class="btn-floating btn-large red waves-effect waves-light">
+    <div class="fixed-action-btn">        
+        <button class="btn-floating btn-large red waves-effect waves-light"
+                data-bind="click: ReadyClick">
             <i class="large material-icons">check</i>
-        </a>        
+        </button>
     </div>
 </div>
 <script>
@@ -139,7 +140,7 @@
                         categoryItem.Summ = categories[cat];
                         AMM_TransactionsViewModel.categoryList.push(categoryItem);
                     }                    
-                    AMM_TransactionsViewModel.ClearForm();
+                    //AMM_TransactionsViewModel.ClearForm();
                 }
             }).fail(function (xhr, status, text) {
                 AMM_ViewModel.showPreloader(false);
@@ -155,7 +156,20 @@
 
     $(document).ready(function () {
         var elems = document.querySelectorAll('.datepicker');
-        var instances = M.Datepicker.init(elems, { format: 'dd.mm.yyyy' });
+        var instances = M.Datepicker.init(elems, {
+            firstDay: true,
+            format: 'dd.mm.yyyy',
+            i18n: {
+                months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+                monthsShort: ["Янв.", "Фев.", "Мрт.", "Апр.", "Май", "Июн", "Июл", "Авг.", "Сен.", "Окт.", "Нбр.", "Дек."],
+                weekdays: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+                weekdaysShort: ["Вскр.", "Пон.", "Втр.", "Ср.", "Чтв.", "Пт.", "Сбт."],
+                weekdaysAbbrev: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+                cancel: 'Отмена',
+                clear: 'Очистить',
+                done: 'Ок'
+            }
+        });
     });
         
     $(document).ready(function () {

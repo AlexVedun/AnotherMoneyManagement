@@ -41,5 +41,25 @@ namespace AMM_Domain_2.Model
         {
             return mdb.UserSet.Where(x => x.Login == _login).FirstOrDefault();
         }
+
+        public void DeleteUserByLogin(string _login)
+        {                       
+            List<Transaction> transactions = mdb.TransactionSet.Where(x => x.User.Login == _login).ToList();
+            foreach (var item in transactions)
+            {
+                mdb.TransactionSet.Remove(item);
+            }
+
+            List<Source> sources = mdb.SourceSet.Where(x => x.User.Login == _login).ToList();
+            foreach (var item in sources)
+            {
+                mdb.SourceSet.Remove(item);
+            }
+
+            User user = GetUserByLogin(_login);
+            mdb.UserSet.Remove(user);
+
+            mdb.SaveChanges();
+        }
     }
 }

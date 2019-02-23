@@ -81,7 +81,7 @@
         UpdateSourcesList: function () {
             AMM_ViewModel.showPreloader(true);
             $.ajax({
-                url: "api/get-sources",
+                url: "api/sources/get",
                 type: 'GET'
             }).done(function (resp) {
                 console.log(resp);

@@ -1,5 +1,5 @@
-﻿<div class="col s12 m12 l12 xl10 offset-xl1">
-    <div class="card grey lighten-2" id="add-source-form">
+﻿<div class="col s12 m12 l12 xl10 offset-xl1" id="add-source-form">
+    <div class="card grey lighten-2">
         <div class="card-content">
             <span class="card-title">Управление кошельками и картами</span>
             <div class="row">
@@ -110,13 +110,19 @@
                     </div>
                 </form>-->
             </div>
-            <div class="row">
+            <!--<div class="row">
                 <button class="col s12 m4 offset-m8 l4 offset-l8 xl4 offset-xl8 waves-effect waves-light btn"
                         data-bind="click: ReadyClick">
                     Готово
                 </button>
-            </div>
+            </div>-->
         </div>
+    </div>
+    <div class="fixed-action-btn">
+        <button class="btn-floating btn-large red waves-effect waves-light"
+                data-bind="click: ReadyClick">
+            <i class="large material-icons">check</i>
+        </button>
     </div>
 </div>
 <script>
@@ -160,7 +166,7 @@
             let formData = ko.toJS(this.addSourceForm);
             console.log(formData);
             $.ajax({
-                url: "api/add-source",
+                url: "api/sources/add",
                 data: formData,
                 type: 'POST'
             }).done(function (resp) {
@@ -183,7 +189,7 @@
         DeleteSourceClick: function () {            
             let deleteId = GetSelectedItemId("DeleteWalletCardList");
             $.ajax({
-                url: "api/delete-source/" + deleteId,
+                url: "api/sources/delete/" + deleteId,
                 type: 'DELETE'
             }).done(function (resp) {
                 if (resp.error !== null && resp.error !== "") {
@@ -205,7 +211,7 @@
         GetWalletsCards: function () {
             AMM_ViewModel.showPreloader(true);
             $.ajax({
-                url: "api/get-sources",
+                url: "api/sources/get",
                 type: 'GET'
             }).done(function (resp) {
                 console.log(resp);
@@ -252,31 +258,5 @@
 
     $(document).ready(function () {
         $('#WalletCardList').collapsible();
-    });
-
-    //AMM_ViewModel.showPreloader(true);
-    //$.ajax({
-    //    url: "api/get-source-types",
-    //    type: 'GET'
-    //}).done(function (resp) {
-    //    if (resp.error !== null && resp.error !== "") {
-    //        AMM_ViewModel.showPreloader(false);
-    //        alert(resp.error);
-    //    }
-    //    else {
-    //        AMM_ViewModel.showPreloader(false);
-    //        //AMM_RegisterViewModel.ClearForm();
-    //        for (const item of resp.data) {
-    //            AMM_AddSourceViewModel.types.push(item);
-    //            //AMM_AddSourceViewModel.TypeNames.push(item.Name);
-    //        }
-    //        //console.log(AMM_AddSourceViewModel.Types());
-    //        //console.log(AMM_AddSourceViewModel.TypeNames());
-    //        $('#AddSourceType').formSelect();
-    //        //location.hash = "#!login";
-    //    }
-    //}).fail(function (xhr, status, text) {
-    //    AMM_ViewModel.showPreloader(false);
-    //    alert("error: " + text);
-    //});
+    });   
 </script>

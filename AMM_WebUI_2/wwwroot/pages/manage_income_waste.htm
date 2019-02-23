@@ -1,5 +1,5 @@
-﻿<div class="col s12 m12 l12 xl10 offset-xl1">
-    <div class="card grey lighten-2" id="manage-income-waste-form">
+﻿<div class="col s12 m12 l12 xl10 offset-xl1" id="manage-income-waste-form">
+    <div class="card grey lighten-2">
         <div class="card-content">
             <span class="card-title">Управление категориями доходов/расходов</span>
             <div class="row">
@@ -51,7 +51,7 @@
                                 Удалить
                             </button>
                         </div>
-                    </div>                                        
+                    </div>
                 </form>
                 <ul id="IncomeWasteList" class="collapsible col s12 m4 l4 xl4" data-bind="foreach: sources">
                     <li>
@@ -67,13 +67,19 @@
                 <!--</li>
                 </ul>-->
             </div>
-            <div class="row">
+            <!--<div class="row">
                 <button class="col s12 m4 offset-m8 l4 offset-l8 xl4 offset-xl8 waves-effect waves-light btn"
                         data-bind="click: ReadyClick">
                     Готово
                 </button>
-            </div>
+            </div>-->
         </div>
+    </div>
+    <div class="fixed-action-btn">
+        <button class="btn-floating btn-large red waves-effect waves-light"
+                data-bind="click: ReadyClick">
+            <i class="large material-icons">check</i>
+        </button>
     </div>
 </div>
 <script>
@@ -118,7 +124,7 @@
             let formData = ko.toJS(this.manageIncomeWasteForm);
             //console.log(formData);
             $.ajax({
-                url: "api/add-source",
+                url: "api/sources/add",
                 data: formData,
                 type: 'POST'
             }).done(function (resp) {
@@ -143,7 +149,7 @@
             //let deleteId = $("#DeleteSourceList option:selected").eq($('#DeleteSourceList').parent('li.selected').index()).val();
             let deleteId = GetSelectedItemId("DeleteSourceList");
             $.ajax({
-                url: "api/delete-source/" + deleteId,
+                url: "api/sources/delete/" + deleteId,
                 type: 'DELETE'
             }).done(function (resp) {
                 if (resp.error !== null && resp.error !== "") {
@@ -165,7 +171,7 @@
         GetIncomeWaste: function () {
             AMM_ViewModel.showPreloader(true);
             $.ajax({
-                url: "api/get-sources",
+                url: "api/sources/get",
                 type: 'GET'
             }).done(function (resp) {
                 console.log(resp);

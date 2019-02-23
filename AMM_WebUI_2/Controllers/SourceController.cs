@@ -26,7 +26,7 @@ namespace AMM_WebUI_2.Controllers
         //    return new ApiResponse<Object>() { data = mRepository.TypeOfSourceAMM.GetTypes(), error = "" };
         //}
         // запрос источников для текущего пользователя
-        [Route("api/get-sources")]
+        [Route("api/sources/get")]
         public Object Get(/*bool _b1 = false*/)
         {
             return new ApiResponse<Object>()
@@ -36,7 +36,7 @@ namespace AMM_WebUI_2.Controllers
                 };
         }
 
-        [Route("api/add-source")]
+        [Route("api/sources/add")]
         public ApiResponse<Source> Post([FromBody]AddSourceForm _addSourceForm)
         {
             string login = HttpContext.Current.Session["user_login"].ToString();
@@ -78,7 +78,7 @@ namespace AMM_WebUI_2.Controllers
             }
         }
 
-        [Route("api/delete-source/{_Id}")]
+        [Route("api/sources/delete/{_Id}")]
         public ApiResponse<Source> Delete([FromUri] int _Id)
         {
             string login = HttpContext.Current.Session["user_login"].ToString();

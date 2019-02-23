@@ -36,6 +36,6 @@ namespace AMM_Domain_2.Model
                 mdb.TransactionSet.Add(_transaction);
             }
             mdb.SaveChanges();
-        }
+        }               
     }
 }

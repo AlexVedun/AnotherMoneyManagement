@@ -140,6 +140,7 @@
     <Content Include="wwwroot\images\credit-card-orig.png" />
     <Content Include="wwwroot\images\wallet.png" />
     <Content Include="wwwroot\images\wallet-orig.png" />
+    <Content Include="wwwroot\pages\user.htm" />
     <Content Include="wwwroot\pages\transactions.htm" />
     <Content Include="wwwroot\pages\manage_income_waste.htm" />
     <Content Include="wwwroot\pages\add_source.htm" />
@@ -168,6 +169,7 @@
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -177,6 +179,7 @@
     <Compile Include="Models\LoginRequestForm.cs" />
     <Compile Include="Models\RegisterRequestForm.cs" />
     <Compile Include="Models\TransactionForm.cs" />
+    <Compile Include="Models\UserRequestForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
