@@ -16,17 +16,30 @@ namespace AMM_Domain_2.Model
 
         public IEnumerable<Family> GetFamilies()
         {
-            return null;
+            return mdb.FamilySet.ToList();
         }
 
         public void SaveFamily(Family _family)
         {
-
+            Family family = GetFamilyByName(_family.Name);
+            if (family == null)
+            {
+                mdb.FamilySet.Add(_family);
+            }
+            else
+            {
+                Type type = typeof(Family);
+                foreach (var item in type.GetProperties())
+                {
+                    item.SetValue(family, item.GetValue(_family));
+                }
+            }
+            mdb.SaveChanges();
         }
 
         public Family GetFamilyByName (string _name)
         {
-            return null;
+            return mdb.FamilySet.Where(x => x.Name == _name).FirstOrDefault();
         }
     }
 }

@@ -31,6 +31,8 @@
                 <li><a href="#!manage_income_waste" data-bind="visible: navbar.incomeWaste">Категории</a></li>
                 <li><a href="#!transactions" data-bind="visible: navbar.transactions">Транзакции</a></li>
                 <li><a href="#!user" data-bind="visible: navbar.user">Пользователь</a></li>
+                <li><a href="#!add_family" data-bind="visible: navbar.addFamily">Семья</a></li>
+                <li><a href="#!manage_family" data-bind="visible: navbar.manageFamily">Семья</a></li>
                 <li><a href="#!logout" data-bind="visible: navbar.logout, text: navbar.logoutText"></a></li>
             </ul>
         </div>
@@ -44,6 +46,8 @@
         <li><a class="waves-effect sidenav-close" href="#!manage_income_waste" data-bind="visible: navbar.incomeWaste">Категории</a></li>
         <li><a class="waves-effect sidenav-close" href="#!transactions" data-bind="visible: navbar.transactions">Транзакции</a></li>
         <li><a class="waves-effect sidenav-close" href="#!user" data-bind="visible: navbar.user">Пользователь</a></li>
+        <li><a class="waves-effect sidenav-close" href="#!add_family" data-bind="visible: navbar.addFamily">Семья</a></li>
+        <li><a class="waves-effect sidenav-close" href="#!manage_family" data-bind="visible: navbar.manageFamily">Семья</a></li>
         <li><a class="waves-effect sidenav-close" href="#!logout" data-bind="visible: navbar.logout, text: navbar.logoutText"></a></li>
     </ul>
     @*индикатор выполнения длительного процесса*@
@@ -59,6 +63,8 @@
     <section id="manage_income_waste" data-bind="visible: show['manage_income_waste']" class="row"></section>
     <section id="transactions" data-bind="visible: show['transactions']" class="row"></section>
     <section id="user" data-bind="visible: show['user']" class="row"></section>
+    <section id="add_family" data-bind="visible: show['add_family']" class="row"></section>
+    <section id="manage_family" data-bind="visible: show['manage_family']" class="row"></section>
     @*основной скрипт*@
     <script src="~/Scripts/global.js"></script>
     <script>
@@ -77,7 +83,9 @@
                 add_source: ko.observable(false),
                 manage_income_waste: ko.observable(false),
                 transactions: ko.observable(false),
-                user: ko.observable(false)
+                user: ko.observable(false),
+                add_family: ko.observable(false),
+                manage_family: ko.observable(false)
             },
             navbar: {
                 login: ko.observable(true),
@@ -87,6 +95,8 @@
                 addSource: ko.observable(false),
                 transactions: ko.observable(false),
                 user: ko.observable(false),
+                addFamily: ko.observable(false),
+                manageFamily: ko.observable(false),
                 logoutText: ko.observable("")
             },
             showPreloader: ko.observable(false),
@@ -129,6 +139,12 @@
                 this.navbar.addSource(true);
                 this.navbar.transactions(true);
                 this.navbar.user(true);
+                if (isFamily) {
+                    this.navbar.manageFamily(true);
+                }
+                else {
+                    this.navbar.addFamily(true);
+                }
             },
             SetLogout: function () {
                 this.navbar.login(true);
@@ -139,6 +155,8 @@
                 this.navbar.addSource(false);
                 this.navbar.transactions(false);
                 this.navbar.user(false);
+                this.navbar.addFamily(false);
+                this.navbar.manageFamily(false);
             }
         }
         // генерируется событие того, что раздел main изменил свою видимость

@@ -1,21 +1,15 @@
 ﻿<div class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4">
     <div class="card grey lighten-2">
         <div class="card-content">
-            <span class="card-title">Вход</span>
+            <span class="card-title">Создать семью</span>
             <div class="row">
-                <form id="login-form">
+                <form id="add-family-form">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input value="" id="UserLogin" name="Login" type="text" class="validate" data-bind="value: loginForm.Login">
-                            <label class="active" for="UserLogin">Логин</label>
+                            <input value="" id="FamilyName" name="Login" type="text" class="validate" data-bind="value: familyForm.Name">
+                            <label class="active" for="FamilyName">Название семьи</label>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input value="" id="UserPassword" name="Password" type="password" class="validate" data-bind="value: loginForm.Password">
-                            <label class="active" for="UserPassword">Пароль</label>
-                        </div>
-                    </div>
+                    </div>                    
                     <div class="row">
                         <div class="input-field col s12">
                             <label class="active"></label>
@@ -23,14 +17,14 @@
                     </div>
                     <div class="row">
                         <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                data-bind="click: LoginClick">
-                            Вход
+                                data-bind="click: CreateFamilyClick">
+                            Создать
                         </button>
                     </div>
                     <div class="row">
                         <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                data-bind="click: ShowRegistrationClick">
-                            Регистрация
+                                data-bind="click: CancelClick">
+                            Отмена
                         </button>
                     </div>
                 </form>
@@ -39,11 +33,11 @@
     </div>
 </div>
 <script>    
-    let AMM_LoginViewModel = {
+    let AMM_AddFamilyViewModel = {
         // свойства
-        loginForm: {
-            Login: ko.observable(""),
-            Password: ko.observable("")
+        //familyName: ko.observable(""),
+        familyForm: {
+            Name: ko.observable("")            
         },
         // методы
         ClearForm: function () {
@@ -51,12 +45,12 @@
                 this.loginForm[i]("");
             }
         },
-        LoginClick: function () {
+        CreateFamilyClick: function () {
             AMM_ViewModel.showPreloader(true);            
-            let formData = ko.toJS(this.loginForm);
-            console.log(formData);
+            let formData = ko.toJS(this.familyForm);
+            //console.log(formData);
             $.ajax({
-                url: "api/login",
+                url: "api/family/add",
                 data: formData,
                 type: 'POST'
             }).done(function (resp) {               
@@ -65,18 +59,14 @@
                     alert(resp.error);
                 }
                 else {
-                    console.log(resp);
                     AMM_ViewModel.showPreloader(false);
-                    isLogin = true;
-                    if (resp.data.Family === null) {
-                        isFamily = false;
-                    }
-                    else {
-                        isFamily = true;
-                    }
-                    userLogin = AMM_LoginViewModel.loginForm.Login();
-                    AMM_ViewModel.SetLogin(userLogin);
-                    AMM_LoginViewModel.ClearForm();
+                    isFamily = true;
+                    AMM_ViewModel.navbar.addFamily(false);
+                    AMM_ViewModel.navbar.manageFamily(true);
+                    //isLogin = true;
+                    //userLogin = AMM_LoginViewModel.loginForm.Login();
+                    //AMM_ViewModel.SetLogin(userLogin);
+                    //AMM_LoginViewModel.ClearForm();
                     location.hash = "#!main";
                 }
             }).fail(function (xhr, status, text) {
@@ -85,9 +75,9 @@
             });
         },
 
-        ShowRegistrationClick: function () {
-            location.hash = "#!register";
+        CancelClick: function () {
+            location.hash = "#!main";
         }
     }    
-    ko.applyBindings(AMM_LoginViewModel, document.getElementById("login-form"));
+    ko.applyBindings(AMM_AddFamilyViewModel, document.getElementById("add-family-form"));
 </script>

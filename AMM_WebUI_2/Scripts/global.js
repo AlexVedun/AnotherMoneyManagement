@@ -1,5 +1,6 @@
 ﻿let isLogin = false;
 let userLogin = "";
+let isFamily = false;
 
 const INCOME = 0;
 const WASTE = 1;

@@ -20,11 +20,6 @@ namespace AMM_WebUI_2.Controllers
             mRepository = _repository;
         }
 
-        //[Route("api/get-source-types")]
-        //public Object Get()
-        //{
-        //    return new ApiResponse<Object>() { data = mRepository.TypeOfSourceAMM.GetTypes(), error = "" };
-        //}
         // запрос источников для текущего пользователя
         [Route("api/sources/get")]
         public Object Get(/*bool _b1 = false*/)

@@ -24,7 +24,7 @@ namespace AMM_Domain_2.Model
             User user = GetUserByLogin(_user.Login);
             if (user == null)
             {
-                mdb.UserSet.Add(_user);
+                mdb.UserSet.Add(_user); 
             }
             else
             {
