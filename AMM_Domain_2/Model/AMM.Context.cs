@@ -11,7 +11,8 @@ namespace AMM_Domain_2.Model
     {
         public AMMContainer() : base("name=AMMContainer")
         {
-            Database.SetInitializer<AMMContainer>(new FirstInitializer());
+            //Database.SetInitializer<AMMContainer>(new DropCreateDatabaseAlways<AMMContainer>());
+            Database.SetInitializer<AMMContainer>(new DropCreateDatabaseIfModelChanges<AMMContainer>());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

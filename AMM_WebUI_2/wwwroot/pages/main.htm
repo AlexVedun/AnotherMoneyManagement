@@ -13,9 +13,6 @@
                                 </li>
                             </ul>
                         </div>                        
-                        <!--<div class="row">
-                            <a href="#!add_source" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Добавить</a>
-                        </div>-->
                     </div>                    
                 </li>
                 <li>
@@ -140,13 +137,15 @@
                         else {
                             item.Icon = "import_export";
                         }                        
-                        item.Time = moment(item.Date).format('kk:mm');
+                        item.Time = moment(item.Date).format('H:mm');
+                        //item.Time = moment(moment().utc(item.Date)).format('kk:mm');
                         if (item.Debet !== 0) {
                             item.Summ = item.Debet;
                         }
                         else {
                             item.Summ = item.Credit;
-                        }
+                        }                         
+                        //console.log(test2);
                         console.log(item.Time);
                         AMM_MainViewModel.transactionList.push(item);
                         //if (item.Type === WALLET || item.Type === CARD) {

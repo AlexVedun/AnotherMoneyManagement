@@ -39,11 +39,11 @@ namespace AMM_WebUI_2.Controllers
                     error = ex.Message
                 };
             }
-            
+
         }
 
-        [Route("api/transactions/get-from-to")]        
-        public Object Get (DateTime _from, DateTime _to)
+        [Route("api/transactions/get-from-to")]
+        public Object Get(DateTime _from, DateTime _to)
         {
             string login = HttpContext.Current.Session["user_login"].ToString();
             try
@@ -68,15 +68,21 @@ namespace AMM_WebUI_2.Controllers
         public ApiResponse<Transaction> Post([FromBody]TransactionForm _transactionForm)
         {
             string login = HttpContext.Current.Session["user_login"].ToString();
+            //DateTimeOffset dateTimeOffset;
 
             Transaction transaction = new Transaction()
             {
                 Date = _transactionForm.Date,
+                //Date = DateTime.ParseExact(_transactionForm.Date, "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffzzz", System.Globalization.CultureInfo.InvariantCulture),
+                //Date = DateTime.ParseExact(_transactionForm.Date, "O", System.Globalization.CultureInfo.InvariantCulture),
+                //Date = DateTime.Parse(_transactionForm.Date),
                 Comment = _transactionForm.Comment,
                 User = mRepository.UserAMM.GetUserByLogin(login),
                 From = mRepository.SourceAMM.GetSourceById(login, _transactionForm.From),
                 To = mRepository.SourceAMM.GetSourceById(login, _transactionForm.To)
             };
+            //dateTimeOffset = DateTimeOffset.Parse(_transactionForm.Date);
+            //transaction.Date = dateTimeOffset.LocalDateTime;
 
             if (transaction.From.Type == TypeOfSource.Wallet || transaction.From.Type == TypeOfSource.Card)
             {
@@ -115,7 +121,7 @@ namespace AMM_WebUI_2.Controllers
                 {
                     return new ApiResponse<Transaction>() { error = ex.Message };
                 }
-            }                       
+            }
         }
     }
 }

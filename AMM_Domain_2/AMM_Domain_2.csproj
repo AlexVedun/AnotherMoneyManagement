@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201902031305514_Add_Id_Properties.Designer.cs">
       <DependentUpon>201902031305514_Add_Id_Properties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903311714324_ChangeDateInTransaction.cs" />
+    <Compile Include="Migrations\201903311714324_ChangeDateInTransaction.Designer.cs">
+      <DependentUpon>201903311714324_ChangeDateInTransaction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AMM.Context.cs" />
     <Compile Include="Model\Family.cs" />
@@ -145,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902031305514_Add_Id_Properties.resx">
       <DependentUpon>201902031305514_Add_Id_Properties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903311714324_ChangeDateInTransaction.resx">
+      <DependentUpon>201903311714324_ChangeDateInTransaction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

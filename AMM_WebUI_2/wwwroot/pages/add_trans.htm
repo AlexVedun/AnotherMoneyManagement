@@ -22,7 +22,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input value="" id="SummTrans" name="Summ" type="text" class="validate" data-bind="value: addTransactionForm.Summ">
+                            <input value="" id="SummTrans" name="Summ" type="number" class="validate" data-bind="value: addTransactionForm.Summ">
                             <label class="active" for="SummTrans">Сумма</label>
                         </div>
                     </div>
@@ -121,9 +121,16 @@
         },
         AddTransactionClick: function () {
             AMM_ViewModel.showPreloader(true);
-            let currentDate = new Date();
-            console.log(currentDate.toJSON());
-            this.addTransactionForm.Date(currentDate.toJSON());
+            //let currentDate = new Date();
+            //let currentDate2 = currentDate.toString();
+            //let currentDate3 = Date.parse(currentDate2);
+            //let currentDate4 = Date(currentDate3);
+            let currentDate = moment();
+            //console.log(currentDate.toString());
+            console.log(currentDate.format());
+            //console.log(currentDate4.toJSON());
+            //this.addTransactionForm.Date(currentDate.toJSON());
+            this.addTransactionForm.Date(currentDate.format());
             this.addTransactionForm.From(GetSelectedItemId("FromSourceList"));
             this.addTransactionForm.To(GetSelectedItemId("ToSourceList"));
             let formData = ko.toJS(this.addTransactionForm);

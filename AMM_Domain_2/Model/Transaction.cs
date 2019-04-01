@@ -10,7 +10,8 @@ namespace AMM_Domain_2.Model
     public partial class Transaction
     {
         public int Id { get; set; }
-        public System.DateTime Date { get; set; }
+        //public System.DateTime Date { get; set; }
+        public string Date { get; set; }
         public string Comment { get; set; }
         public decimal Debet { get; set; }
         public decimal Credit { get; set; }
