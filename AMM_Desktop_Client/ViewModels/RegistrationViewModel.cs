@@ -1,4 +1,5 @@
-﻿using AMM_Domain;
+﻿using AMM_Domain_2;
+using AMM_Domain_2.Model;
 using Catel.Data;
 using Catel.MVVM;
 using System;

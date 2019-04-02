@@ -1,9 +1,13 @@
-﻿using AMM_Domain;
+﻿using AMM_Desktop_Client.Models;
+using AMM_Desktop_Client.WebAPIClientWPF;
+using AMM_Domain_2;
+using AMM_Domain_2.Model;
 using Catel.Data;
 using Catel.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -61,27 +65,48 @@ namespace AMM_Desktop_Client.ViewModels
 
         public Command<object> LoginCommand { get; private set; }
 
-        private void OnLoginCommandExecute(object _param)
+        private async void OnLoginCommandExecute(object _param)
         {
-            //PreloaderVisibility = true;
+            LoginRequestForm loginRequestForm = new LoginRequestForm();
+            PreloaderVisibility = true;
             var passwordBox = _param as PasswordBox;
-            string password = passwordBox.Password;
-            User user = repository.UserAMM.GetUserByLogin(UserLogin);
-            //PreloaderVisibility = false;
-            if (user == null)
-            {
-                System.Windows.MessageBox.Show("Неверный логин или пароль");
-            }
-            else if (user.Password != password)
-            {
-                System.Windows.MessageBox.Show("Неверный логин или пароль");
-            }
-            else
+            loginRequestForm.Login = UserLogin;
+            loginRequestForm.Password = passwordBox.Password;
+            //string password = passwordBox.Password;
+            //User user = repository.UserAMM.GetUserByLogin(UserLogin);
+            ApiResponse<User> response = await LoginAsync(loginRequestForm);
+            PreloaderVisibility = false;
+            if (response.data != null)
             {
                 UserLogin = "";
                 ShowGeneralView.Execute();
             }
+            else
+            {
+                System.Windows.MessageBox.Show(response.error);
+            }
+            //PreloaderVisibility = false;
+            //if (user == null)
+            //{
+            //    System.Windows.MessageBox.Show("Неверный логин или пароль");
+            //}
+            //else if (user.Password != password)
+            //{
+            //    System.Windows.MessageBox.Show("Неверный логин или пароль");
+            //}
+            //else
+            //{
+            //    UserLogin = "";
+            //    ShowGeneralView.Execute();
+            //}
 
+        }
+
+        private async Task<ApiResponse<User>> LoginAsync(LoginRequestForm loginRequestForm)
+        {
+            HttpResponseMessage response = await WebAPIClient.Client.PostAsJsonAsync("api/login", loginRequestForm);
+            response.EnsureSuccessStatusCode();            
+            return await response.Content.ReadAsAsync<ApiResponse<User>>();
         }
 
         public Command RegistrationCommand { get; private set; }
