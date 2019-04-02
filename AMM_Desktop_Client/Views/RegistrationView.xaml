@@ -29,7 +29,7 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        
+
         <Label 
             Style="{DynamicResource MaterialDesignLabel}" 
             Grid.Row="0" 
@@ -45,7 +45,7 @@
         <PasswordBox 
             Name="passwdBox"
             Style="{DynamicResource MaterialDesignPasswordBox}" 
-            Grid.Row="3" />        
+            Grid.Row="3" />
         <Label 
             Style="{DynamicResource MaterialDesignLabel}" 
             Grid.Row="4" 
@@ -62,6 +62,17 @@
             Style="{DynamicResource MaterialDesignTextBox}" 
             Grid.Row="7" 
             Text="{Binding UserName}" />
+        <materialDesign:Card 
+            Grid.Row="7"
+            UniformCornerRadius="25" 
+            Padding="2" 
+            HorizontalAlignment="Center"
+            Visibility="{Binding PreloaderVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ProgressBar 
+                Style="{StaticResource MaterialDesignCircularProgressBar}" 
+                Value="0"
+                IsIndeterminate="True" Width="30" Height="30" />
+        </materialDesign:Card>
         <Label 
             Style="{DynamicResource MaterialDesignLabel}" 
             Grid.Row="8" 
@@ -93,5 +104,5 @@
             Content="Отмена"
             Command="{Binding CancelCommand}" />
     </Grid>
-    
+
 </catel:UserControl>

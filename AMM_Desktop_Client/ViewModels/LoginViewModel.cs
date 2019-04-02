@@ -16,10 +16,10 @@ namespace AMM_Desktop_Client.ViewModels
 {
     class LoginViewModel: ViewModelBase
     {
-        private IRepository repository;
+        //private IRepository repository;
         public LoginViewModel()
         {
-            repository = new SqlServerRepository();
+            //repository = new SqlServerRepository();
             PreloaderVisibility = false;
 
             LoginCommand = new Command<object>(OnLoginCommandExecute);

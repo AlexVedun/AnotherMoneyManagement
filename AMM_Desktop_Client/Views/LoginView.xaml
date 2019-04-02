@@ -51,14 +51,14 @@
             IsIndeterminate="True" />-->
         <materialDesign:Card 
             Grid.Row="3"
-            UniformCornerRadius="14" 
-            Padding="4" 
+            UniformCornerRadius="25" 
+            Padding="2" 
             HorizontalAlignment="Center"
             Visibility="{Binding PreloaderVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ProgressBar 
                 Style="{StaticResource MaterialDesignCircularProgressBar}" 
                 Value="0"
-                IsIndeterminate="True" />
+                IsIndeterminate="True" Width="30" Height="30" />
         </materialDesign:Card>
         <Label 
             Grid.Row="4" 

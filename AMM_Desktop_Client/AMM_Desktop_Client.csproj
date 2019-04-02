@@ -111,6 +111,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\LoginRequestForm.cs" />
+    <Compile Include="Models\RegisterRequestForm.cs" />
     <Compile Include="Services\Session.cs" />
     <Compile Include="Services\WebAPIClient.cs" />
     <Compile Include="ViewModels\GeneralViewModel.cs" />

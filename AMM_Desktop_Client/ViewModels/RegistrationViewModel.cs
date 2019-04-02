@@ -1,10 +1,13 @@
-﻿using AMM_Domain_2;
+﻿using AMM_Desktop_Client.Models;
+using AMM_Desktop_Client.WebAPIClientWPF;
+using AMM_Domain_2;
 using AMM_Domain_2.Model;
 using Catel.Data;
 using Catel.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -13,10 +16,11 @@ namespace AMM_Desktop_Client.ViewModels
 {
     class RegistrationViewModel: ViewModelBase
     {
-        private IRepository repository;
+        //private IRepository repository;
         public RegistrationViewModel()
         {
-            repository = new SqlServerRepository();
+            //repository = new SqlServerRepository();
+            PreloaderVisibility = false;
             RegistrationCommand = new Command<object>(OnRegistrationCommandExecute);
             CancelCommand = new Command(OnCancelCommandExecute);
         }
@@ -62,32 +66,66 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData UserPatronymicProperty = RegisterProperty(nameof(UserPatronymic), typeof(string), null);
+
+        public bool PreloaderVisibility
+        {
+            get { return GetValue<bool>(PreloaderVisibilityProperty); }
+            set { SetValue(PreloaderVisibilityProperty, value); }
+        }
+
+        public static readonly PropertyData PreloaderVisibilityProperty = RegisterProperty(nameof(PreloaderVisibility), typeof(bool), null);
         #endregion
 
         #region Methods
 
         public Command<object> RegistrationCommand { get; private set; }
 
-        private void OnRegistrationCommandExecute(object _param)
+        private async void OnRegistrationCommandExecute(object _param)
         {
+            PreloaderVisibility = true;
+            RegisterRequestForm registerRequestForm = new RegisterRequestForm();
             var passwordBox = _param as PasswordBox;
-            string password = passwordBox.Password;
-            if (repository.UserAMM.GetUserByLogin(UserLogin) != null)
+            //string password = passwordBox.Password;
+            registerRequestForm.Login = UserLogin;
+            registerRequestForm.Password = passwordBox.Password;
+            registerRequestForm.Surname = UserSurname;
+            registerRequestForm.Name = UserName;
+            registerRequestForm.Patronymic = UserPatronymic;
+            ApiResponse<User> response = await RegisterAsync(registerRequestForm);
+            PreloaderVisibility = false;
+            if (response.data != null)
             {
-                System.Windows.MessageBox.Show("Пользователь " + UserLogin + " уже зарегистритован. Выберите другой логин.");
-            }
-            else
-            {
-                User user = new User();
-                user.Login = UserLogin;
-                user.Password = password;
-                user.Surname = UserSurname;
-                user.Name = UserName;
-                user.Patronymic = user.Patronymic;
-                repository.UserAMM.SaveUser(user);
+                //UserLogin = "";
                 System.Windows.MessageBox.Show("Пользователь " + UserLogin + " зарегистритован");
                 ShowLoginView.Execute();
             }
+            else
+            {
+                System.Windows.MessageBox.Show(response.error);
+            }
+            //if (repository.UserAMM.GetUserByLogin(UserLogin) != null)
+            //{
+            //    System.Windows.MessageBox.Show("Пользователь " + UserLogin + " уже зарегистритован. Выберите другой логин.");
+            //}
+            //else
+            //{
+            //    User user = new User();
+            //    user.Login = UserLogin;
+            //    user.Password = password;
+            //    user.Surname = UserSurname;
+            //    user.Name = UserName;
+            //    user.Patronymic = user.Patronymic;
+            //    repository.UserAMM.SaveUser(user);
+            //    System.Windows.MessageBox.Show("Пользователь " + UserLogin + " зарегистритован");
+            //    ShowLoginView.Execute();
+            //}
+        }
+
+        private async Task<ApiResponse<User>> RegisterAsync(RegisterRequestForm registerRequestForm)
+        {
+            HttpResponseMessage response = await WebAPIClient.Client.PostAsJsonAsync("api/register", registerRequestForm);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<ApiResponse<User>>();
         }
 
         public Command CancelCommand { get; private set; }
