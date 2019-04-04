@@ -29,15 +29,33 @@
             <Menu
                 IsMainMenu="True">
                 <MenuItem
-                     Header="_File">
+                     Header="Пользователь">
                     <MenuItem
-                        Header="Save">
+                        Header="Кошельки и карты">
                         <MenuItem.Icon>
-                            <materialDesign:PackIcon
-                                Kind="ContentSave" />
+                            <materialDesign:PackIcon Kind="CashMultiple" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
+                        Header="Категории">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="ShoppingBasket" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Header="Транзакции">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="CalendarText" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Header="Выход">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="ExitToApp" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <!--<MenuItem
                         Header="Save As.." />
                     <MenuItem
                         Header="Exit"
@@ -72,9 +90,9 @@
                             Header="Plain" />
                         <MenuItem
                             Header="Ice Cream" />
-                    </MenuItem>
+                    </MenuItem>-->
                 </MenuItem>
-                <MenuItem
+                <!--<MenuItem
                     Header="_Edit">
                     <MenuItem
                         Header="_Cut"
@@ -100,7 +118,7 @@
                                 Kind="ContentPaste" />
                         </MenuItem.Icon>
                     </MenuItem>
-                </MenuItem>
+                </MenuItem>-->
             </Menu>
 
 
