@@ -19,7 +19,9 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <materialDesign:Card              
@@ -123,7 +125,54 @@
 
 
         </materialDesign:Card>
-
+        <ListView
+            Grid.Row="1"
+            Grid.Column="1"
+            ItemsSource="{Binding Sources}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView.View>
+                <GridView>                    
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Name}"
+                        Header="Название" />
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Money}"
+                        Header="Сумма" />
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Description}"
+                        Header="Описание" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <materialDesign:Card 
+            Grid.Row="2"
+            Grid.Column="1"
+            UniformCornerRadius="25" 
+            Padding="2" 
+            HorizontalAlignment="Center"
+            Visibility="{Binding PreloaderVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ProgressBar 
+                Style="{StaticResource MaterialDesignCircularProgressBar}" 
+                Value="0"
+                IsIndeterminate="True" Width="30" Height="30" />
+        </materialDesign:Card>
+        <ListView
+            Grid.Row="3"
+            Grid.Column="1"
+            ItemsSource="{Binding Transactions}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Time}"
+                        Header="Время" />
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Summ}"
+                        Header="Сумма" />
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Comment}"
+                        Header="Комментарий" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 
 </catel:UserControl>

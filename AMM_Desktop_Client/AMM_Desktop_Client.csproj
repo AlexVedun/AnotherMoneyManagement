@@ -112,6 +112,9 @@
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\LoginRequestForm.cs" />
     <Compile Include="Models\RegisterRequestForm.cs" />
+    <Compile Include="Models\Source.cs" />
+    <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\TypeOfSource.cs" />
     <Compile Include="Services\Session.cs" />
     <Compile Include="Services\WebAPIClient.cs" />
     <Compile Include="ViewModels\GeneralViewModel.cs" />

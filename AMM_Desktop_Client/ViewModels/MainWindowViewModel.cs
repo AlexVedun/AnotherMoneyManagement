@@ -54,6 +54,7 @@
 
         private void OnShowGeneralViewCommandExecute()
         {
+            ((GeneralViewModel)generalView).LoadSourcesTransactionsCommand.Execute();
             CurrentView = generalView;
         }
         #endregion
