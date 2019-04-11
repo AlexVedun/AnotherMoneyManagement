@@ -1,9 +1,11 @@
-﻿<div class="col s12 m12 l12 xl10 offset-xl1" id="add-source-form">
+﻿<!--Управление кошельками и картами-->
+<div class="col s12 m12 l12 xl10 offset-xl1" id="add-source-form">
     <div class="card grey lighten-2">
         <div class="card-content">
             <span class="card-title">Управление кошельками и картами</span>
             <div class="row">
                 <form class="col s12 m8 l8 xl8">
+                    <!--добавление карт и кошельков-->
                     <div class="col s12 m6 l6 xl6">
                         <div class="row">
                             <div class="input-field col s12">
@@ -42,6 +44,7 @@
                             </button>
                         </div>
                     </div>
+                    <!--удаление карт и кошельков-->
                     <div class="col s12 m6 l6 xl6">
                         <div class="row">
                             <div class="input-field col s12">
@@ -59,63 +62,14 @@
                         </div>
                     </div>
                 </form>
+                <!--список имеющихся карт и кошельков-->
                 <ul id="WalletCardList" class="collapsible col s12 m4 l4 xl4" data-bind="foreach: sources">
                     <li>
                         <div class="collapsible-header"><i class="material-icons" data-bind="text: Icon"></i><!--ko text: Name--><!--/ko--></div>
                         <div class="collapsible-body"><span><!--ko text: Description--><!--/ko--></span></div>
                     </li>
-                </ul>
-                <!--<form id="add-source-form">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input value="" id="AddSourceName" type="text" class="validate" data-bind="value: addSourceForm.Name">
-                            <label class="active" for="AddSourceName">Наименование</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label>
-                            <input class="with-gap" name="AddSourceType" type="radio" value="2" data-bind="checked: addSourceForm.TypeOfSource" />
-                            <span>Кошелек</span>
-                        </label>
-                    </div>
-                    <div class="row">
-                        <label>
-                            <input class="with-gap" name="AddSourceType" type="radio" value="3" data-bind="checked: addSourceForm.TypeOfSource" />
-                            <span>Карта</span>
-                        </label>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input value="" id="AddSourceMoney" type="text" class="validate" data-bind="value: addSourceForm.Money">
-                            <label class="active" for="AddSourceMoney">Сумма</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input value="" id="AddSourceDescription" type="text" class="validate" data-bind="value: addSourceForm.Description">
-                            <label class="active" for="AddSourceDescription">Описание</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                data-bind="click: AddSourceClick">
-                            Добавить
-                        </button>
-                    </div>
-                    <div class="row">
-                        <button class="col s12 m10 offset-m1 l10 offset-l1 xl10 offset-xl1 waves-effect waves-light btn"
-                                data-bind="click: CancelAddSourceClick">
-                            Отмена
-                        </button>
-                    </div>
-                </form>-->
-            </div>
-            <!--<div class="row">
-                <button class="col s12 m4 offset-m8 l4 offset-l8 xl4 offset-xl8 waves-effect waves-light btn"
-                        data-bind="click: ReadyClick">
-                    Готово
-                </button>
-            </div>-->
+                </ul>                
+            </div>            
         </div>
     </div>
     <div class="fixed-action-btn">
@@ -126,45 +80,28 @@
     </div>
 </div>
 <script>
+    // главный объект секции
     let AMM_AddSourceViewModel = {
         // свойства
-        self: this,
-        //selectedTypeIndex: function () {
-        //    return $('#AddSourceType').parent('li.selected').index();
-        //},
-        //selectedTypeText: function () {
-        //    return $("#AddSourceType option:selected").eq(self.selectedTypeIndex()).text();
-        //},
+        self: this,        
         sources: ko.observableArray(),
         addSourceForm: {
             Name: ko.observable(""),
             Money: ko.observable(0),
             Description: ko.observable(""),
-            TypeOfSource: ko.observable("2")
-            //TypeOfSource: 0
-            //TypeOfSource: ko.computed(function () {
-            //    return $("#AddSourceType option:selected").eq(self.selectedTypeIndex).val();
-            //})
-        },
-        //types: ko.observableArray(),
-        //isMoneyNeed: ko.computed(function () {
-        //    console.log(self.selectedTypeText)
-        //    return (self.selectedTypeText === "Кошелек" || self.selectedTypeText === "Карта");
-        //}),
-        //TypeNames: ko.observableArray(),
-        //SelectedType: ko.observable(""),
+            TypeOfSource: ko.observable("2")            
+        },        
         // методы
+        // очистка формы ввода
         ClearForm: function () {
             this.addSourceForm.Description("");
             this.addSourceForm.Money(0);
-            this.addSourceForm.Name("");
-            //this.addSourceForm.TypeOfSource();
+            this.addSourceForm.Name("");            
         },
+        // добавление кошелька или карты
         AddSourceClick: function () {
-            AMM_ViewModel.showPreloader(true);
-            //this.addSourceForm.TypeOfSource = $("#AddSourceType option:selected").eq(this.selectedTypeIndex()).val();
-            let formData = ko.toJS(this.addSourceForm);
-            console.log(formData);
+            AMM_ViewModel.showPreloader(true);            
+            let formData = ko.toJS(this.addSourceForm);            
             $.ajax({
                 url: "api/sources/add",
                 data: formData,
@@ -178,14 +115,14 @@
                     AMM_ViewModel.showPreloader(false);
                     AMM_AddSourceViewModel.ClearForm();
                     AMM_AddSourceViewModel.GetWalletsCards();
-                    AMM_MainViewModel.UpdateSourcesList();
-                    //location.hash = "#!main";
+                    AMM_MainViewModel.UpdateSourcesList();                    
                 }
             }).fail(function (xhr, status, text) {
                 AMM_ViewModel.showPreloader(false);
                 alert("error: " + text);
             });
         },
+        // удаление кошельков или карт
         DeleteSourceClick: function () {            
             let deleteId = GetSelectedItemId("DeleteWalletCardList");
             $.ajax({
@@ -198,23 +135,20 @@
                 }
                 else {
                     AMM_ViewModel.showPreloader(false);
-                    AMM_AddSourceViewModel.GetWalletsCards();
-                    //AMM_AddSourceViewModel.ClearForm();
-                    //AMM_MainViewModel.UpdateSourcesList();
-                    //location.hash = "#!main";
+                    AMM_AddSourceViewModel.GetWalletsCards();                    
                 }
             }).fail(function (xhr, status, text) {
                 AMM_ViewModel.showPreloader(false);
                 alert("error: " + text);
             });
         },
+        // получение списка кошельков и карт
         GetWalletsCards: function () {
             AMM_ViewModel.showPreloader(true);
             $.ajax({
                 url: "api/sources/get",
                 type: 'GET'
-            }).done(function (resp) {
-                console.log(resp);
+            }).done(function (resp) {                
                 if (resp.error !== null && resp.error !== "") {
                     AMM_ViewModel.showPreloader(false);
                     alert(resp.error);
@@ -237,25 +171,25 @@
                         }
                     } 
                     $('#DeleteWalletCardList').formSelect();
-                    console.log(AMM_AddSourceViewModel.sources);
-                    //location.hash = "#!main";
+                    console.log(AMM_AddSourceViewModel.sources);                    
                 }
             }).fail(function (xhr, status, text) {
                 AMM_ViewModel.showPreloader(false);
                 alert("error: " + text);
             });
         },
+        // переход на главный вид
         ReadyClick: function () {
             location.hash = "#!main";
         }
     }
 
     ko.applyBindings(AMM_AddSourceViewModel, document.getElementById("add-source-form"));
-
+    // отслеживание события отображения вида для управления кошельками и картами
     $(document).on("AddSourceVisible", function () {
         AMM_AddSourceViewModel.GetWalletsCards();
     });
-
+    // активация элемента "выпадающий список"
     $(document).ready(function () {
         $('#WalletCardList').collapsible();
     });   

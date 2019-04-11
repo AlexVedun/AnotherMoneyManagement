@@ -68,11 +68,13 @@
     @*основной скрипт*@
     <script src="~/Scripts/global.js"></script>
     <script>
-        let mainVisibleEvent = new Event("MainVisible");
-        let manageIncomeWasteEvent = new Event("IncomeWasteVisible");
-        let addSourceEvent = new Event("AddSourceVisible");
-        let addTransactionEvent = new Event("AddTransactionVisible");
-        let userEvent = new Event("UserVisible");
+        // объекты событий изменения состояния видимости отдельных секций
+        let mainVisibleEvent = new Event("MainVisible");                // нлавный вид
+        let manageIncomeWasteEvent = new Event("IncomeWasteVisible");   // управление категориями поступлений/расходов
+        let addSourceEvent = new Event("AddSourceVisible");             // управление кошельками и картами 
+        let addTransactionEvent = new Event("AddTransactionVisible");   // добавление транзакций
+        let userEvent = new Event("UserVisible");                       // управление пользователем
+        // объект основного вида
         let AMM_ViewModel = {
             // свойства
             show: {
@@ -101,11 +103,13 @@
             },
             showPreloader: ko.observable(false),
             // методы
+            // скрыть все секции
             HideAll: function () {
                 for (var i in this.show) {
                     this.show[i](false);
                 }
             },
+            // загрузить или отобразить секцию
             ShowChunck: function (_chunck) {
                 this.HideAll();
                 this.showPreloader(true);
@@ -130,6 +134,7 @@
                     this.show[_chunck](true);
                 }
             },
+            // изменение интерфейса при входе пользователя в систему
             SetLogin: function (_name) {
                 this.navbar.login(false);
                 this.navbar.register(false);
@@ -146,6 +151,7 @@
                 //    this.navbar.addFamily(true);
                 //}
             },
+            // изменение интерфейса при выходе пользователя из системы
             SetLogout: function () {
                 this.navbar.login(true);
                 this.navbar.register(true);
@@ -165,25 +171,25 @@
                 document.dispatchEvent(mainVisibleEvent);
             }
         });
-
+        // генерируется событие того, что раздел manage_income_waste изменил свою видимость
         AMM_ViewModel.show.manage_income_waste.subscribe(function (newValue) {
             if (newValue) {
                 document.dispatchEvent(manageIncomeWasteEvent);
             }
         });
-
+        // генерируется событие того, что раздел add_source изменил свою видимость
         AMM_ViewModel.show.add_source.subscribe(function (newValue) {
             if (newValue) {
                 document.dispatchEvent(addSourceEvent);
             }
         });
-
+        // генерируется событие того, что раздел add_trans изменил свою видимость
         AMM_ViewModel.show.add_trans.subscribe(function (newValue) {
             if (newValue) {
                 document.dispatchEvent(addTransactionEvent);
             }
         });
-
+        // генерируется событие того, что раздел user изменил свою видимость
         AMM_ViewModel.show.user.subscribe(function (newValue) {
             if (newValue) {
                 document.dispatchEvent(userEvent);
@@ -191,7 +197,7 @@
         });
 
         ko.applyBindings(AMM_ViewModel);
-
+        // маршрутизация
         Sammy(function () {
             this.get('#!logout', function () {
                 AMM_ViewModel.showPreloader(true);

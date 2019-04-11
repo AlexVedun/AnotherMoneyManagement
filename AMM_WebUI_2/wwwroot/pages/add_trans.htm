@@ -1,4 +1,5 @@
-﻿<div class="col s12 m8 offset-m2 l4 offset-l4 xl4 offset-xl4">
+﻿<!--создание транзакции-->
+<div class="col s12 m8 offset-m2 l4 offset-l4 xl4 offset-xl4">
     <div class="card grey lighten-2">
         <div class="card-content">
             <span class="card-title">Создать транзакцию</span>
@@ -59,23 +60,21 @@
             To: ko.observable(0),
             Summ: ko.observable("")
         },
-        fromSources: ko.observableArray(),
-        toSources: ko.observableArray(),
+        fromSources: ko.observableArray(),      // список источников денег
+        toSources: ko.observableArray(),        // список получателей денег
         // методы
+        // очистка формы
         ClearForm: function () {
             this.addTransactionForm.Comment("");
-            this.addTransactionForm.Summ("");
-            //for (var i in this.registerForm) {
-            //    this.registerForm[i]("");
-            //}
+            this.addTransactionForm.Summ("");            
         },
+        // получить список источников поступлений и расходов
         GetSourses: function () {
             AMM_ViewModel.showPreloader(true);
             $.ajax({
                 url: "api/sources/get",
                 type: 'GET'
-            }).done(function (resp) {
-                //console.log(resp);
+            }).done(function (resp) {                
                 if (resp.error !== null && resp.error !== "") {
                     AMM_ViewModel.showPreloader(false);
                     alert(resp.error);
@@ -95,41 +94,20 @@
                             item.Name = item.Name + " (" + item.Money + " грн.)";
                             AMM_AddTransactionViewModel.fromSources.push(item);
                             AMM_AddTransactionViewModel.toSources.push(item);
-                        }
-                        //if (item.Type === INCOME || item.Type === WASTE) {
-                        //    switch (item.Type) {
-                        //        case INCOME:
-                        //            item.Icon = "attach_money";
-                        //            break;
-                        //        case WASTE:
-                        //            item.Icon = "shopping_cart";
-                        //            break;
-                        //        default:
-                        //    }
-                        //    AMM_ManageIncomeWasteViewModel.sources.push(item);
-                        //}
+                        }                        
                     }
                     $('#FromSourceList').formSelect();
-                    $('#ToSourceList').formSelect();
-                    //console.log(AMM_ManageIncomeWasteViewModel.sources);
-                    //location.hash = "#!main";
+                    $('#ToSourceList').formSelect();                    
                 }
             }).fail(function (xhr, status, text) {
                 AMM_ViewModel.showPreloader(false);
                 alert("error: " + text);
             });
         },
+        // добавить транзакцию
         AddTransactionClick: function () {
-            AMM_ViewModel.showPreloader(true);
-            //let currentDate = new Date();
-            //let currentDate2 = currentDate.toString();
-            //let currentDate3 = Date.parse(currentDate2);
-            //let currentDate4 = Date(currentDate3);
-            let currentDate = moment();
-            //console.log(currentDate.toString());
-            console.log(currentDate.format());
-            //console.log(currentDate4.toJSON());
-            //this.addTransactionForm.Date(currentDate.toJSON());
+            AMM_ViewModel.showPreloader(true);            
+            let currentDate = moment();            
             this.addTransactionForm.Date(currentDate.format());
             this.addTransactionForm.From(GetSelectedItemId("FromSourceList"));
             this.addTransactionForm.To(GetSelectedItemId("ToSourceList"));
@@ -153,13 +131,14 @@
                 alert("error: " + text);
             });
         },
-
+        // отмена создания транзакции
         CancelTransactionClick: function () {
             location.hash = "#!main";
         }
     }
-    ko.applyBindings(AMM_AddTransactionViewModel, document.getElementById("add-transaction-form"));
 
+    ko.applyBindings(AMM_AddTransactionViewModel, document.getElementById("add-transaction-form"));
+    // отслеживание события отображения вида для создания транзакции
     $(document).on("AddTransactionVisible", function () {
         AMM_AddTransactionViewModel.GetSourses();
     });

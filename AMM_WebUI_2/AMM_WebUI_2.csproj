@@ -136,10 +136,6 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\sammy-0.7.5.js" />
     <Content Include="Scripts\sammy-0.7.5.min.js" />
-    <Content Include="wwwroot\images\credit-card.png" />
-    <Content Include="wwwroot\images\credit-card-orig.png" />
-    <Content Include="wwwroot\images\wallet.png" />
-    <Content Include="wwwroot\images\wallet-orig.png" />
     <Content Include="wwwroot\pages\add_family.htm" />
     <Content Include="wwwroot\pages\manage_family.htm" />
     <Content Include="wwwroot\pages\user.htm" />
@@ -202,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AMM_Domain_2\AMM_Domain_2.csproj">
