@@ -19,6 +19,7 @@
             ((LoginViewModel)loginView).ShowRegistrationView = ShowRegistrationViewCommand;
             ((LoginViewModel)loginView).ShowGeneralView = ShowGeneralViewCommand;
             ((RegistrationViewModel)registrationView).ShowLoginView = ShowLoginViewCommand;
+            ((GeneralViewModel)generalView).ShowLoginView = ShowLoginViewCommand;
 
             CurrentView = loginView;
         }

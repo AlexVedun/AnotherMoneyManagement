@@ -21,6 +21,7 @@ namespace AMM_Desktop_Client.ViewModels
             Transactions = new List<Transaction>();
 
             LoadSourcesTransactionsCommand = new Command(OnLoadSourcesTransactionsCommandExecute);
+            LogoutCommand = new Command(OnLogoutCommandExecute);
         }
 
         #region Properties
@@ -48,6 +49,14 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData PreloaderVisibilityProperty = RegisterProperty(nameof(PreloaderVisibility), typeof(bool), null);
+
+        public Command ShowLoginView
+        {
+            get { return GetValue<Command>(ShowLoginViewProperty); }
+            set { SetValue(ShowLoginViewProperty, value); }
+        }
+
+        public static readonly PropertyData ShowLoginViewProperty = RegisterProperty(nameof(ShowLoginView), typeof(Command), null);
         #endregion
 
         #region Methods
@@ -125,14 +134,24 @@ namespace AMM_Desktop_Client.ViewModels
 
         private async Task<ApiResponse<List<Source>>> GetSourcesAsync()
         {
-            HttpResponseMessage response = await WebAPIClient.Client.GetAsync("api/sources/get");
-            //    Console.WriteLine(response);
+            HttpResponseMessage response = await WebAPIClient.Client.GetAsync("api/sources/get");            
             ApiResponse<List<Source>> result = null;
             if (response.IsSuccessStatusCode)
             {
                 result = await response.Content.ReadAsAsync<ApiResponse<List<Source>>>();
             }
             return result;
+        }
+
+        public Command LogoutCommand { get; private set; }
+
+        private async void OnLogoutCommandExecute()
+        {
+            PreloaderVisibility = true;
+            HttpResponseMessage response = await WebAPIClient.Client.PutAsJsonAsync("api/logout", new Object { });
+            response.EnsureSuccessStatusCode();
+            PreloaderVisibility = false;
+            ShowLoginView.Execute();
         }
         #endregion
 

@@ -12,7 +12,7 @@ namespace AMM_WebUI_2.Controllers
     public class LogoutController : ApiController
     {
         [Route("api/logout")]
-        public ApiResponse<Object> Post()
+        public ApiResponse<Object> Put()
         {
             try
             {

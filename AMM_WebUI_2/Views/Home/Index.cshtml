@@ -203,7 +203,7 @@
                 AMM_ViewModel.showPreloader(true);
                 $.ajax({
                     url: "api/logout",
-                    type: 'POST'
+                    type: 'PUT'
                 }).done(function (resp) {
                     if (resp.error !== null && resp.error !== "") {
                         AMM_ViewModel.showPreloader(false);
