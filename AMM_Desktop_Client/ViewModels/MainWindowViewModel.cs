@@ -9,17 +9,21 @@
         private IViewModel loginView = new LoginViewModel();
         private IViewModel registrationView = new RegistrationViewModel();
         private IViewModel generalView = new GeneralViewModel();
+        private IViewModel addTransactionView = new AddTransactionViewModel();
 
         public MainWindowViewModel()
         {
             ShowRegistrationViewCommand = new Command(OnShowRegistrationViewCommandExecute);
             ShowLoginViewCommand = new Command(OnShowLoginViewCommandExecute);
             ShowGeneralViewCommand = new Command(OnShowGeneralViewCommandExecute);
+            ShowAddTransactionViewCommand = new Command(OnShowAddTransactionViewCommandExecute);
 
             ((LoginViewModel)loginView).ShowRegistrationView = ShowRegistrationViewCommand;
             ((LoginViewModel)loginView).ShowGeneralView = ShowGeneralViewCommand;
             ((RegistrationViewModel)registrationView).ShowLoginView = ShowLoginViewCommand;
             ((GeneralViewModel)generalView).ShowLoginView = ShowLoginViewCommand;
+            ((GeneralViewModel)generalView).ShowAddTransactionView = ShowAddTransactionViewCommand;
+            ((AddTransactionViewModel)addTransactionView).ShowGeneralView = ShowGeneralViewCommand;
 
             CurrentView = loginView;
         }
@@ -57,6 +61,14 @@
         {
             ((GeneralViewModel)generalView).LoadSourcesTransactionsCommand.Execute();
             CurrentView = generalView;
+        }
+
+        public Command ShowAddTransactionViewCommand { get; private set; }
+
+        private void OnShowAddTransactionViewCommandExecute()
+        {
+            ((AddTransactionViewModel)addTransactionView).LoadSourcesCommand.Execute();
+            CurrentView = addTransactionView;
         }
         #endregion
         

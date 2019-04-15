@@ -115,6 +115,7 @@
     <Compile Include="Models\Source.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TypeOfSource.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Services\Session.cs" />
     <Compile Include="Services\WebAPIClient.cs" />
     <Compile Include="ViewModels\AddTransactionViewModel.cs" />
@@ -224,12 +225,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AMM_Domain_2\AMM_Domain_2.csproj">
-      <Project>{6e8d70c4-aeb6-4c49-90db-f58b12e68b4b}</Project>
-      <Name>AMM_Domain_2</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

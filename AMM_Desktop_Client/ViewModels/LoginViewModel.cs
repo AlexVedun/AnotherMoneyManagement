@@ -1,14 +1,9 @@
-﻿using AMM_Desktop_Client.Models;
+﻿using AMM_Desktop_Client.Model;
+using AMM_Desktop_Client.Models;
 using AMM_Desktop_Client.WebAPIClientWPF;
-using AMM_Domain_2;
-using AMM_Domain_2.Model;
 using Catel.Data;
 using Catel.MVVM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 

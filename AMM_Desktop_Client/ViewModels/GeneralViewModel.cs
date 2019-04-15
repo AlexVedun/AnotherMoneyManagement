@@ -22,6 +22,7 @@ namespace AMM_Desktop_Client.ViewModels
 
             LoadSourcesTransactionsCommand = new Command(OnLoadSourcesTransactionsCommandExecute);
             LogoutCommand = new Command(OnLogoutCommandExecute);
+            ShowAddTransactionViewCommand = new Command(OnShowAddTransactionViewCommandExecute);
         }
 
         #region Properties
@@ -57,6 +58,14 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData ShowLoginViewProperty = RegisterProperty(nameof(ShowLoginView), typeof(Command), null);
+
+        public Command ShowAddTransactionView
+        {
+            get { return GetValue<Command>(ShowAddTransactionViewProperty); }
+            set { SetValue(ShowAddTransactionViewProperty, value); }
+        }
+
+        public static readonly PropertyData ShowAddTransactionViewProperty = RegisterProperty(nameof(ShowAddTransactionView), typeof(Command), null);
         #endregion
 
         #region Methods
@@ -152,6 +161,13 @@ namespace AMM_Desktop_Client.ViewModels
             response.EnsureSuccessStatusCode();
             PreloaderVisibility = false;
             ShowLoginView.Execute();
+        }
+
+        public Command ShowAddTransactionViewCommand { get; private set; }
+
+        private void OnShowAddTransactionViewCommandExecute()
+        {
+            ShowAddTransactionView.Execute();
         }
         #endregion
 

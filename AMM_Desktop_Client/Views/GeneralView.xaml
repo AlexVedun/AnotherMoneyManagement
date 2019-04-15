@@ -95,9 +95,10 @@
                             Header="Ice Cream" />
                     </MenuItem>-->
                 </MenuItem>
-                <!--<MenuItem
-                    Header="_Edit">
-                    <MenuItem
+                <MenuItem
+                    Header="Добавить транзакцию"
+                    Command="{Binding ShowAddTransactionViewCommand}">
+                    <!--<MenuItem
                         Header="_Cut"
                         Command="Cut">
                         <MenuItem.Icon>
@@ -120,8 +121,8 @@
                             <materialDesign:PackIcon
                                 Kind="ContentPaste" />
                         </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>-->
+                    </MenuItem>-->
+                </MenuItem>
             </Menu>
 
 
@@ -156,10 +157,11 @@
                 Value="0"
                 IsIndeterminate="True" Width="30" Height="30" />
         </materialDesign:Card>
+        
         <ListView
             Grid.Row="3"
             Grid.Column="1"
-            ItemsSource="{Binding Transactions}" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="290">
+            ItemsSource="{Binding Transactions}" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
             <ListView.View>
                 <GridView>
                     <GridViewColumn
