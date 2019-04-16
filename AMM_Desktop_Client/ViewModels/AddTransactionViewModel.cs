@@ -103,9 +103,41 @@ namespace AMM_Desktop_Client.ViewModels
 
         public Command AddTransactionCommand { get; private set; }
 
-        private void OnAddTransactionCommandExecute()
+        private async void OnAddTransactionCommandExecute()
         {
-            
+            PreloaderVisibility = true;
+            TransactionForm transactionForm = new TransactionForm();
+            transactionForm.Comment = Comment;
+            if (decimal.TryParse(Summ, out decimal summ))
+            {
+                transactionForm.Summ = summ;
+                transactionForm.From = FromListSelection.Id;
+                transactionForm.To = ToListSelection.Id;
+                DateTime localTime = DateTime.Now;
+                DateTimeOffset localTimeAndOffset = new DateTimeOffset(localTime, TimeZoneInfo.Local.GetUtcOffset(localTime));
+                transactionForm.Date = localTimeAndOffset.ToString("o");
+                ApiResponse<Transaction> response = await AddTransactionAsync(transactionForm);
+                if (response.data != null)
+                {
+                    ShowGeneralView.Execute();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show(response.error);
+                }
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Данные, введенные в поле 'Сумма' не являются числом!");
+            }
+            PreloaderVisibility = false;
+        }
+
+        private async Task<ApiResponse<Transaction>> AddTransactionAsync(TransactionForm transactionForm)
+        {
+            HttpResponseMessage response = await WebAPIClient.Client.PostAsJsonAsync("api/transactions/add", transactionForm);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<ApiResponse<Transaction>>();
         }
 
         public Command LoadSourcesCommand { get; private set; }

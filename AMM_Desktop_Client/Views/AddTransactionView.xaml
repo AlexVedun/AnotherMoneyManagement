@@ -47,7 +47,7 @@
                 Content="Куда" />
             <ComboBox
                 ItemsSource="{Binding ToList}"
-                SelectedIndex="{Binding ToListSelection}"
+                SelectedItem="{Binding ToListSelection}"
                 DisplayMemberPath="Name"
                 materialDesign:HintAssist.Hint="Куда"
                 IsEditable="True"
