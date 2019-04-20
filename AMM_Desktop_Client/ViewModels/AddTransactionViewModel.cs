@@ -1,5 +1,6 @@
 ﻿using AMM_Desktop_Client.Model;
 using AMM_Desktop_Client.Models;
+using AMM_Desktop_Client.Services;
 using AMM_Desktop_Client.WebAPIClientWPF;
 using Catel.Data;
 using Catel.MVVM;
@@ -121,6 +122,7 @@ namespace AMM_Desktop_Client.ViewModels
                 ApiResponse<Transaction> response = await AddTransactionAsync(transactionForm);
                 if (response.data != null)
                 {
+                    Globals.Transactions.Add(response.data);
                     ShowGeneralView.Execute();
                 }
                 else

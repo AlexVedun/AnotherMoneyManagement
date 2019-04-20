@@ -10,6 +10,9 @@ namespace AMM_Desktop_Client.Services
 {
     static class Globals
     {
-        //public ObservableCollection<Transaction> Transactions { get; set; }
+        public static ObservableCollection<Transaction> Transactions { get; set; } = new ObservableCollection<Transaction>();
+        public static ObservableCollection<Source> Sources { get; set; } = new ObservableCollection<Source>();
+
+        
     }
 }

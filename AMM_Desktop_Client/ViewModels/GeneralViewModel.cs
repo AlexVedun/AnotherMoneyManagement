@@ -1,10 +1,12 @@
 ﻿using AMM_Desktop_Client.Model;
 using AMM_Desktop_Client.Models;
+using AMM_Desktop_Client.Services;
 using AMM_Desktop_Client.WebAPIClientWPF;
 using Catel.Data;
 using Catel.MVVM;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -17,9 +19,11 @@ namespace AMM_Desktop_Client.ViewModels
 
         public GeneralViewModel()
         {
-            Sources = new List<Source>();
-            Transactions = new List<Transaction>();
-
+            //Sources = new List<Source>();
+            //Transactions = new List<Transaction>();
+            Sources = Globals.Sources;
+            Transactions = Globals.Transactions;
+            
             LoadSourcesTransactionsCommand = new Command(OnLoadSourcesTransactionsCommandExecute);
             LogoutCommand = new Command(OnLogoutCommandExecute);
             ShowAddTransactionViewCommand = new Command(OnShowAddTransactionViewCommandExecute);
@@ -27,21 +31,21 @@ namespace AMM_Desktop_Client.ViewModels
 
         #region Properties
 
-        public List<Source> Sources
+        public ObservableCollection<Source> Sources
         {
-            get { return GetValue<List<Source>>(SourcesProperty); }
+            get { return GetValue<ObservableCollection<Source>>(SourcesProperty); }
             set { SetValue(SourcesProperty, value); }
         }
 
-        public static readonly PropertyData SourcesProperty = RegisterProperty(nameof(Sources), typeof(List<Source>), null);
+        public static readonly PropertyData SourcesProperty = RegisterProperty(nameof(Sources), typeof(ObservableCollection<Source>), null);
 
-        public List<Transaction> Transactions
+        public ObservableCollection<Transaction> Transactions
         {
-            get { return GetValue<List<Transaction>>(TransactionsProperty); }
+            get { return GetValue<ObservableCollection<Transaction>>(TransactionsProperty); }
             set { SetValue(TransactionsProperty, value); }
         }
 
-        public static readonly PropertyData TransactionsProperty = RegisterProperty(nameof(Transactions), typeof(List<Transaction>), null);
+        public static readonly PropertyData TransactionsProperty = RegisterProperty(nameof(Transactions), typeof(ObservableCollection<Transaction>), null);
 
         public bool PreloaderVisibility
         {
@@ -83,59 +87,60 @@ namespace AMM_Desktop_Client.ViewModels
         private async void OnLoadSourcesTransactionsCommandExecute()
         {
             PreloaderVisibility = true;
-            if (Sources.Count == 0)
+            ApiResponse<List<Source>> response = await GetSourcesAsync();
+
+            if (response.data != null)
             {
-                ApiResponse<List<Source>> response = await GetSourcesAsync();
+                foreach (var item in response.data)
+                {
+                    if (item.Type == TypeOfSource.Card || item.Type == TypeOfSource.Wallet)
+                    {
+                        switch (item.Type)
+                        {
+                            case TypeOfSource.Wallet:
+                                item.Icon = "Wallet";
+                                break;
+                            case TypeOfSource.Card:
+                                item.Icon = "CreditCardMultiple";
+                                break;
+                            default:
+                                break;
+                        }
+                        Globals.Sources.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                System.Windows.MessageBox.Show(response.error);
+            }
+            ApiResponse<List<Transaction>> response2 = await GetTransactionsAsync();
+            PreloaderVisibility = false;
+            if (response2.data != null)
+            {
+                foreach (var item in response2.data)
+                {
+                    var newItem = item;
+                    newItem.Time = DateTime.Parse(item.Date).TimeOfDay.ToString();
+                    if (item.Debet != 0)
+                    {
+                        newItem.Summ = item.Debet;
+                    }
+                    else
+                    {
+                        newItem.Summ = item.Credit;
+                    }
+                    Globals.Transactions.Add(newItem);
+                }
+            }
+            else
+            {
+                System.Windows.MessageBox.Show(response2.error);
+            }
+            //if (Globals.Sources.Count == 0)
+            //{
                 
-                if (response.data != null)
-                {
-                    foreach (var item in response.data)
-                    {
-                        if (item.Type == TypeOfSource.Card || item.Type == TypeOfSource.Wallet)
-                        {
-                            switch (item.Type)
-                            {
-                                case TypeOfSource.Wallet:
-                                    item.Icon = "Wallet";
-                                    break;
-                                case TypeOfSource.Card:
-                                    item.Icon = "CreditCardMultiple";
-                                    break;
-                                default:
-                                    break;
-                            }
-                            Sources.Add(item);
-                        }                        
-                    }
-                }                
-                else
-                {
-                    System.Windows.MessageBox.Show(response.error);
-                }
-                ApiResponse<List<Transaction>> response2 = await GetTransactionsAsync();
-                PreloaderVisibility = false;
-                if (response2.data != null)
-                {
-                    foreach (var item in response2.data)
-                    {
-                        var newItem = item;
-                        newItem.Time = DateTime.Parse(item.Date).TimeOfDay.ToString();                        
-                        if (item.Debet != 0)
-                        {
-                            newItem.Summ = item.Debet;
-                        }
-                        else
-                        {
-                            newItem.Summ = item.Credit;
-                        }
-                        Transactions.Add(newItem);
-                    }
-                }
-                else
-                {
-                    System.Windows.MessageBox.Show(response2.error);
-                }
-            } 
+            //} 
         }
 
         private async Task<ApiResponse<List<Transaction>>> GetTransactionsAsync()
@@ -166,9 +171,9 @@ namespace AMM_Desktop_Client.ViewModels
         {
             PreloaderVisibility = true;
             HttpResponseMessage response = await WebAPIClient.Client.PutAsJsonAsync("api/logout", new Object { });
-            response.EnsureSuccessStatusCode();            
-            Sources.Clear();
-            Transactions.Clear();
+            response.EnsureSuccessStatusCode();
+            Globals.Sources.Clear();
+            Globals.Transactions.Clear();
             PreloaderVisibility = false;
             Logout.Execute();
             //ShowLoginView.Execute();
