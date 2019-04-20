@@ -66,6 +66,14 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData ShowAddTransactionViewProperty = RegisterProperty(nameof(ShowAddTransactionView), typeof(Command), null);
+
+        public Command Logout
+        {
+            get { return GetValue<Command>(LogOutProperty); }
+            set { SetValue(LogOutProperty, value); }
+        }
+
+        public static readonly PropertyData LogOutProperty = RegisterProperty(nameof(Logout), typeof(Command), null);
         #endregion
 
         #region Methods
@@ -158,9 +166,12 @@ namespace AMM_Desktop_Client.ViewModels
         {
             PreloaderVisibility = true;
             HttpResponseMessage response = await WebAPIClient.Client.PutAsJsonAsync("api/logout", new Object { });
-            response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();            
+            Sources.Clear();
+            Transactions.Clear();
             PreloaderVisibility = false;
-            ShowLoginView.Execute();
+            Logout.Execute();
+            //ShowLoginView.Execute();
         }
 
         public Command ShowAddTransactionViewCommand { get; private set; }

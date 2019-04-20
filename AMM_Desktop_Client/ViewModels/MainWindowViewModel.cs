@@ -17,11 +17,13 @@
             ShowLoginViewCommand = new Command(OnShowLoginViewCommandExecute);
             ShowGeneralViewCommand = new Command(OnShowGeneralViewCommandExecute);
             ShowAddTransactionViewCommand = new Command(OnShowAddTransactionViewCommandExecute);
+            LogoutCommand = new Command(OnLogoutCommandExecute);
 
             ((LoginViewModel)loginView).ShowRegistrationView = ShowRegistrationViewCommand;
             ((LoginViewModel)loginView).ShowGeneralView = ShowGeneralViewCommand;
             ((RegistrationViewModel)registrationView).ShowLoginView = ShowLoginViewCommand;
-            ((GeneralViewModel)generalView).ShowLoginView = ShowLoginViewCommand;
+            //((GeneralViewModel)generalView).ShowLoginView = ShowLoginViewCommand;
+            ((GeneralViewModel)generalView).Logout = LogoutCommand;
             ((GeneralViewModel)generalView).ShowAddTransactionView = ShowAddTransactionViewCommand;
             ((AddTransactionViewModel)addTransactionView).ShowGeneralView = ShowGeneralViewCommand;
 
@@ -69,6 +71,14 @@
         {
             ((AddTransactionViewModel)addTransactionView).LoadSourcesCommand.Execute();
             CurrentView = addTransactionView;
+        }
+
+        public Command LogoutCommand { get; private set; }
+
+        private void OnLogoutCommandExecute()
+        {
+            ((AddTransactionViewModel)addTransactionView).LogoutCommand.Execute();
+            CurrentView = loginView;
         }
         #endregion
         

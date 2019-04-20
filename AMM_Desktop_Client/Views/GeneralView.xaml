@@ -127,24 +127,47 @@
 
 
         </materialDesign:Card>
-        <ListView
-            Grid.Row="1"
-            Grid.Column="1"
-            ItemsSource="{Binding Sources}" ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <ListView.View>
-                <GridView>                    
-                    <GridViewColumn
+        <GroupBox Header="Кошельки и карты" Margin="16" Grid.Row="1" Grid.Column="1">
+            <ListView
+                ItemsSource="{Binding Sources}" ScrollViewer.VerticalScrollBarVisibility="Auto">                                
+                <ListView.ItemTemplate>                    
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="Auto" MinWidth="100"/>
+                                <ColumnDefinition Width="Auto" MinWidth="50" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Grid.Column="0" Kind="{Binding Icon}" />
+                            <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Money}"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Description}"/>
+                        </Grid>                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <!--<ListView.View>
+                    <GridView>
+                        <GridViewColumn >
+                            <TextBlock Text="">
+                                <materialDesign:PackIcon
+                                    Kind="{Binding Sources.Icon}" />
+                            </TextBlock>
+                        </GridViewColumn>
+                        <GridViewColumn
                         DisplayMemberBinding="{Binding Name}"
                         Header="Название" />
-                    <GridViewColumn
+                        <GridViewColumn
                         DisplayMemberBinding="{Binding Money}"
                         Header="Сумма" />
-                    <GridViewColumn
+                        <GridViewColumn
                         DisplayMemberBinding="{Binding Description}"
                         Header="Описание" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+                    </GridView>
+                </ListView.View>-->
+            </ListView>
+        </GroupBox>
+        
         <materialDesign:Card 
             Grid.Row="2"
             Grid.Column="1"
@@ -157,25 +180,25 @@
                 Value="0"
                 IsIndeterminate="True" Width="30" Height="30" />
         </materialDesign:Card>
-        
-        <ListView
-            Grid.Row="3"
-            Grid.Column="1"
-            ItemsSource="{Binding Transactions}" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn
+
+        <GroupBox Header="Транзакции за день" Margin="16" Grid.Row="3" Grid.Column="1">
+            <ListView
+                ItemsSource="{Binding Transactions}" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
                         DisplayMemberBinding="{Binding Time}"
                         Header="Время" />
-                    <GridViewColumn
+                        <GridViewColumn
                         DisplayMemberBinding="{Binding Summ}"
                         Header="Сумма" />
-                    <GridViewColumn
+                        <GridViewColumn
                         DisplayMemberBinding="{Binding Comment}"
                         Header="Комментарий" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>        
     </Grid>
 
 </catel:UserControl>

@@ -11,98 +11,99 @@
                    Background="{DynamicResource MaterialDesignPaper}"
                    FontFamily="{DynamicResource MaterialDesignFont}">
 
-    <Grid Width="250">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
+    <GroupBox Header="Регистрация" Margin="16">
+        <Grid Width="250">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
 
-        <Label 
-            Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="0" 
-            Content="Логин*" />
-        <TextBox 
-            Style="{DynamicResource MaterialDesignTextBox}" 
-            Grid.Row="1" 
-            Text="{Binding UserLogin}" />
-        <Label 
-            Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="2" 
-            Content="Пароль*" />
-        <PasswordBox 
-            Name="passwdBox"
-            Style="{DynamicResource MaterialDesignPasswordBox}" 
-            Grid.Row="3" />
-        <Label 
-            Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="4" 
-            Content="Фамилия" />
-        <TextBox 
-            Style="{DynamicResource MaterialDesignTextBox}" 
-            Grid.Row="5" 
-            Text="{Binding UserSurname}" />
-        <Label 
-            Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="6" 
-            Content="Имя" />
-        <TextBox 
-            Style="{DynamicResource MaterialDesignTextBox}" 
-            Grid.Row="7" 
-            Text="{Binding UserName}" />
-        <materialDesign:Card 
-            Grid.Row="7"
-            UniformCornerRadius="25" 
-            Padding="2" 
-            HorizontalAlignment="Center"
-            Visibility="{Binding PreloaderVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <ProgressBar 
-                Style="{StaticResource MaterialDesignCircularProgressBar}" 
-                Value="0"
-                IsIndeterminate="True" Width="30" Height="30" />
-        </materialDesign:Card>
-        <Label 
-            Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="8" 
-            Content="Отчество" />
-        <TextBox 
-            Style="{DynamicResource MaterialDesignTextBox}" 
-            Grid.Row="9" 
-            Text="{Binding UserPatronymic}" />
-        <Label
-            Style="{DynamicResource MaterialDesignLabel}"
-            Grid.Row="10" 
-            Content="* - поля, обязательные для заполнения" />
-        <Label 
-            Grid.Row="11" 
-            Content="" />
-        <Button 
-            Style="{DynamicResource MaterialDesignRaisedButton}" 
-            Grid.Row="12" 
-            Content="Регистрация" 
-            IsDefault="True"
-            Command="{Binding RegistrationCommand}"
-            CommandParameter="{Binding ElementName=passwdBox}" />
-        <Label 
-            Grid.Row="13" 
-            Content="" />
-        <Button 
-            Style="{DynamicResource MaterialDesignRaisedButton}" 
-            Grid.Row="14" 
-            Content="Отмена"
-            Command="{Binding CancelCommand}" />
-    </Grid>
-
+            <Label 
+                Style="{DynamicResource MaterialDesignLabel}" 
+                Grid.Row="0" 
+                Content="Логин*" />
+            <TextBox 
+                Style="{DynamicResource MaterialDesignTextBox}" 
+                Grid.Row="1" 
+                Text="{Binding UserLogin}" />
+            <Label 
+                Style="{DynamicResource MaterialDesignLabel}" 
+                Grid.Row="2" 
+                Content="Пароль*" />
+            <PasswordBox 
+                Name="passwdBox"
+                Style="{DynamicResource MaterialDesignPasswordBox}" 
+                Grid.Row="3" />
+            <Label 
+                Style="{DynamicResource MaterialDesignLabel}" 
+                Grid.Row="4" 
+                Content="Фамилия" />
+            <TextBox 
+                Style="{DynamicResource MaterialDesignTextBox}" 
+                Grid.Row="5" 
+                Text="{Binding UserSurname}" />
+            <Label 
+                Style="{DynamicResource MaterialDesignLabel}" 
+                Grid.Row="6" 
+                Content="Имя" />
+            <TextBox 
+                Style="{DynamicResource MaterialDesignTextBox}" 
+                Grid.Row="7" 
+                Text="{Binding UserName}" />
+            <materialDesign:Card 
+                Grid.Row="7"
+                UniformCornerRadius="25" 
+                Padding="2" 
+                HorizontalAlignment="Center"
+                Visibility="{Binding PreloaderVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ProgressBar 
+                    Style="{StaticResource MaterialDesignCircularProgressBar}" 
+                    Value="0"
+                    IsIndeterminate="True" Width="30" Height="30" />
+            </materialDesign:Card>
+            <Label 
+                Style="{DynamicResource MaterialDesignLabel}" 
+                Grid.Row="8" 
+                Content="Отчество" />
+            <TextBox 
+                Style="{DynamicResource MaterialDesignTextBox}" 
+                Grid.Row="9" 
+                Text="{Binding UserPatronymic}" />
+            <Label
+                Style="{DynamicResource MaterialDesignLabel}"
+                Grid.Row="10" 
+                Content="* - поля, обязательные для заполнения" />
+            <Label 
+                Grid.Row="11" 
+                Content="" />
+            <Button 
+                Style="{DynamicResource MaterialDesignRaisedButton}" 
+                Grid.Row="12" 
+                Content="Регистрация" 
+                IsDefault="True"
+                Command="{Binding RegistrationCommand}"
+                CommandParameter="{Binding ElementName=passwdBox}" />
+            <Label 
+                Grid.Row="13" 
+                Content="" />
+            <Button 
+                Style="{DynamicResource MaterialDesignRaisedButton}" 
+                Grid.Row="14" 
+                Content="Отмена"
+                Command="{Binding CancelCommand}" />
+        </Grid>
+    </GroupBox>    
 </catel:UserControl>

@@ -23,6 +23,7 @@ namespace AMM_Desktop_Client.ViewModels
             CancelCommand = new Command(OnCancelCommandExecute);
             AddTransactionCommand = new Command(OnAddTransactionCommandExecute);
             LoadSourcesCommand = new Command(OnLoadSourcesCommandExecute);
+            LogoutCommand = new Command(OnLogoutCommandExecute);
         }
 
         #region Properties
@@ -115,7 +116,8 @@ namespace AMM_Desktop_Client.ViewModels
                 transactionForm.To = ToListSelection.Id;
                 DateTime localTime = DateTime.Now;
                 DateTimeOffset localTimeAndOffset = new DateTimeOffset(localTime, TimeZoneInfo.Local.GetUtcOffset(localTime));
-                transactionForm.Date = localTimeAndOffset.ToString("o");
+                //transactionForm.Date = localTimeAndOffset.ToString("o");
+                transactionForm.Date = localTimeAndOffset.ToString("yyyy-MM-ddTHH:mm:sszzz");
                 ApiResponse<Transaction> response = await AddTransactionAsync(transactionForm);
                 if (response.data != null)
                 {
@@ -205,16 +207,14 @@ namespace AMM_Desktop_Client.ViewModels
             return result;
         }
 
-        //public Command LogoutCommand { get; private set; }
+        public Command LogoutCommand { get; private set; }
 
-        //private async void OnLogoutCommandExecute()
-        //{
-        //    PreloaderVisibility = true;
-        //    HttpResponseMessage response = await WebAPIClient.Client.PutAsJsonAsync("api/logout", new Object { });
-        //    response.EnsureSuccessStatusCode();
-        //    PreloaderVisibility = false;
-        //    ShowLoginView.Execute();
-        //}
+        private void OnLogoutCommandExecute()
+        {
+            FromList.Clear();
+            ToList.Clear();
+        }
+        
         #endregion
 
         #region Other

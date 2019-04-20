@@ -14,70 +14,66 @@
     <catel:UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </catel:UserControl.Resources>
-    
-    <Grid Width="200">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
 
-        <Label 
-            Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="0" 
-            Content="Логин" />
-        <TextBox 
-            Style="{DynamicResource MaterialDesignTextBox}" 
-            Grid.Row="1" 
-            Text="{Binding UserLogin}" />
-        <Label 
-            Style="{DynamicResource MaterialDesignLabel}" 
-            Grid.Row="2" 
-            Content="Пароль" />
-        <PasswordBox
-            Name="passwdBox"
-            Style="{DynamicResource MaterialDesignPasswordBox}" 
-            Grid.Row="3" />
-        <!--<ProgressBar
-            Style="{StaticResource MaterialDesignCircularProgressBar}"
-            Grid.Row="3"
-            Value="0"
-            Visibility="{Binding PreloaderVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"
-            IsIndeterminate="True" />-->
-        <materialDesign:Card 
-            Grid.Row="3"
-            UniformCornerRadius="25" 
-            Padding="2" 
-            HorizontalAlignment="Center"
-            Visibility="{Binding PreloaderVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <ProgressBar 
-                Style="{StaticResource MaterialDesignCircularProgressBar}" 
-                Value="0"
-                IsIndeterminate="True" Width="30" Height="30" />
-        </materialDesign:Card>
-        <Label 
-            Grid.Row="4" 
-            Content="" />
-        <Button 
-            Style="{DynamicResource MaterialDesignRaisedButton}" 
-            Grid.Row="5" 
-            Content="Вход" 
-            Command="{Binding LoginCommand}"
-            CommandParameter="{Binding ElementName=passwdBox}"
-            IsDefault="True" />
-        <Label 
-            Grid.Row="6" 
-            Content="" />
-        <Button 
-            Style="{DynamicResource MaterialDesignRaisedButton}" 
-            Grid.Row="7" 
-            Content="Регистрация" 
-            Command="{Binding RegistrationCommand}" />
-    </Grid>
+    <GroupBox Header="Вход" Margin="16">
+        <Grid Width="200">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <Label 
+                Style="{DynamicResource MaterialDesignLabel}" 
+                Grid.Row="0" 
+                Content="Логин" />
+            <TextBox 
+                Style="{DynamicResource MaterialDesignTextBox}" 
+                Grid.Row="1" 
+                Text="{Binding UserLogin}" />
+            <Label 
+                Style="{DynamicResource MaterialDesignLabel}" 
+                Grid.Row="2" 
+                Content="Пароль" />
+            <PasswordBox
+                Name="passwdBox"
+                Style="{DynamicResource MaterialDesignPasswordBox}" 
+                Grid.Row="3" />            
+            <materialDesign:Card 
+                Grid.Row="3"
+                UniformCornerRadius="25" 
+                Padding="2" 
+                HorizontalAlignment="Center"
+                Visibility="{Binding PreloaderVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ProgressBar 
+                    Style="{StaticResource MaterialDesignCircularProgressBar}" 
+                    Value="0"
+                    IsIndeterminate="True" Width="30" Height="30" />
+            </materialDesign:Card>
+            <Label 
+                Grid.Row="4" 
+                Content="" />
+            <Button 
+                Style="{DynamicResource MaterialDesignRaisedButton}" 
+                Grid.Row="5" 
+                Content="Вход" 
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding ElementName=passwdBox}"
+                IsDefault="True" />
+            <Label 
+                Grid.Row="6" 
+                Content="" />
+            <Button 
+                Style="{DynamicResource MaterialDesignRaisedButton}" 
+                Grid.Row="7" 
+                Content="Регистрация" 
+                Command="{Binding RegistrationCommand}" />
+        </Grid>
+    </GroupBox>
 
 </catel:UserControl>
