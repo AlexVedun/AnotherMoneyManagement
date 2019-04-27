@@ -16,6 +16,7 @@ namespace AMM_Desktop_Client.Model
         public decimal Debet { get; set; }
         public decimal Credit { get; set; }
         public decimal Summ { get; set; }
+        public string Icon { get; set; }
 
         public virtual Source From { get; set; }
         public virtual Source To { get; set; }

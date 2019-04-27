@@ -91,6 +91,7 @@ namespace AMM_Desktop_Client.ViewModels
 
             if (response.data != null)
             {
+                Globals.Sources.Clear();
                 foreach (var item in response.data)
                 {
                     if (item.Type == TypeOfSource.Card || item.Type == TypeOfSource.Wallet)
@@ -118,19 +119,37 @@ namespace AMM_Desktop_Client.ViewModels
             PreloaderVisibility = false;
             if (response2.data != null)
             {
+                Globals.Transactions.Clear();
                 foreach (var item in response2.data)
                 {
-                    var newItem = item;
-                    newItem.Time = DateTime.Parse(item.Date).TimeOfDay.ToString();
-                    if (item.Debet != 0)
+                    if (item.Debet == 0)
                     {
-                        newItem.Summ = item.Debet;
+                        item.Icon = "Minus";
+                        item.Summ = item.Credit;
+                        
+                    }
+                    else if (item.Credit == 0)
+                    {
+                        item.Icon = "Plus";
+                        item.Summ = item.Debet;
                     }
                     else
                     {
-                        newItem.Summ = item.Credit;
+                        item.Icon = "Swap-horizontal";
+                        item.Summ = item.Debet;
                     }
-                    Globals.Transactions.Add(newItem);
+                    item.Time = DateTime.Parse(item.Date).TimeOfDay.ToString();
+                    //var newItem = item;
+                    //newItem.Time = DateTime.Parse(item.Date).TimeOfDay.ToString();
+                    //if (item.Debet != 0)
+                    //{
+                    //    newItem.Summ = item.Debet;
+                    //}
+                    //else
+                    //{
+                    //    newItem.Summ = item.Credit;
+                    //}
+                    Globals.Transactions.Add(/*newItem*/item);
                 }
             }
             else

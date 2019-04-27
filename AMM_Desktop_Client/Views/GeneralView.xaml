@@ -129,42 +129,27 @@
         </materialDesign:Card>
         <GroupBox Header="Кошельки и карты" Margin="16" Grid.Row="1" Grid.Column="1">
             <ListView
-                ItemsSource="{Binding Sources}" ScrollViewer.VerticalScrollBarVisibility="Auto">                                
-                <ListView.ItemTemplate>                    
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30" />
-                                <ColumnDefinition Width="Auto" MinWidth="100"/>
-                                <ColumnDefinition Width="Auto" MinWidth="50" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon Grid.Column="0" Kind="{Binding Icon}" />
-                            <TextBlock Grid.Column="1" Text="{Binding Name}"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Money}"/>
-                            <TextBlock Grid.Column="3" Text="{Binding Description}"/>
-                        </Grid>                        
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <!--<ListView.View>
+                ItemsSource="{Binding Sources}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView.View>
                     <GridView>
-                        <GridViewColumn >
-                            <TextBlock Text="">
-                                <materialDesign:PackIcon
-                                    Kind="{Binding Sources.Icon}" />
-                            </TextBlock>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <materialDesign:PackIcon Kind="{Binding Icon}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>                            
                         </GridViewColumn>
                         <GridViewColumn
-                        DisplayMemberBinding="{Binding Name}"
-                        Header="Название" />
+                            DisplayMemberBinding="{Binding Name}"
+                            Header="Название" />
                         <GridViewColumn
-                        DisplayMemberBinding="{Binding Money}"
-                        Header="Сумма" />
+                            DisplayMemberBinding="{Binding Money}"
+                            Header="Сумма" />
                         <GridViewColumn
-                        DisplayMemberBinding="{Binding Description}"
-                        Header="Описание" />
+                            DisplayMemberBinding="{Binding Description}"
+                            Header="Описание" />
                     </GridView>
-                </ListView.View>-->
+                </ListView.View>
             </ListView>
         </GroupBox>
         
@@ -186,15 +171,22 @@
                 ItemsSource="{Binding Transactions}" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <materialDesign:PackIcon Kind="{Binding Icon}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn
-                        DisplayMemberBinding="{Binding Time}"
-                        Header="Время" />
+                            DisplayMemberBinding="{Binding Time}"
+                            Header="Время" />
                         <GridViewColumn
-                        DisplayMemberBinding="{Binding Summ}"
-                        Header="Сумма" />
+                            DisplayMemberBinding="{Binding Summ}"
+                            Header="Сумма" />
                         <GridViewColumn
-                        DisplayMemberBinding="{Binding Comment}"
-                        Header="Комментарий" />
+                            DisplayMemberBinding="{Binding Comment}"
+                            Header="Комментарий" />
                     </GridView>
                 </ListView.View>
             </ListView>
