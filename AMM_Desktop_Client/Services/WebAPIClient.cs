@@ -24,6 +24,7 @@ namespace AMM_Desktop_Client.WebAPIClientWPF
         static async Task RunAsync()
         {
             Client.BaseAddress = new Uri("https://anothermoneymanagement.azurewebsites.net/");
+            //Client.BaseAddress = new Uri("https://amm2-239308.appspot.com/");
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders
                 .Accept

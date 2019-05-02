@@ -38,7 +38,6 @@ namespace AMM_WebUI_2.Controllers
             }
             catch (Exception ex)
             {
-
                 return new ApiResponse<User>() { error = ex.Message };
             }
         }

@@ -115,8 +115,7 @@ namespace AMM_Desktop_Client.ViewModels
             {
                 System.Windows.MessageBox.Show(response.error);
             }
-            ApiResponse<List<Transaction>> response2 = await GetTransactionsAsync();
-            PreloaderVisibility = false;
+            ApiResponse<List<Transaction>> response2 = await GetTransactionsAsync();            
             if (response2.data != null)
             {
                 Globals.Transactions.Clear();
@@ -156,9 +155,10 @@ namespace AMM_Desktop_Client.ViewModels
             {
                 System.Windows.MessageBox.Show(response2.error);
             }
+            PreloaderVisibility = false;
             //if (Globals.Sources.Count == 0)
             //{
-                
+
             //} 
         }
 
