@@ -31,6 +31,7 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
             <ListView
@@ -39,6 +40,7 @@
                 Grid.RowSpan="2" 
                 Grid.ColumnSpan="4"
                 ItemsSource="{Binding Sources}" 
+                SelectedItem="{Binding SelectedItem}"
                 ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListView.View>
                     <GridView>
@@ -53,9 +55,6 @@
                             DisplayMemberBinding="{Binding Name}"
                             Header="Название" />
                         <GridViewColumn
-                            DisplayMemberBinding="{Binding Money}"
-                            Header="Сумма" />
-                        <GridViewColumn
                             DisplayMemberBinding="{Binding Description}"
                             Header="Описание" />
                     </GridView>
@@ -67,17 +66,41 @@
                 Grid.Column="0"/>
             <TextBox
                 Grid.Row="3"
-                Grid.Column="0"/>
+                Grid.Column="0"
+                Text="{Binding Name}" />
             <Label
                 Content=""
                 Grid.Row="4"
                 Grid.Column="0" />
+            <!--<materialDesign:ColorZone
+                Mode="PrimaryMid"                 
+                Grid.Row="5"
+                Grid.Column="0">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Margin="2" 
+                    HorizontalAlignment="Center">
+                    <RadioButton
+                        Style="{StaticResource MaterialDesignTabRadioButton}"
+                        Margin="4"
+                        IsChecked="True"
+                        Content="Доход" />
+                    <RadioButton
+                        Style="{StaticResource MaterialDesignTabRadioButton}"
+                        Margin="4"
+                        IsChecked="False"
+                        Content="Расход" />                    
+                </StackPanel>
+            </materialDesign:ColorZone>-->
             <RadioButton
+                Style="{StaticResource MaterialDesignRadioButton}"
                 Content="Доход"
                 Grid.Row="5"
                 Grid.Column="0" 
-                Margin="0,5" />
+                Margin="0,5" 
+                IsChecked="{Binding IsIncomeChecked}"/>
             <RadioButton
+                Style="{StaticResource MaterialDesignRadioButton}"
                 Content="Расход"
                 Grid.Row="6"
                 Grid.Column="0" 
@@ -87,23 +110,36 @@
                 Grid.Row="7"
                 Grid.Column="0" />
             <Label
-                Content="Комментарий"
+                Content="Описание"
                 Grid.Row="8"
                 Grid.Column="0" />
             <TextBox
                 Grid.Row="9"
                 Grid.Column="0"
-                Grid.ColumnSpan="2" />
+                Grid.ColumnSpan="2" 
+                Text="{Binding Description}" />
+            <Label
+                Content=""
+                Grid.Row="10"
+                Grid.Column="0" />
             <Button
                 Content="Добавить"
-                Grid.Row="10"
+                Grid.Row="11"
                 Grid.Column="0" 
-                Margin="5" />
+                Margin="5" 
+                Command="{Binding AddCategoryCommand}" />
             <Button
                 Content="Удалить"
-                Grid.Row="10"
+                Grid.Row="11"
                 Grid.Column="1"
-                Margin="5" />
+                Margin="5" 
+                Command="{Binding DeleteCategoryCommand}"/>
+            <Button
+                Content="Готово"
+                Grid.Row="11"
+                Grid.Column="2"
+                Margin="5" 
+                Command="{Binding ReadyCommand}" />
 
 
             <materialDesign:Card 
@@ -123,6 +159,6 @@
 
 
         </Grid>
-    </GroupBox>   
+    </GroupBox>
 
 </catel:UserControl>

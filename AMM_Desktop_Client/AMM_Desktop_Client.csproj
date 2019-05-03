@@ -110,6 +110,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\AddSourceForm.cs" />
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\LoginRequestForm.cs" />
     <Compile Include="Models\RegisterRequestForm.cs" />

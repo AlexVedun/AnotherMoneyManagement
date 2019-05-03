@@ -29,7 +29,7 @@
             ((GeneralViewModel)generalView).ShowAddTransactionView = ShowAddTransactionViewCommand;
             ((GeneralViewModel)generalView).ShowManageCategoriesView = ShowManageCategoriesViewCommand;
             ((AddTransactionViewModel)addTransactionView).ShowGeneralView = ShowGeneralViewCommand;
-            
+            ((ManageCategoriesViewModel)manageCategoriesView).ShowGeneralView = ShowGeneralViewCommand;
 
             CurrentView = loginView;
         }
@@ -89,6 +89,7 @@
 
         private void OnShowManageCategoriesViewCommandExecute()
         {
+            ((ManageCategoriesViewModel)manageCategoriesView).LoadSourcesCommand.Execute();
             CurrentView = manageCategoriesView;
         }
         #endregion

@@ -39,7 +39,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        Header="Категории">
+                        Header="Категории"
+                        Command="{Binding ShowManageCategoriesViewCommand}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="ShoppingBasket" />
                         </MenuItem.Icon>
