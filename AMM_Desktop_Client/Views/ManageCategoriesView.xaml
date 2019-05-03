@@ -15,8 +15,18 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
@@ -24,8 +34,12 @@
             </Grid.RowDefinitions>
 
             <ListView
-                Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
-                ItemsSource="{Binding Sources}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                Grid.Row="0" 
+                Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Grid.ColumnSpan="4"
+                ItemsSource="{Binding Sources}" 
+                ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn>
@@ -47,10 +61,56 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <Label
+                Content="Название"
+                Grid.Row="2" 
+                Grid.Column="0"/>
+            <TextBox
+                Grid.Row="3"
+                Grid.Column="0"/>
+            <Label
+                Content=""
+                Grid.Row="4"
+                Grid.Column="0" />
+            <RadioButton
+                Content="Доход"
+                Grid.Row="5"
+                Grid.Column="0" 
+                Margin="0,5" />
+            <RadioButton
+                Content="Расход"
+                Grid.Row="6"
+                Grid.Column="0" 
+                Margin="0,5" />
+            <Label
+                Content=""
+                Grid.Row="7"
+                Grid.Column="0" />
+            <Label
+                Content="Комментарий"
+                Grid.Row="8"
+                Grid.Column="0" />
+            <TextBox
+                Grid.Row="9"
+                Grid.Column="0"
+                Grid.ColumnSpan="2" />
+            <Button
+                Content="Добавить"
+                Grid.Row="10"
+                Grid.Column="0" 
+                Margin="5" />
+            <Button
+                Content="Удалить"
+                Grid.Row="10"
+                Grid.Column="1"
+                Margin="5" />
+
 
             <materialDesign:Card 
-            Grid.Row="1"
+            Grid.Row="5"
             Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Grid.RowSpan="11"
             UniformCornerRadius="25" 
             Padding="2" 
             HorizontalAlignment="Center"

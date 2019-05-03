@@ -10,6 +10,7 @@
         private IViewModel registrationView = new RegistrationViewModel();
         private IViewModel generalView = new GeneralViewModel();
         private IViewModel addTransactionView = new AddTransactionViewModel();
+        private IViewModel manageCategoriesView = new ManageCategoriesViewModel();
 
         public MainWindowViewModel()
         {
@@ -18,6 +19,7 @@
             ShowGeneralViewCommand = new Command(OnShowGeneralViewCommandExecute);
             ShowAddTransactionViewCommand = new Command(OnShowAddTransactionViewCommandExecute);
             LogoutCommand = new Command(OnLogoutCommandExecute);
+            ShowManageCategoriesViewCommand = new Command(OnShowManageCategoriesViewCommandExecute);
 
             ((LoginViewModel)loginView).ShowRegistrationView = ShowRegistrationViewCommand;
             ((LoginViewModel)loginView).ShowGeneralView = ShowGeneralViewCommand;
@@ -25,7 +27,9 @@
             //((GeneralViewModel)generalView).ShowLoginView = ShowLoginViewCommand;
             ((GeneralViewModel)generalView).Logout = LogoutCommand;
             ((GeneralViewModel)generalView).ShowAddTransactionView = ShowAddTransactionViewCommand;
+            ((GeneralViewModel)generalView).ShowManageCategoriesView = ShowManageCategoriesViewCommand;
             ((AddTransactionViewModel)addTransactionView).ShowGeneralView = ShowGeneralViewCommand;
+            
 
             CurrentView = loginView;
         }
@@ -77,8 +81,15 @@
 
         private void OnLogoutCommandExecute()
         {
-            ((AddTransactionViewModel)addTransactionView).LogoutCommand.Execute();
+            ((AddTransactionViewModel)addTransactionView).LogoutCommand.Execute(); // ?????????????
             CurrentView = loginView;
+        }
+
+        public Command ShowManageCategoriesViewCommand { get; private set; }
+
+        private void OnShowManageCategoriesViewCommandExecute()
+        {
+            CurrentView = manageCategoriesView;
         }
         #endregion
         

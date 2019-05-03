@@ -19,14 +19,15 @@ namespace AMM_Desktop_Client.ViewModels
 
         public GeneralViewModel()
         {
-            //Sources = new List<Source>();
-            //Transactions = new List<Transaction>();
-            Sources = Globals.Sources;
-            Transactions = Globals.Transactions;
+            Sources = new ObservableCollection<Source>();
+            Transactions = new ObservableCollection<Transaction>();
+            //Sources = Globals.Sources;
+            //Transactions = Globals.Transactions;
             
             LoadSourcesTransactionsCommand = new Command(OnLoadSourcesTransactionsCommandExecute);
             LogoutCommand = new Command(OnLogoutCommandExecute);
             ShowAddTransactionViewCommand = new Command(OnShowAddTransactionViewCommandExecute);
+            ShowManageCategoriesViewCommand = new Command(OnShowManageCategoriesViewCommandExecute);
         }
 
         #region Properties
@@ -78,6 +79,14 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData LogOutProperty = RegisterProperty(nameof(Logout), typeof(Command), null);
+
+        public Command ShowManageCategoriesView
+        {
+            get { return GetValue<Command>(ShowManageCategoriesViewProperty); }
+            set { SetValue(ShowManageCategoriesViewProperty, value); }
+        }
+
+        public static readonly PropertyData ShowManageCategoriesViewProperty = RegisterProperty(nameof(ShowManageCategoriesView), typeof(Command), null);
         #endregion
 
         #region Methods
@@ -91,7 +100,8 @@ namespace AMM_Desktop_Client.ViewModels
 
             if (response.data != null)
             {
-                Globals.Sources.Clear();
+                //Globals.Sources.Clear();
+                Sources.Clear();
                 foreach (var item in response.data)
                 {
                     if (item.Type == TypeOfSource.Card || item.Type == TypeOfSource.Wallet)
@@ -107,7 +117,8 @@ namespace AMM_Desktop_Client.ViewModels
                             default:
                                 break;
                         }
-                        Globals.Sources.Add(item);
+                        //Globals.Sources.Add(item);
+                        Sources.Add(item);
                     }
                 }
             }
@@ -118,7 +129,8 @@ namespace AMM_Desktop_Client.ViewModels
             ApiResponse<List<Transaction>> response2 = await GetTransactionsAsync();            
             if (response2.data != null)
             {
-                Globals.Transactions.Clear();
+                //Globals.Transactions.Clear();
+                Transactions.Clear();
                 foreach (var item in response2.data)
                 {
                     if (item.Debet == 0)
@@ -148,18 +160,15 @@ namespace AMM_Desktop_Client.ViewModels
                     //{
                     //    newItem.Summ = item.Credit;
                     //}
-                    Globals.Transactions.Add(/*newItem*/item);
+                    //Globals.Transactions.Add(/*newItem*/item);
+                    Transactions.Add(item);
                 }
             }
             else
             {
                 System.Windows.MessageBox.Show(response2.error);
             }
-            PreloaderVisibility = false;
-            //if (Globals.Sources.Count == 0)
-            //{
-
-            //} 
+            PreloaderVisibility = false;            
         }
 
         private async Task<ApiResponse<List<Transaction>>> GetTransactionsAsync()
@@ -203,6 +212,13 @@ namespace AMM_Desktop_Client.ViewModels
         private void OnShowAddTransactionViewCommandExecute()
         {
             ShowAddTransactionView.Execute();
+        }
+
+        public Command ShowManageCategoriesViewCommand { get; private set; }
+                
+        private void OnShowManageCategoriesViewCommandExecute()
+        {
+            ShowManageCategoriesView.Execute();
         }
         #endregion
 

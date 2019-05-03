@@ -1,6 +1,9 @@
-﻿using Catel.MVVM;
+﻿using AMM_Desktop_Client.Model;
+using Catel.Data;
+using Catel.MVVM;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +14,18 @@ namespace AMM_Desktop_Client.ViewModels
     {
         public ManageCategoriesViewModel()
         {
-
+            Sources = new ObservableCollection<Source>();
         }
 
         #region Properties
-        
+
+        public ObservableCollection<Source> Sources
+        {
+            get { return GetValue<ObservableCollection<Source>>(SourcesProperty); }
+            set { SetValue(SourcesProperty, value); }
+        }
+
+        public static readonly PropertyData SourcesProperty = RegisterProperty(nameof(Sources), typeof(ObservableCollection<Source>), null);
         #endregion
 
         #region Methods
