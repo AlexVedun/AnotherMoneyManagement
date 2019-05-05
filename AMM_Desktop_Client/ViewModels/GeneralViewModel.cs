@@ -28,6 +28,7 @@ namespace AMM_Desktop_Client.ViewModels
             LogoutCommand = new Command(OnLogoutCommandExecute);
             ShowAddTransactionViewCommand = new Command(OnShowAddTransactionViewCommandExecute);
             ShowManageCategoriesViewCommand = new Command(OnShowManageCategoriesViewCommandExecute);
+            ShowManageCardsWalletsViewCommand = new Command(OnShowManageCardsWalletsViewCommandExecute);
         }
 
         #region Properties
@@ -87,6 +88,14 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData ShowManageCategoriesViewProperty = RegisterProperty(nameof(ShowManageCategoriesView), typeof(Command), null);
+
+        public Command ShowManageCardsWalletsView
+        {
+            get { return GetValue<Command>(ShowManageCardsWalletsViewProperty); }
+            set { SetValue(ShowManageCardsWalletsViewProperty, value); }
+        }
+
+        public static readonly PropertyData ShowManageCardsWalletsViewProperty = RegisterProperty(nameof(ShowManageCardsWalletsView), typeof(Command), null);
         #endregion
 
         #region Methods
@@ -219,6 +228,13 @@ namespace AMM_Desktop_Client.ViewModels
         private void OnShowManageCategoriesViewCommandExecute()
         {
             ShowManageCategoriesView.Execute();
+        }
+
+        public Command ShowManageCardsWalletsViewCommand { get; private set; }
+
+        private void OnShowManageCardsWalletsViewCommandExecute()
+        {
+            ShowManageCardsWalletsView.Execute();
         }
         #endregion
 

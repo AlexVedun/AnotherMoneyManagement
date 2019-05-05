@@ -33,7 +33,8 @@
                 <MenuItem
                      Header="Пользователь">
                     <MenuItem
-                        Header="Кошельки и карты">
+                        Header="Кошельки и карты"
+                        Command="{Binding ShowManageCardsWalletsViewCommand}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="CashMultiple" />
                         </MenuItem.Icon>

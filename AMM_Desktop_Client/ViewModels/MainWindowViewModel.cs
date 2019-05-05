@@ -11,6 +11,7 @@
         private IViewModel generalView = new GeneralViewModel();
         private IViewModel addTransactionView = new AddTransactionViewModel();
         private IViewModel manageCategoriesView = new ManageCategoriesViewModel();
+        private IViewModel manageCardsWalletsView = new ManageCardsWalletsViewModel();
 
         public MainWindowViewModel()
         {
@@ -20,6 +21,7 @@
             ShowAddTransactionViewCommand = new Command(OnShowAddTransactionViewCommandExecute);
             LogoutCommand = new Command(OnLogoutCommandExecute);
             ShowManageCategoriesViewCommand = new Command(OnShowManageCategoriesViewCommandExecute);
+            ShowManageCardsWalletsViewCommand = new Command(OnShowManageCardsWalletsViewCommandExecute);
 
             ((LoginViewModel)loginView).ShowRegistrationView = ShowRegistrationViewCommand;
             ((LoginViewModel)loginView).ShowGeneralView = ShowGeneralViewCommand;
@@ -28,8 +30,10 @@
             ((GeneralViewModel)generalView).Logout = LogoutCommand;
             ((GeneralViewModel)generalView).ShowAddTransactionView = ShowAddTransactionViewCommand;
             ((GeneralViewModel)generalView).ShowManageCategoriesView = ShowManageCategoriesViewCommand;
+            ((GeneralViewModel)generalView).ShowManageCardsWalletsView = ShowManageCardsWalletsViewCommand;
             ((AddTransactionViewModel)addTransactionView).ShowGeneralView = ShowGeneralViewCommand;
             ((ManageCategoriesViewModel)manageCategoriesView).ShowGeneralView = ShowGeneralViewCommand;
+            ((ManageCardsWalletsViewModel)manageCardsWalletsView).ShowGeneralView = ShowGeneralViewCommand;
 
             CurrentView = loginView;
         }
@@ -91,6 +95,14 @@
         {
             ((ManageCategoriesViewModel)manageCategoriesView).LoadSourcesCommand.Execute();
             CurrentView = manageCategoriesView;
+        }
+
+        public Command ShowManageCardsWalletsViewCommand { get; private set; }
+
+        private void OnShowManageCardsWalletsViewCommandExecute()
+        {
+            ((ManageCardsWalletsViewModel)manageCardsWalletsView).LoadSourcesCommand.Execute();
+            CurrentView = manageCardsWalletsView;
         }
         #endregion
         
