@@ -12,6 +12,7 @@
         private IViewModel addTransactionView = new AddTransactionViewModel();
         private IViewModel manageCategoriesView = new ManageCategoriesViewModel();
         private IViewModel manageCardsWalletsView = new ManageCardsWalletsViewModel();
+        private IViewModel userView = new UserViewModel();
 
         public MainWindowViewModel()
         {
@@ -22,18 +23,24 @@
             LogoutCommand = new Command(OnLogoutCommandExecute);
             ShowManageCategoriesViewCommand = new Command(OnShowManageCategoriesViewCommandExecute);
             ShowManageCardsWalletsViewCommand = new Command(OnShowManageCardsWalletsViewCommandExecute);
+            ShowUserViewCommand = new Command(OnShowUserViewCommandExecute);
 
             ((LoginViewModel)loginView).ShowRegistrationView = ShowRegistrationViewCommand;
             ((LoginViewModel)loginView).ShowGeneralView = ShowGeneralViewCommand;
             ((RegistrationViewModel)registrationView).ShowLoginView = ShowLoginViewCommand;
             //((GeneralViewModel)generalView).ShowLoginView = ShowLoginViewCommand;
+
             ((GeneralViewModel)generalView).Logout = LogoutCommand;
             ((GeneralViewModel)generalView).ShowAddTransactionView = ShowAddTransactionViewCommand;
             ((GeneralViewModel)generalView).ShowManageCategoriesView = ShowManageCategoriesViewCommand;
             ((GeneralViewModel)generalView).ShowManageCardsWalletsView = ShowManageCardsWalletsViewCommand;
+            ((GeneralViewModel)generalView).ShowUserView = ShowUserViewCommand;
+
             ((AddTransactionViewModel)addTransactionView).ShowGeneralView = ShowGeneralViewCommand;
             ((ManageCategoriesViewModel)manageCategoriesView).ShowGeneralView = ShowGeneralViewCommand;
             ((ManageCardsWalletsViewModel)manageCardsWalletsView).ShowGeneralView = ShowGeneralViewCommand;
+            ((UserViewModel)userView).ShowGeneralView = ShowGeneralViewCommand;
+            ((UserViewModel)userView).ShowLoginView = ShowLoginViewCommand;
 
             CurrentView = loginView;
         }
@@ -103,6 +110,14 @@
         {
             ((ManageCardsWalletsViewModel)manageCardsWalletsView).LoadSourcesCommand.Execute();
             CurrentView = manageCardsWalletsView;
+        }
+
+        public Command ShowUserViewCommand { get; private set; }
+
+        private void OnShowUserViewCommandExecute()
+        {
+            ((UserViewModel)userView).GetUserInfoCommand.Execute();
+            CurrentView = userView;
         }
         #endregion
         

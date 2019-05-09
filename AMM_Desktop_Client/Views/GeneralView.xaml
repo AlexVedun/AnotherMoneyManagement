@@ -54,6 +54,14 @@
                     </MenuItem>
                     <Separator />
                     <MenuItem
+                        Header="Данные пользователя"
+                        Command="{Binding ShowUserViewCommand}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="UserCardDetails" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
                         Header="Выход"
                         Command="{Binding LogoutCommand}">
                         <MenuItem.Icon>

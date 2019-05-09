@@ -149,51 +149,35 @@ namespace AMM_Desktop_Client.ViewModels
         private async void OnLoadSourcesCommandExecute()
         {
             PreloaderVisibility = true;
-            if (FromList.Count == 0)
-            {
-                ApiResponse<List<Source>> response = await GetSourcesAsync();
+            ApiResponse<List<Source>> response = await GetSourcesAsync();
 
-                if (response.data != null)
+            if (response.data != null)
+            {
+                FromList.Clear();
+                ToList.Clear();
+                foreach (var item in response.data)
                 {
-                    foreach (var item in response.data)
+                    switch (item.Type)
                     {
-                        switch (item.Type)
-                        {
-                            case TypeOfSource.Income:
-                                FromList.Add(item);
-                                break;
-                            case TypeOfSource.Waste:
-                                ToList.Add(item);
-                                break;
-                            case TypeOfSource.Wallet:                                
-                            case TypeOfSource.Card:
-                                FromList.Add(item);
-                                ToList.Add(item);
-                                break;
-                            default:
-                                break;
-                        }
-                        //if (item.Type == TypeOfSource.Card || item.Type == TypeOfSource.Wallet || item.Type == TypeOfSource.Income)
-                        //{
-                        //    switch (item.Type)
-                        //    {
-                        //        case TypeOfSource.Wallet:
-                        //            item.Icon = "Wallet";
-                        //            break;
-                        //        case TypeOfSource.Card:
-                        //            item.Icon = "CreditCardMultiple";
-                        //            break;
-                        //        default:
-                        //            break;
-                        //    }
-                        //    Sources.Add(item);
-                        //}
-                    }
+                        case TypeOfSource.Income:
+                            FromList.Add(item);
+                            break;
+                        case TypeOfSource.Waste:
+                            ToList.Add(item);
+                            break;
+                        case TypeOfSource.Wallet:
+                        case TypeOfSource.Card:
+                            FromList.Add(item);
+                            ToList.Add(item);
+                            break;
+                        default:
+                            break;
+                    }                    
                 }
-                else
-                {
-                    System.Windows.MessageBox.Show(response.error);
-                }                
+            }
+            else
+            {
+                System.Windows.MessageBox.Show(response.error);
             }
             PreloaderVisibility = false;
         }

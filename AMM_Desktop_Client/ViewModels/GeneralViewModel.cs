@@ -29,6 +29,7 @@ namespace AMM_Desktop_Client.ViewModels
             ShowAddTransactionViewCommand = new Command(OnShowAddTransactionViewCommandExecute);
             ShowManageCategoriesViewCommand = new Command(OnShowManageCategoriesViewCommandExecute);
             ShowManageCardsWalletsViewCommand = new Command(OnShowManageCardsWalletsViewCommandExecute);
+            ShowUserViewCommand = new Command(OnShowUserViewCommandExecute);
         }
 
         #region Properties
@@ -96,6 +97,14 @@ namespace AMM_Desktop_Client.ViewModels
         }
 
         public static readonly PropertyData ShowManageCardsWalletsViewProperty = RegisterProperty(nameof(ShowManageCardsWalletsView), typeof(Command), null);
+
+        public Command ShowUserView
+        {
+            get { return GetValue<Command>(ShowUserViewProperty); }
+            set { SetValue(ShowUserViewProperty, value); }
+        }
+
+        public static readonly PropertyData ShowUserViewProperty = RegisterProperty(nameof(ShowUserView), typeof(Command), null);
         #endregion
 
         #region Methods
@@ -235,6 +244,13 @@ namespace AMM_Desktop_Client.ViewModels
         private void OnShowManageCardsWalletsViewCommandExecute()
         {
             ShowManageCardsWalletsView.Execute();
+        }
+
+        public Command ShowUserViewCommand { get; private set; }
+
+        private void OnShowUserViewCommandExecute()
+        {
+            ShowUserView.Execute();
         }
         #endregion
 
